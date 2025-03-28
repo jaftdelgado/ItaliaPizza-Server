@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f577af6667974745bce43bb7b7424e00" Name="Diagram1">
+      <Diagram DiagramId="4143cd1e33be4c609afaf86ce7aef342" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="ItaliaPizzaModel.Address" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliaPizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliaPizzaModel.Customer" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
@@ -22,7 +22,7 @@
         <EntityTypeShape EntityType="ItaliaPizzaModel.Supply" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliaPizzaModel.SupplyCategory" Width="1.5" PointX="6" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliaPizzaModel.Transaction" Width="1.5" PointX="10.5" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ItaliaPizzaModel.Waste" Width="1.5" PointX="10.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ItaliaPizzaModel.Waste" Width="1.5" PointX="10.875" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ItaliaPizzaModel.WasteSupply" Width="1.5" PointX="10.5" PointY="11.625" IsExpanded="true" />
         <AssociationConnector Association="ItaliaPizzaModel.FK_Customer_Address" ManuallyRouted="false" />
         <AssociationConnector Association="ItaliaPizzaModel.FK_Delivery_Address" ManuallyRouted="false" />
