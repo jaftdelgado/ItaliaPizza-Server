@@ -22,6 +22,10 @@ namespace Host
                 {
                     Console.WriteLine($"Error starting services: {ex.Message}");
                 }
+                finally
+                {
+                    serviceHost.Abort();
+                }
             }
         }
     }
