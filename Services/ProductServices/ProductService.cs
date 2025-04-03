@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.DAO;
 using Services.Dtos;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,20 @@ namespace Services
         {
             var product = new Product
             {
-                Name = productDTO.name,
-                Category = productDTO.category,
-                Price = productDTO.price,
-                IsPrepared = productDTO.isPrepared,
+                Name = productDTO.Name,
+                Category = productDTO.Category,
+                Price = productDTO.Price,
+                IsPrepared = productDTO.IsPrepared,
                 SupplierID = productDTO.SupplierID,
                 Status = productDTO.Status,
                 Photo = productDTO.Photo,
                 Description = productDTO.Description,
                 Code = productDTO.Code
             };
-            return 0;
+
+            ProductDAO productDAO = new ProductDAO();
+            int result = productDAO.AddProduct(product);
+            return result;
         }
     }
 }
