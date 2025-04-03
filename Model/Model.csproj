@@ -152,7 +152,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <WCFMetadata Include="Connected Services\" />
+=======
+    <Folder Include="DAO\" />
+>>>>>>> c37c45e1da4145df8086f014e1a14c2d2135c1f8
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
