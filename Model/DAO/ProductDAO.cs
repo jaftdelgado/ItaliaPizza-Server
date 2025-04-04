@@ -8,7 +8,7 @@ namespace Model.DAO
         public int AddProduct(Product product)
         {
             int result = 0;
-            using (var context = new ItaliaPizzaEntities())
+            using (var context = new italiapizzaEntities())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
