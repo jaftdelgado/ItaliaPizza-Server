@@ -19,7 +19,6 @@ namespace Services
                 Category = productDTO.Category,
                 Price = productDTO.Price,
                 IsPrepared = productDTO.IsPrepared,
-                SupplierID = productDTO.SupplierID,
                 Status = productDTO.Status,
                 Photo = productDTO.Photo,
                 Description = productDTO.Description,
