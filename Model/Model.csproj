@@ -55,112 +55,109 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="CashRegister.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="Customer.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DAO\ProductDAO.cs" />
     <Compile Include="Delivery.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ItaliaPizzaModel.Context.cs">
+    <Compile Include="ItaliaPizzaEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ItaliaPizzaModel.Context.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ItaliaPizzaModel.cs">
+    <Compile Include="ItaliaPizzaEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ItaliaPizzaModel.Designer.cs">
+    <Compile Include="ItaliaPizzaEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ItaliaPizzaModel.edmx</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Order.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderState.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Personal.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Product_Order.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recipe.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="StockReport.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier_Order.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Supply.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="SupplyCategory.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Transaction.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Waste.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="WasteSupply.cs">
-      <DependentUpon>ItaliaPizzaModel.tt</DependentUpon>
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="ItaliaPizzaModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ItaliaPizzaModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="ItaliaPizzaModel.edmx.diagram">
-      <DependentUpon>ItaliaPizzaModel.edmx</DependentUpon>
+    <EntityDeploy Include="ItaliaPizzaEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ItaliaPizzaEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ItaliaPizzaEntities.edmx.diagram">
+      <DependentUpon>ItaliaPizzaEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ItaliaPizzaModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ItaliaPizzaModel.Context.cs</LastGenOutput>
-      <DependentUpon>ItaliaPizzaModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="ItaliaPizzaModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ItaliaPizzaModel.edmx</DependentUpon>
-      <LastGenOutput>ItaliaPizzaModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-    <Folder Include="DAO\" />
+    <Content Include="ItaliaPizzaEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ItaliaPizzaEntities.edmx</DependentUpon>
+      <LastGenOutput>ItaliaPizzaEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ItaliaPizzaEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ItaliaPizzaEntities.edmx</DependentUpon>
+      <LastGenOutput>ItaliaPizzaEntities.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

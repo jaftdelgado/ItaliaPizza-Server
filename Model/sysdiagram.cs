@@ -12,17 +12,12 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction
+    public partial class sysdiagram
     {
-        public int TransactionID { get; set; }
-        public string Type { get; set; }
-        public Nullable<decimal> Total { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> OrderID { get; set; }
-        public Nullable<int> CashRegisterID { get; set; }
-    
-        public virtual CashRegister CashRegister { get; set; }
-        public virtual Order Order { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

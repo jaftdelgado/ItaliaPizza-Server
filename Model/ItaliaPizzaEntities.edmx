@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ItaliaPizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -85,7 +85,7 @@
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" />
           <Property Name="Category" Type="varchar" MaxLength="255" />
-          <Property Name="Price" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
           <Property Name="IsPrepared" Type="bit" />
           <Property Name="SupplierID" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="255" />
@@ -173,6 +173,16 @@
           </Key>
           <Property Name="SupplyCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -435,7 +445,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ItaliaPizzaModelStoreContainer">
+        <EntityContainer Name="italiapizzaModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CashRegister" EntityType="Self.CashRegister" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -452,6 +462,7 @@
           <EntitySet Name="Supplier_Order" EntityType="Self.Supplier_Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supply" EntityType="Self.Supply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplyCategory" EntityType="Self.SupplyCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Waste" EntityType="Self.Waste" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WasteSupply" EntityType="Self.WasteSupply" Schema="dbo" store:Type="Tables" />
@@ -535,7 +546,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ItaliaPizzaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="italiapizzaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -632,7 +643,7 @@
           <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="IsPrepared" Type="Boolean" />
           <Property Name="SupplierID" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
@@ -739,6 +750,16 @@
           <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="StockReports" Relationship="Self.FK_Product_Category" FromRole="SupplyCategory" ToRole="StockReport" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK_Supply_SupplyCategory" FromRole="SupplyCategory" ToRole="Supply" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -1004,7 +1025,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ItaliaPizzaEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="italiapizzaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="CashRegisters" EntityType="Self.CashRegister" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
@@ -1021,6 +1042,7 @@
           <EntitySet Name="Supplier_Order" EntityType="Self.Supplier_Order" />
           <EntitySet Name="Supplies" EntityType="Self.Supply" />
           <EntitySet Name="SupplyCategories" EntityType="Self.SupplyCategory" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="Wastes" EntityType="Self.Waste" />
           <EntitySet Name="WasteSupplies" EntityType="Self.WasteSupply" />
@@ -1106,9 +1128,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ItaliaPizzaModelStoreContainer" CdmEntityContainer="ItaliaPizzaEntities">
+        <EntityContainerMapping StorageEntityContainer="italiapizzaModelStoreContainer" CdmEntityContainer="italiapizzaEntities">
           <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Address">
+            <EntityTypeMapping TypeName="italiapizzaModel.Address">
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
                 <ScalarProperty Name="AddressName" ColumnName="AddressName" />
@@ -1118,7 +1140,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CashRegisters">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.CashRegister">
+            <EntityTypeMapping TypeName="italiapizzaModel.CashRegister">
               <MappingFragment StoreEntitySet="CashRegister">
                 <ScalarProperty Name="CashRegisterID" ColumnName="CashRegisterID" />
                 <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
@@ -1129,7 +1151,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Customer">
+            <EntityTypeMapping TypeName="italiapizzaModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1140,7 +1162,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Deliveries">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Delivery">
+            <EntityTypeMapping TypeName="italiapizzaModel.Delivery">
               <MappingFragment StoreEntitySet="Delivery">
                 <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
@@ -1150,7 +1172,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Order">
+            <EntityTypeMapping TypeName="italiapizzaModel.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
@@ -1165,7 +1187,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderStates">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.OrderState">
+            <EntityTypeMapping TypeName="italiapizzaModel.OrderState">
               <MappingFragment StoreEntitySet="OrderState">
                 <ScalarProperty Name="StateID" ColumnName="StateID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -1173,7 +1195,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Personals">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Personal">
+            <EntityTypeMapping TypeName="italiapizzaModel.Personal">
               <MappingFragment StoreEntitySet="Personals">
                 <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1188,7 +1210,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Product">
+            <EntityTypeMapping TypeName="italiapizzaModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1204,7 +1226,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Product_Order">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Product_Order">
+            <EntityTypeMapping TypeName="italiapizzaModel.Product_Order">
               <MappingFragment StoreEntitySet="Product_Order">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -1213,7 +1235,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Recipes">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Recipe">
+            <EntityTypeMapping TypeName="italiapizzaModel.Recipe">
               <MappingFragment StoreEntitySet="Recipe">
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1223,7 +1245,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Role">
+            <EntityTypeMapping TypeName="italiapizzaModel.Role">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="RolID" ColumnName="RolID" />
                 <ScalarProperty Name="RolName" ColumnName="RolName" />
@@ -1231,7 +1253,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StockReports">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.StockReport">
+            <EntityTypeMapping TypeName="italiapizzaModel.StockReport">
               <MappingFragment StoreEntitySet="StockReport">
                 <ScalarProperty Name="StockReportID" ColumnName="StockReportID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
@@ -1244,7 +1266,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Supplier">
+            <EntityTypeMapping TypeName="italiapizzaModel.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
@@ -1254,7 +1276,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Supplier_Order">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Supplier_Order">
+            <EntityTypeMapping TypeName="italiapizzaModel.Supplier_Order">
               <MappingFragment StoreEntitySet="Supplier_Order">
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
@@ -1268,7 +1290,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Supplies">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Supply">
+            <EntityTypeMapping TypeName="italiapizzaModel.Supply">
               <MappingFragment StoreEntitySet="Supply">
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
                 <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
@@ -1282,15 +1304,26 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SupplyCategories">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.SupplyCategory">
+            <EntityTypeMapping TypeName="italiapizzaModel.SupplyCategory">
               <MappingFragment StoreEntitySet="SupplyCategory">
                 <ScalarProperty Name="SupplyCategoryID" ColumnName="SupplyCategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="italiapizzaModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Transaction">
+            <EntityTypeMapping TypeName="italiapizzaModel.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -1303,7 +1336,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wastes">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.Waste">
+            <EntityTypeMapping TypeName="italiapizzaModel.Waste">
               <MappingFragment StoreEntitySet="Waste">
                 <ScalarProperty Name="WasteID" ColumnName="WasteID" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
@@ -1313,7 +1346,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WasteSupplies">
-            <EntityTypeMapping TypeName="ItaliaPizzaModel.WasteSupply">
+            <EntityTypeMapping TypeName="italiapizzaModel.WasteSupply">
               <MappingFragment StoreEntitySet="WasteSupply">
                 <ScalarProperty Name="WasteID" ColumnName="WasteID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
@@ -1337,7 +1370,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
