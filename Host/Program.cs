@@ -1,4 +1,5 @@
-﻿using Services;
+﻿using ServerUtilities;
+using Services;
 using System;
 using System.ServiceModel;
 
@@ -21,6 +22,7 @@ namespace Host
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error starting services: {ex.Message}");
+                    Logger.Log($"Error starting services - : {ex.Message}");
                 }
             }
         }
