@@ -1,5 +1,6 @@
 ﻿using Services.Dtos;
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace Services
@@ -12,6 +13,7 @@ namespace Services
         private readonly ISupplierManager _supplierService;
         private readonly IPersonalManager _personalService;
         private readonly IProductManager _productService;
+        private readonly ISupplierOrderManager _supplierOrderService;
 
         // Constructor que crea las instancias directamente
         public MainService()
@@ -20,6 +22,7 @@ namespace Services
             _supplierService = new SupplierService();
             _personalService = new PersonalService();
             _productService = new ProductService();
+            _supplierOrderService = new SupplierOrderService();
         }
 
         public bool Ping()
