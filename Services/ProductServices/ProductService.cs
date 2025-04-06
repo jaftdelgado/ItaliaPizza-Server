@@ -19,7 +19,7 @@ namespace Services
                 Category = productDTO.Category,
                 Price = productDTO.Price,
                 IsPrepared = productDTO.IsPrepared,
-                Status = productDTO.Status,
+                Status = "Activo",
                 Photo = productDTO.Photo,
                 Description = productDTO.Description,
                 Code = productDTO.Code
