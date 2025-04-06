@@ -28,11 +28,9 @@ namespace Services
             return true;
         }
 
-        // Implementación de métodos 
 
-        public int AddProduct(ProductDTO productDTO)
-        {
-            return _productService.AddProduct(productDTO);
-        }
+        public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+
+        public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
     }
 }

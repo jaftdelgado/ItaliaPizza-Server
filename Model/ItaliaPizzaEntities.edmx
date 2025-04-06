@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -64,19 +64,21 @@
           <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
-        <EntityType Name="Personals">
+        <EntityType Name="Personal">
           <Key>
             <PropertyRef Name="PersonalID" />
           </Key>
           <Property Name="PersonalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="RoleID" Type="int" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="FatherName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="MotherName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="RFC" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="16" />
+          <Property Name="Password" Type="varchar" MaxLength="64" />
+          <Property Name="ProfilePic" Type="varbinary(max)" />
+          <Property Name="HireDate" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="50" />
-          <Property Name="RFC" Type="nvarchar" MaxLength="13" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -113,10 +115,10 @@
         </EntityType>
         <EntityType Name="Roles">
           <Key>
-            <PropertyRef Name="RolID" />
+            <PropertyRef Name="RoleID" />
           </Key>
-          <Property Name="RolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RolName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="StockReport">
           <Key>
@@ -213,6 +215,18 @@
           <Property Name="Quantity" Type="decimal" Precision="4" Scale="3" />
           <Property Name="SupplyID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Personal__RoleID__3493CFA7">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Personal">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customer_Address">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
@@ -262,10 +276,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Personal">
-          <End Role="Personals" Type="Self.Personals" Multiplicity="0..1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Personals">
+            <Principal Role="Personal">
               <PropertyRef Name="PersonalID" />
             </Principal>
             <Dependent Role="Order">
@@ -282,18 +296,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="IDState" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Personal_Role">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Personals" Type="Self.Personals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="RolID" />
-            </Principal>
-            <Dependent Role="Personals">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -452,7 +454,7 @@
           <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderState" EntityType="Self.OrderState" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Personals" EntityType="Self.Personals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Order" EntityType="Self.Product_Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
@@ -466,6 +468,10 @@
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Waste" EntityType="Self.Waste" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WasteSupply" EntityType="Self.WasteSupply" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Personal__RoleID__3493CFA7" Association="Self.FK__Personal__RoleID__3493CFA7">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Personal" EntitySet="Personal" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customer_Address" Association="Self.FK_Customer_Address">
             <End Role="Address" EntitySet="Address" />
             <End Role="Customer" EntitySet="Customer" />
@@ -483,16 +489,12 @@
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Personal" Association="Self.FK_Order_Personal">
-            <End Role="Personals" EntitySet="Personals" />
+            <End Role="Personal" EntitySet="Personal" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
             <End Role="OrderState" EntitySet="OrderState" />
             <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Personal_Role" Association="Self.FK_Personal_Role">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Personals" EntitySet="Personals" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
@@ -543,8 +545,7 @@
             <End Role="WasteSupply" EntitySet="WasteSupply" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="italiapizzaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -608,10 +609,10 @@
           <Property Name="IDState" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="Delivery" Relationship="Self.FK_Order_Delivery" FromRole="Order" ToRole="Delivery" />
-          <NavigationProperty Name="Personal" Relationship="Self.FK_Order_Personal" FromRole="Order" ToRole="Personals" />
           <NavigationProperty Name="OrderState" Relationship="Self.FK_Order_State" FromRole="Order" ToRole="OrderState" />
           <NavigationProperty Name="Product_Order" Relationship="Self.FK_Product_Order_Order" FromRole="Order" ToRole="Product_Order" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Order" FromRole="Order" ToRole="Transaction" />
+          <NavigationProperty Name="Personal" Relationship="italiapizzaModel.FK_Order_Personal" FromRole="Order" ToRole="Personal1" />
         </EntityType>
         <EntityType Name="OrderState">
           <Key>
@@ -620,22 +621,6 @@
           <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_State" FromRole="OrderState" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="Personal">
-          <Key>
-            <PropertyRef Name="PersonalID" />
-          </Key>
-          <Property Name="PersonalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Personal" FromRole="Personals" ToRole="Order" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Personal_Role" FromRole="Personals" ToRole="Roles" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -678,11 +663,11 @@
         </EntityType>
         <EntityType Name="Role">
           <Key>
-            <PropertyRef Name="RolID" />
+            <PropertyRef Name="RoleID" />
           </Key>
-          <Property Name="RolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RolName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Personals" Relationship="Self.FK_Personal_Role" FromRole="Roles" ToRole="Personals" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Personal" Relationship="italiapizzaModel.FK__Personal__RoleID__3493CFA7" FromRole="Role" ToRole="Personal1" />
         </EntityType>
         <EntityType Name="StockReport">
           <Key>
@@ -854,18 +839,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Personal">
-          <End Role="Personals" Type="Self.Personal" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Personals">
-              <PropertyRef Name="PersonalID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="PersonalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Order_State">
           <End Role="OrderState" Type="Self.OrderState" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -899,18 +872,6 @@
             </Principal>
             <Dependent Role="Transaction">
               <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Personal_Role">
-          <End Role="Roles" Type="Self.Role" Multiplicity="1" />
-          <End Role="Personals" Type="Self.Personal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="RolID" />
-            </Principal>
-            <Dependent Role="Personals">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1033,7 +994,6 @@
           <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="OrderStates" EntityType="Self.OrderState" />
-          <EntitySet Name="Personals" EntityType="Self.Personal" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Product_Order" EntityType="Self.Product_Order" />
           <EntitySet Name="Recipes" EntityType="Self.Recipe" />
@@ -1067,10 +1027,6 @@
             <End Role="Delivery" EntitySet="Deliveries" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Personal" Association="Self.FK_Order_Personal">
-            <End Role="Personals" EntitySet="Personals" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
             <End Role="OrderState" EntitySet="OrderStates" />
             <End Role="Order" EntitySet="Orders" />
@@ -1082,10 +1038,6 @@
           <AssociationSet Name="FK_Transaction_Order" Association="Self.FK_Transaction_Order">
             <End Role="Order" EntitySet="Orders" />
             <End Role="Transaction" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Personal_Role" Association="Self.FK_Personal_Role">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Personals" EntitySet="Personals" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Order_Product" Association="Self.FK_Product_Order_Product">
             <End Role="Product" EntitySet="Products" />
@@ -1123,7 +1075,58 @@
             <End Role="Supply" EntitySet="Supplies" />
             <End Role="WasteSupply" EntitySet="WasteSupplies" />
           </AssociationSet>
+          <EntitySet Name="Personals" EntityType="italiapizzaModel.Personal" />
+          <AssociationSet Name="FK__Personal__RoleID__3493CFA7" Association="italiapizzaModel.FK__Personal__RoleID__3493CFA7">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Personal1" EntitySet="Personals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Personal" Association="italiapizzaModel.FK_Order_Personal">
+            <End Role="Personal1" EntitySet="Personals" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="PersonalID" />
+          </Key>
+          <Property Name="PersonalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="MotherName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="RFC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePic" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="italiapizzaModel.FK__Personal__RoleID__3493CFA7" FromRole="Personal1" ToRole="Role" />
+          <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Personal" FromRole="Personal1" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK__Personal__RoleID__3493CFA7">
+          <End Type="italiapizzaModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="italiapizzaModel.Personal" Role="Personal1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Personal1">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Personal">
+          <End Type="italiapizzaModel.Personal" Role="Personal1" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal1">
+              <PropertyRef Name="PersonalID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PersonalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1195,21 +1198,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Personals">
-            <EntityTypeMapping TypeName="italiapizzaModel.Personal">
-              <MappingFragment StoreEntitySet="Personals">
-                <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="RFC" ColumnName="RFC" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="italiapizzaModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -1248,8 +1236,8 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="italiapizzaModel.Role">
               <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="RolID" ColumnName="RolID" />
-                <ScalarProperty Name="RolName" ColumnName="RolName" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1352,6 +1340,23 @@
                 <ScalarProperty Name="WasteID" ColumnName="WasteID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personals">
+            <EntityTypeMapping TypeName="italiapizzaModel.Personal">
+              <MappingFragment StoreEntitySet="Personal">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
