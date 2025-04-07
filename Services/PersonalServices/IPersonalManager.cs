@@ -8,5 +8,11 @@ namespace Services
     {
         [OperationContract]
         int AddPersonal(PersonalDTO personalDTO);
+
+        [OperationContract]
+        bool IsUsernameAvailable(string username);
+
+        [OperationContract]
+        bool IsRfcUnique(string rfc);
     }
 }

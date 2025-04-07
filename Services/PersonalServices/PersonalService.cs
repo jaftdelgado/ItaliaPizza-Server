@@ -14,6 +14,7 @@ namespace Services
                 FatherName = personalDTO.FatherName,
                 MotherName = personalDTO.MotherName,
                 RFC = personalDTO.RFC,
+                Username = personalDTO.Username,
                 Password = personalDTO.Password,
                 ProfilePic = personalDTO.ProfilePic,
                 RoleID = personalDTO.RoleID,
@@ -23,6 +24,18 @@ namespace Services
             PersonalDAO personalDAO = new PersonalDAO();
             int result = personalDAO.AddPersonal(personal);
             return result;
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            PersonalDAO personalDAO = new PersonalDAO();
+            return personalDAO.IsUsernameTaken(username);
+        }
+
+        public bool IsRfcUnique(string rfc)
+        {
+            PersonalDAO personalDAO = new PersonalDAO();
+            return personalDAO.IsRfcTaken(rfc);
         }
     }
 }

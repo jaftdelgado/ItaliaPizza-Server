@@ -1,6 +1,7 @@
 ﻿using Model;
-using System;
 using System.Data.Entity.Validation;
+using System;
+using System.Linq;
 
 namespace Services
 {
@@ -35,6 +36,22 @@ namespace Services
                 }
             }
             return result;
+        }
+
+        public bool IsUsernameTaken(string username)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Personal.Any(p => p.Username == username);
+            }
+        }
+
+        public bool IsRfcTaken(string rfc)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Personal.Any(p => p.RFC == rfc);
+            }
         }
     }
 }

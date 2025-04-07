@@ -13,7 +13,6 @@ namespace Services
         private readonly ISupplierManager _supplierService;
         private readonly IPersonalManager _personalService;
         private readonly IProductManager _productService;
-        private readonly ISupplierOrderManager _supplierOrderService;
 
         // Constructor que crea las instancias directamente
         public MainService()
@@ -22,7 +21,6 @@ namespace Services
             _supplierService = new SupplierService();
             _personalService = new PersonalService();
             _productService = new ProductService();
-            _supplierOrderService = new SupplierOrderService();
         }
 
         public bool Ping()
@@ -31,9 +29,10 @@ namespace Services
             return true;
         }
 
-
         public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
 
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
+        public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
+        public bool IsRfcUnique(string rfc) => _personalService.IsRfcUnique(rfc);
     }
 }

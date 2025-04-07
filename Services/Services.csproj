@@ -66,5 +66,11 @@
     <Compile Include="SupplyServices\ISupplyManager.cs" />
     <Compile Include="SupplyServices\SupplyService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{afafde64-fbb2-4951-a267-ad6e387eaac4}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
