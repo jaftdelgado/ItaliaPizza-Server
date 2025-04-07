@@ -1,5 +1,4 @@
 ﻿using Model;
-using Model.DAO;
 using Services.Dtos;
 
 namespace Services.CustomerServices
