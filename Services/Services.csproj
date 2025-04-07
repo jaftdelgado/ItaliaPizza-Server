@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerServices\CustomerDAO.cs" />
+    <Compile Include="CustomerServices\CustomerService.cs" />
+    <Compile Include="CustomerServices\ICustomerManager.cs" />
+    <Compile Include="Dtos\AddressDTO.cs" />
+    <Compile Include="Dtos\CustomerDTO.cs" />
     <Compile Include="Dtos\PersonalDTO.cs" />
     <Compile Include="Dtos\ProductDTO.cs" />
     <Compile Include="IMainManager.cs" />
@@ -72,5 +77,6 @@
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
