@@ -4,18 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d4e9e01078754e8ea573289c862e4312" Name="Diagram1">
+      <Diagram DiagramId="d4e9e01078754e8ea573289c862e4312" Name="Diagram1" ZoomLevel="84">
         <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Customer" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Delivery" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Order" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.OrderState" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Product" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Product_Order" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Recipe" Width="1.5" PointX="7.5" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.Role" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Role" Width="1.5" PointX="0.625" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.StockReport" Width="1.5" PointX="8.25" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Supplier" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Supplier_Order" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
@@ -30,11 +29,9 @@
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_CashRegister" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Order_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Order_Delivery" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Order_State" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Order" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Personal_Role" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Product" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Recipe_Product" ManuallyRouted="false" />
@@ -44,6 +41,9 @@
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supply" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Supply_SupplyCategory" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Waste_Supply" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="2.75" PointY="10.25" />
+        <AssociationConnector Association="italiapizzaModel.FK__Personal__RoleID__3493CFA7" />
+        <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

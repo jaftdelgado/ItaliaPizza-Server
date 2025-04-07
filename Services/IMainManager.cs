@@ -1,4 +1,6 @@
-﻿using System.ServiceModel;
+﻿using Services.Dtos;
+using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace Services
 {

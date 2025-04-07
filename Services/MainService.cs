@@ -1,5 +1,6 @@
 ﻿using Services.Dtos;
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace Services
@@ -28,11 +29,10 @@ namespace Services
             return true;
         }
 
-        // Implementación de métodos 
+        public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
 
-        public int AddProduct(ProductDTO productDTO)
-        {
-            return _productService.AddProduct(productDTO);
-        }
+        public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
+        public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
+        public bool IsRfcUnique(string rfc) => _personalService.IsRfcUnique(rfc);
     }
 }

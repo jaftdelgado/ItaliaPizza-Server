@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Model;
 using System.Data.Entity.Validation;
+using System;
+using System.Linq;
 
-namespace Model.DAO
+namespace Services
 {
-    public class ProductDAO
+    public class PersonalDAO
     {
-        public int AddProduct(Product product)
+        public int AddPersonal(Personal personal)
         {
             int result = 0;
             using (var context = new italiapizzaEntities())
@@ -14,7 +16,7 @@ namespace Model.DAO
                 {
                     try
                     {
-                        context.Products.Add(product);
+                        context.Personal.Add(personal);
                         context.SaveChanges();
                         dbContextTransaction.Commit();
                         result = 1;
@@ -34,6 +36,22 @@ namespace Model.DAO
                 }
             }
             return result;
+        }
+
+        public bool IsUsernameTaken(string username)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Personal.Any(p => p.Username == username);
+            }
+        }
+
+        public bool IsRfcTaken(string rfc)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Personal.Any(p => p.RFC == rfc);
+            }
         }
     }
 }
