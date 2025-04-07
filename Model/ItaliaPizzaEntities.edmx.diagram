@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="italiapizzaModel.Role" Width="1.5" PointX="0.625" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.StockReport" Width="1.5" PointX="8.25" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Supplier" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.Supplier_Order" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supplier_Order" Width="1.5" PointX="10.5" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.SupplyCategory" Width="1.5" PointX="6" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.sysdiagram" Width="1.5" PointX="10.75" PointY="1.75" IsExpanded="true" />
