@@ -18,8 +18,9 @@ namespace Services.SupplyServices
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Suppliers.Where(s => s.CategorySupply == categoryId).ToList();
-
+                return context.Suppliers
+                    .Where(s => s.CategorySupply == categoryId)
+                    .ToList();
             }
         }
 
@@ -27,8 +28,9 @@ namespace Services.SupplyServices
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Supplies.Where(s => s.SupplierID == supplierId).ToList();
-
+                return context.Supplies
+                    .Where(s => s.SupplierID == supplierId)
+                    .ToList();
             }
         }
     }

@@ -26,7 +26,8 @@ namespace Services.SupplyServices
                 {
                     Id = s.SupplierID,
                     ContactName = s.ContactName,
-                    PhoneNumber = s.PhoneNumber
+                    PhoneNumber = s.PhoneNumber,
+                    CategorySupply = s.CategorySupply
                 }).ToList();
         }
 
@@ -38,7 +39,10 @@ namespace Services.SupplyServices
                     Id = s.SupplyID,
                     Name = s.SupplyName,
                     Price = s.Price,
-                    MeasureUnit = s.MeasureUnit
+                    MeasureUnit = s.MeasureUnit,
+                    Brand = s.Brand,
+                    SupplyCategoryID = s.SupplyCategoryID,
+                    SupplierID = s.SupplierID
                 }).ToList();
         }
     }
