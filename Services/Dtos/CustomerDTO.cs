@@ -20,7 +20,7 @@ namespace Services.Dtos
         public string LastName { get; set; }
 
         [DataMember]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
     }
 }

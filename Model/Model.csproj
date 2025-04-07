@@ -64,6 +64,7 @@
     <Compile Include="Customer.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAO\CustomerDAO.cs" />
     <Compile Include="DAO\ProductDAO.cs" />
     <Compile Include="Delivery.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
