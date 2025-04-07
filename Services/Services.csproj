@@ -52,8 +52,19 @@
   <ItemGroup>
     <Compile Include="Dtos\PersonalDTO.cs" />
     <Compile Include="Dtos\ProductDTO.cs" />
+    <Compile Include="Dtos\SupplierDTO.cs" />
+    <Compile Include="Dtos\SupplierOrderDTO.cs" />
+    <Compile Include="Dtos\SupplyCategoryDTO.cs" />
+    <Compile Include="Dtos\SupplyDTO.cs" />
+    <Compile Include="Dtos\TransactionDTO.cs" />
+    <Compile Include="FinanceServices\FinanceDAO.cs" />
+    <Compile Include="FinanceServices\FinanceService.cs" />
+    <Compile Include="FinanceServices\IFinanceManager.cs" />
     <Compile Include="IMainManager.cs" />
     <Compile Include="MainService.cs" />
+    <Compile Include="OrderSupplierServices\ISupplierOrderManager.cs" />
+    <Compile Include="OrderSupplierServices\SupplierOrderDAO.cs" />
+    <Compile Include="OrderSupplierServices\SupplierOrderService.cs" />
     <Compile Include="PersonalServices\IPersonalManager.cs" />
     <Compile Include="PersonalServices\PersonalDAO.cs" />
     <Compile Include="PersonalServices\PersonalService.cs" />
@@ -64,6 +75,7 @@
     <Compile Include="SupplierServices\ISupplierManager.cs" />
     <Compile Include="SupplierServices\SupplierService.cs" />
     <Compile Include="SupplyServices\ISupplyManager.cs" />
+    <Compile Include="SupplyServices\SupplyDAO.cs" />
     <Compile Include="SupplyServices\SupplyService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,27 +6,15 @@ namespace Services.Dtos
     public class SupplyDTO
     {
         [DataMember]
-        public int SupplyID { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string SupplyName { get; set; }
-
-        [DataMember]
-        public string Brand { get; set; }
-
-        [DataMember]
-        public decimal Stock { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public decimal Price { get; set; }
 
         [DataMember]
         public string MeasureUnit { get; set; }
-
-        [DataMember]
-        public int SupplierID { get; set; }
-
-        [DataMember]
-        public int SupplyCategoryID { get; set; }
     }
 }
