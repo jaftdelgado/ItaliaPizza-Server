@@ -56,7 +56,7 @@ namespace Services.CustomerServices
                         result = 0;
                     }
                 }
-            }
+            } 
             catch (EntityException ex)
             {
                 Console.WriteLine(ex.Message);

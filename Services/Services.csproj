@@ -57,6 +57,10 @@
     <Compile Include="Dtos\CustomerDTO.cs" />
     <Compile Include="Dtos\PersonalDTO.cs" />
     <Compile Include="Dtos\ProductDTO.cs" />
+    <Compile Include="Dtos\SupplierDTO.cs" />
+    <Compile Include="Dtos\SupplierOrderDTO.cs" />
+    <Compile Include="Dtos\SupplyCategoryDTO.cs" />
+    <Compile Include="Dtos\SupplyDTO.cs" />
     <Compile Include="IMainManager.cs" />
     <Compile Include="MainService.cs" />
     <Compile Include="PersonalServices\IPersonalManager.cs" />
