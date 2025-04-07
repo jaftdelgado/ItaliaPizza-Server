@@ -6,9 +6,9 @@ namespace Services.Dtos
     public class SupplyCategoryDTO
     {
         [DataMember]
-        public int SupplyCategoryID { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string CategoryName { get; set; }
+        public string Name { get; set; }
     }
 }
