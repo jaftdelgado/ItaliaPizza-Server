@@ -12,18 +12,14 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplier_Order
+    public partial class SupplierOrder_Supply
     {
-        public int SupplierID { get; set; }
+        public int SupplierOrderID { get; set; }
         public int SupplyID { get; set; }
-        public System.DateTime OrderedDate { get; set; }
-        public Nullable<System.DateTime> Delivered { get; set; }
-        public string OrderFolio { get; set; }
-        public decimal Total { get; set; }
         public decimal Quantity { get; set; }
-        public string Status { get; set; }
+        public decimal Total { get; set; }
     
-        public virtual Supplier Supplier { get; set; }
         public virtual Supply Supply { get; set; }
+        public virtual SupplierOrder SupplierOrder { get; set; }
     }
 }

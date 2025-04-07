@@ -29,13 +29,13 @@ namespace Services
         public bool IsUsernameAvailable(string username)
         {
             PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.IsUsernameTaken(username);
+            return personalDAO.IsUsernameAvailable(username);
         }
 
         public bool IsRfcUnique(string rfc)
         {
             PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.IsRfcTaken(rfc);
+            return personalDAO.IsRfcUnique(rfc);
         }
     }
 }

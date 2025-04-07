@@ -109,7 +109,10 @@
     <Compile Include="Supplier.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Supplier_Order.cs">
+    <Compile Include="SupplierOrder.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierOrder_Supply.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Supply.cs">

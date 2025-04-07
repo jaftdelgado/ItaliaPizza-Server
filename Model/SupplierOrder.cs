@@ -12,26 +12,24 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplier
+    public partial class SupplierOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Supplier()
+        public SupplierOrder()
         {
-            this.Products = new HashSet<Product>();
-            this.Supplies = new HashSet<Supply>();
-            this.SupplierOrders = new HashSet<SupplierOrder>();
+            this.SupplierOrder_Supply = new HashSet<SupplierOrder_Supply>();
         }
     
+        public int SupplierOrderID { get; set; }
         public int SupplierID { get; set; }
-        public string PhoneNumber { get; set; }
-        public string ContactName { get; set; }
-        public int CategorySupply { get; set; }
+        public System.DateTime OrderedDate { get; set; }
+        public Nullable<System.DateTime> Delivered { get; set; }
+        public string OrderFolio { get; set; }
+        public decimal Total { get; set; }
+        public string Status { get; set; }
     
+        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supply> Supplies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SupplierOrder> SupplierOrders { get; set; }
+        public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
     }
 }

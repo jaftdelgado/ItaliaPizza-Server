@@ -16,7 +16,7 @@ namespace Services
                 {
                     try
                     {
-                        context.Personal.Add(personal);
+                        context.Personals.Add(personal);
                         context.SaveChanges();
                         dbContextTransaction.Commit();
                         result = 1;
@@ -38,19 +38,19 @@ namespace Services
             return result;
         }
 
-        public bool IsUsernameTaken(string username)
+        public bool IsUsernameAvailable(string username)
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Personal.Any(p => p.Username == username);
+                return !context.Personals.Any(p => p.Username == username);
             }
         }
 
-        public bool IsRfcTaken(string rfc)
+        public bool IsRfcUnique(string rfc)
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Personal.Any(p => p.RFC == rfc);
+                return !context.Personals.Any(p => p.RFC == rfc);
             }
         }
     }
