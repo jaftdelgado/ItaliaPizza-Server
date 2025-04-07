@@ -61,13 +61,10 @@
     <Compile Include="Dtos\SupplierOrderDTO.cs" />
     <Compile Include="Dtos\SupplyCategoryDTO.cs" />
     <Compile Include="Dtos\SupplyDTO.cs" />
-<<<<<<< HEAD
-=======
     <Compile Include="Dtos\TransactionDTO.cs" />
     <Compile Include="FinanceServices\FinanceDAO.cs" />
     <Compile Include="FinanceServices\FinanceService.cs" />
     <Compile Include="FinanceServices\IFinanceManager.cs" />
->>>>>>> d6c1a701c6424ecee5d45f53352c175faa6186f8
     <Compile Include="IMainManager.cs" />
     <Compile Include="MainService.cs" />
     <Compile Include="OrderSupplierServices\ISupplierOrderManager.cs" />
