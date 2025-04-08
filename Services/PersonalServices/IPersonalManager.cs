@@ -14,5 +14,8 @@ namespace Services
 
         [OperationContract]
         bool IsRfcUnique(string rfc);
+
+        [OperationContract]
+        bool IsEmailAvailable(string email);
     }
 }

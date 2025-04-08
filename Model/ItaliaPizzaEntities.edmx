@@ -672,19 +672,6 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="italiapizzaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressID" />
-          </Key>
-          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AddressName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ZipCode" Type="String" Nullable="false" />
-          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Address" FromRole="Address" ToRole="Customer" />
-          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Delivery_Address" FromRole="Address" ToRole="Delivery" />
-          <Property Name="City" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Personals" Relationship="italiapizzaModel.FK_Personal_Address" FromRole="Address" ToRole="Personal" />
-        </EntityType>
         <EntityType Name="CashRegister">
           <Key>
             <PropertyRef Name="CashRegisterID" />
@@ -705,8 +692,8 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="AddressID" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_Customer_Address" FromRole="Customer" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Address" Relationship="italiapizzaModel.FK_Customer_Address" FromRole="Customer" ToRole="Address" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -716,8 +703,8 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeliveryStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AddressID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_Delivery_Address" FromRole="Delivery" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Delivery" FromRole="Delivery" ToRole="Order" />
+          <NavigationProperty Name="Address" Relationship="italiapizzaModel.FK_Delivery_Address" FromRole="Delivery" ToRole="Address" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -871,15 +858,6 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           <NavigationProperty Name="CashRegister" Relationship="Self.FK_Transaction_CashRegister" FromRole="Transaction" ToRole="CashRegister" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Transaction_Order" FromRole="Transaction" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Waste">
-          <Key>
-            <PropertyRef Name="WasteID" />
-          </Key>
-          <Property Name="WasteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ReportDate" Type="DateTime" Precision="3" />
-          <Property Name="WasteDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="WasteSupply">
           <Key>
             <PropertyRef Name="WasteID" />
@@ -889,30 +867,6 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           <Property Name="SupplyID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Supply" Relationship="Self.FK_Waste_Supply" FromRole="WasteSupply" ToRole="Supply" />
         </EntityType>
-        <Association Name="FK_Customer_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressID" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="AddressID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Delivery_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressID" />
-            </Principal>
-            <Dependent Role="Delivery">
-              <PropertyRef Name="AddressID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Transaction_CashRegister">
           <End Role="CashRegister" Type="Self.CashRegister" Multiplicity="0..1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
@@ -1074,7 +1028,6 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="italiapizzaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="CashRegisters" EntityType="Self.CashRegister" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
@@ -1090,16 +1043,7 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           <EntitySet Name="SupplyCategories" EntityType="Self.SupplyCategory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
-          <EntitySet Name="Wastes" EntityType="Self.Waste" />
           <EntitySet Name="WasteSupplies" EntityType="Self.WasteSupply" />
-          <AssociationSet Name="FK_Customer_Address" Association="Self.FK_Customer_Address">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Delivery_Address" Association="Self.FK_Delivery_Address">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Delivery" EntitySet="Deliveries" />
-          </AssociationSet>
           <AssociationSet Name="FK_Transaction_CashRegister" Association="Self.FK_Transaction_CashRegister">
             <End Role="CashRegister" EntitySet="CashRegisters" />
             <End Role="Transaction" EntitySet="Transactions" />
@@ -1175,50 +1119,19 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
             <End Role="SupplierOrder" EntitySet="SupplierOrders" />
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
           </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="italiapizzaModel.Address" />
+          <AssociationSet Name="FK_Customer_Address" Association="italiapizzaModel.FK_Customer_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Address" Association="italiapizzaModel.FK_Delivery_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
           <AssociationSet Name="FK_Personal_Address" Association="italiapizzaModel.FK_Personal_Address">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="Personal" EntitySet="Personals" />
           </AssociationSet>
-          <EntitySet Name="RecipeSupplies" EntityType="italiapizzaModel.RecipeSupply" />
-          <EntitySet Name="database_firewall_rules" EntityType="italiapizzaModel.database_firewall_rules" />
-          <AssociationSet Name="FK_RecipeSupply_Recipe" Association="italiapizzaModel.FK_RecipeSupply_Recipe">
-            <End Role="Recipe" EntitySet="Recipes" />
-            <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RecipeSupply_Supply" Association="italiapizzaModel.FK_RecipeSupply_Supply">
-            <End Role="Supply" EntitySet="Supplies" />
-            <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
-          </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(italiapizzaModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(italiapizzaModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <EntityType Name="Personal">
           <Key>
@@ -1226,9 +1139,10 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           </Key>
           <Property Name="PersonalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="MotherName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="RFC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ProfilePic" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -1237,9 +1151,6 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="italiapizzaModel.FK__Personal__RoleID__3493CFA7" FromRole="Personal1" ToRole="Role" />
           <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Personal" FromRole="Personal1" ToRole="Order" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="AddressID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="italiapizzaModel.FK_Personal_Address" FromRole="Personal" ToRole="Address" />
         </EntityType>
@@ -1333,6 +1244,42 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customers" Relationship="italiapizzaModel.FK_Customer_Address" FromRole="Address" ToRole="Customer" />
+          <NavigationProperty Name="Deliveries" Relationship="italiapizzaModel.FK_Delivery_Address" FromRole="Address" ToRole="Delivery" />
+          <NavigationProperty Name="Personals" Relationship="italiapizzaModel.FK_Personal_Address" FromRole="Address" ToRole="Personal" />
+        </EntityType>
+        <Association Name="FK_Customer_Address">
+          <End Type="italiapizzaModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Address">
+          <End Type="italiapizzaModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="italiapizzaModel.Delivery" Role="Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Personal_Address">
           <End Type="italiapizzaModel.Address" Role="Address" Multiplicity="1" />
           <End Type="italiapizzaModel.Personal" Role="Personal" Multiplicity="*" />
@@ -1345,88 +1292,12 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="RecipeSupply">
-          <Key>
-            <PropertyRef Name="RecipeSupplyID" />
-          </Key>
-          <Property Name="RecipeSupplyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RecipeID" Type="Int32" Nullable="false" />
-          <Property Name="SupplyID" Type="Int32" Nullable="false" />
-          <Property Name="UseQuantity" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
-          <NavigationProperty Name="Recipe" Relationship="italiapizzaModel.FK_RecipeSupply_Recipe" FromRole="RecipeSupply" ToRole="Recipe" />
-          <NavigationProperty Name="Supply" Relationship="italiapizzaModel.FK_RecipeSupply_Supply" FromRole="RecipeSupply" ToRole="Supply" />
-        </EntityType>
-        <EntityType Name="database_firewall_rules">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <Association Name="FK_RecipeSupply_Recipe">
-          <End Type="italiapizzaModel.Recipe" Role="Recipe" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="italiapizzaModel.RecipeSupply" Role="RecipeSupply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipe">
-              <PropertyRef Name="RecipeID" />
-            </Principal>
-            <Dependent Role="RecipeSupply">
-              <PropertyRef Name="RecipeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RecipeSupply_Supply">
-          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="italiapizzaModel.RecipeSupply" Role="RecipeSupply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supply">
-              <PropertyRef Name="SupplyID" />
-            </Principal>
-            <Dependent Role="RecipeSupply">
-              <PropertyRef Name="SupplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="italiapizzaModelStoreContainer" CdmEntityContainer="italiapizzaEntities">
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="italiapizzaModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="AddressName" ColumnName="AddressName" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CashRegisters">
             <EntityTypeMapping TypeName="italiapizzaModel.CashRegister">
               <MappingFragment StoreEntitySet="CashRegister">
@@ -1645,52 +1516,16 @@ advertencia 6002: La tabla o vista 'italiapizza.sys.database_firewall_rules' no 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RecipeSupplies">
-            <EntityTypeMapping TypeName="italiapizzaModel.RecipeSupply">
-              <MappingFragment StoreEntitySet="RecipeSupply">
-                <ScalarProperty Name="UseQuantity" ColumnName="UseQuantity" />
-                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
-                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-                <ScalarProperty Name="RecipeSupplyID" ColumnName="RecipeSupplyID" />
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="italiapizzaModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="AddressName" ColumnName="AddressName" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="database_firewall_rules">
-            <EntityTypeMapping TypeName="italiapizzaModel.database_firewall_rules">
-              <MappingFragment StoreEntitySet="database_firewall_rules">
-                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
-                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="italiapizzaModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="italiapizzaModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="italiapizzaModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="italiapizzaModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="italiapizzaModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="italiapizzaModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="italiapizzaModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="italiapizzaModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="italiapizzaModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

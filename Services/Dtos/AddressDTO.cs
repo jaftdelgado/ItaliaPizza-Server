@@ -15,6 +15,6 @@ namespace Services.Dtos
         public string ZipCode { get; set; }
 
         [DataMember]
-        public string District { get; set; }
+        public string City { get; set; }
     }
 }

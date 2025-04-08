@@ -25,7 +25,6 @@ namespace Model
         public int AddressID { get; set; }
         public string AddressName { get; set; }
         public string ZipCode { get; set; }
-        public string District { get; set; }
         public string City { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
