@@ -12,11 +12,14 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Waste
+    public partial class RecipeSupply
     {
-        public int WasteID { get; set; }
-        public string Reason { get; set; }
-        public Nullable<System.DateTime> ReportDate { get; set; }
-        public string WasteDescription { get; set; }
+        public int RecipeSupplyID { get; set; }
+        public int RecipeID { get; set; }
+        public int SupplyID { get; set; }
+        public decimal UseQuantity { get; set; }
+    
+        public virtual Recipe Recipe { get; set; }
+        public virtual Supply Supply { get; set; }
     }
 }

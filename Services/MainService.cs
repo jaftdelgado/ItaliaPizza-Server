@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using Services.SupplyServices;
 using Services.FinanceServices;
+using Services.OrderServices;
 
 
 namespace Services
@@ -19,6 +20,7 @@ namespace Services
         private readonly IFinanceManager _financeService;
         private readonly ISupplierOrderManager _supplierOrderService;
         private readonly ISupplyManager supplyService = new SupplyService();
+        private readonly IOrderManager _orderService;
 
 
         // Constructor que crea las instancias directamente
@@ -30,6 +32,7 @@ namespace Services
             _productService = new ProductService();
             _financeService = new FinanceService();
             _supplierOrderService = new SupplierOrderService();
+            _orderService = new OrderService();
         }
 
         public bool Ping()
@@ -62,10 +65,14 @@ namespace Services
         {
             return _supplierOrderService.RegisterOrder(dto);
         }
-
-        public bool RegisterTransaction(TransactionDTO transaction)
+        public bool RegisterOrderPayment(OrderDTO dto)
         {
-            return _financeService.RegisterTransaction(transaction);
+            return _orderService.RegisterOrderPayment(dto);
+        }
+
+        public List<OrderSummaryDTO> GetDeliveredOrders()
+        {
+            return _orderService.GetDeliveredOrders();
         }
 
     }

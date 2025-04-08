@@ -11,8 +11,6 @@ namespace Services
             var personal = new Personal
             {
                 FirstName = personalDTO.FirstName,
-                FatherName = personalDTO.FatherName,
-                MotherName = personalDTO.MotherName,
                 RFC = personalDTO.RFC,
                 Username = personalDTO.Username,
                 Password = personalDTO.Password,
