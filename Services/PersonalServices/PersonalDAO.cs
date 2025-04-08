@@ -1,12 +1,13 @@
 ﻿using Model;
-using System;
 using System.Data.Entity.Validation;
+using System;
+using System.Linq;
 
 namespace Services
 {
     public class PersonalDAO
     {
-        public int AddPersonal(Personal personal)
+        public int AddPersonal(Personal personal, Address address)
         {
             int result = 0;
             using (var context = new italiapizzaEntities())
@@ -15,8 +16,14 @@ namespace Services
                 {
                     try
                     {
-                        context.Personal.Add(personal);
+                        context.Addresses.Add(address);
                         context.SaveChanges();
+
+                        personal.AddressID = address.AddressID;
+
+                        context.Personals.Add(personal);
+                        context.SaveChanges();
+
                         dbContextTransaction.Commit();
                         result = 1;
                     }
@@ -35,6 +42,30 @@ namespace Services
                 }
             }
             return result;
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return !context.Personals.Any(p => p.Username == username);
+            }
+        }
+
+        public bool IsRfcUnique(string rfc)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return !context.Personals.Any(p => p.RFC == rfc);
+            }
+        }
+
+        public bool IsEmailAvailable(string email)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return !context.Personals.Any(p => p.EmailAddress == email);
+            }
         }
     }
 }

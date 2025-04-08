@@ -24,6 +24,10 @@ namespace Host
                     Console.WriteLine($"Error starting services: {ex.Message}");
                     Logger.Log($"Error starting services - : {ex.Message}");
                 }
+                finally
+                {
+                    serviceHost.Abort();
+                }
             }
         }
     }

@@ -25,7 +25,6 @@ namespace Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<CashRegister> CashRegisters { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Delivery> Deliveries { get; set; }
@@ -37,13 +36,14 @@ namespace Model
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StockReport> StockReports { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<Supplier_Order> Supplier_Order { get; set; }
         public virtual DbSet<Supply> Supplies { get; set; }
         public virtual DbSet<SupplyCategory> SupplyCategories { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
-        public virtual DbSet<Waste> Wastes { get; set; }
         public virtual DbSet<WasteSupply> WasteSupplies { get; set; }
-        public virtual DbSet<Personal> Personal { get; set; }
+        public virtual DbSet<Personal> Personals { get; set; }
+        public virtual DbSet<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
+        public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
     }
 }

@@ -12,18 +12,18 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplier_Order
+    public partial class Roles
     {
-        public int SupplierID { get; set; }
-        public int SupplyID { get; set; }
-        public System.DateTime OrderedDate { get; set; }
-        public Nullable<System.DateTime> Delivered { get; set; }
-        public string OrderFolio { get; set; }
-        public decimal Total { get; set; }
-        public decimal Quantity { get; set; }
-        public string Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Roles()
+        {
+            this.Personal = new HashSet<Personal>();
+        }
     
-        public virtual Supplier Supplier { get; set; }
-        public virtual Supply Supply { get; set; }
+        public int RoleID { get; set; }
+        public string RoleName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Personal> Personal { get; set; }
     }
 }

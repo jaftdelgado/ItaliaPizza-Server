@@ -10,13 +10,10 @@
 namespace Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Waste
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int WasteID { get; set; }
-        public string Reason { get; set; }
-        public Nullable<System.DateTime> ReportDate { get; set; }
-        public string WasteDescription { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
