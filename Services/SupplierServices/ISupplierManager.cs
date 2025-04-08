@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 
 namespace Services
 {
     [ServiceContract]
     public interface ISupplierManager
     {
+        [OperationContract]
+        int RegisterSupplier(SupplierDTO supplierDTO);
     }
 }

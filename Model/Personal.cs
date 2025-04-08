@@ -31,9 +31,14 @@ namespace Model
         public System.DateTime HireDate { get; set; }
         public bool IsActive { get; set; }
         public int RoleID { get; set; }
+        public string LastName { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public int AddressID { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual Address Address { get; set; }
     }
 }

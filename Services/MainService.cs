@@ -19,6 +19,7 @@ namespace Services
         private readonly IFinanceManager _financeService;
         private readonly ISupplierOrderManager _supplierOrderService;
         private readonly ISupplyManager supplyService = new SupplyService();
+        private readonly ICustomerManager _customerService;
 
 
         // Constructor que crea las instancias directamente
@@ -30,6 +31,7 @@ namespace Services
             _productService = new ProductService();
             _financeService = new FinanceService();
             _supplierOrderService = new SupplierOrderService();
+            _customerService = new CustomerService();
         }
 
         public bool Ping()
@@ -68,5 +70,14 @@ namespace Services
             return _financeService.RegisterTransaction(transaction);
         }
 
+        public int RegisterCustomer(CustomerDTO customerDTO, AddressDTO addressDTO)
+        {
+            return _customerService.RegisterCustomer(customerDTO, addressDTO);
+        }
+
+        public int RegisterSupplier(SupplierDTO supplierDTO)
+        {
+            return _supplierService.RegisterSupplier(supplierDTO);
+        }
     }
 }

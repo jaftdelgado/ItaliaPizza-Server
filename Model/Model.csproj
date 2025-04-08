@@ -63,6 +63,9 @@
     <Compile Include="Customer.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="database_firewall_rules.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Delivery.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
@@ -100,7 +103,16 @@
     <Compile Include="Recipe.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="RecipeSupply.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Role.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="StockReport.cs">

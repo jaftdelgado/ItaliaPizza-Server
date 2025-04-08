@@ -12,7 +12,7 @@ namespace Services.Dtos
         public string AddressName { get; set; }
 
         [DataMember]
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         [DataMember]
         public string District { get; set; }

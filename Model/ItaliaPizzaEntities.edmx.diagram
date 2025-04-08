@@ -47,6 +47,11 @@
         <EntityTypeShape EntityType="italiapizzaModel.SupplierOrder" Width="1.5" PointX="5.625" PointY="14.375" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Order" />
+        <AssociationConnector Association="italiapizzaModel.FK_Personal_Address" />
+        <EntityTypeShape EntityType="italiapizzaModel.RecipeSupply" Width="1.5" PointX="13.75" PointY="15.875" />
+        <EntityTypeShape EntityType="italiapizzaModel.database_firewall_rules" Width="1.5" PointX="5.375" PointY="9.75" />
+        <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Recipe" />
+        <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Supply" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

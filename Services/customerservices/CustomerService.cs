@@ -1,12 +1,19 @@
 ﻿using Model;
 using Services.Dtos;
 
-namespace Services.CustomerServices
+namespace Services
 {
-    public class CustomerService
+    public class CustomerService : ICustomerManager
     {
-        public int RegisterCustomer(CustomerDTO customerDTO)
+        public int RegisterCustomer(CustomerDTO customerDTO, AddressDTO addressDTO)
         {
+            var address = new Address
+            {
+                AddressName = addressDTO.AddressName,
+                ZipCode = addressDTO.ZipCode,
+                District = addressDTO.District
+            };
+
             var customer = new Customer
             {
                 FirstName = customerDTO.FirstName,
@@ -16,7 +23,7 @@ namespace Services.CustomerServices
 
             CustomerDAO customerDAO = new CustomerDAO();
 
-            int result = customerDAO.RegisterCustomer(customer);
+            int result = customerDAO.RegisterCustomer(customer, address);
             return result;
         }
     }

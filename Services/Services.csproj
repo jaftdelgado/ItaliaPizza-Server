@@ -78,6 +78,7 @@
     <Compile Include="ProductServices\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupplierServices\ISupplierManager.cs" />
+    <Compile Include="SupplierServices\SupplierDAO.cs" />
     <Compile Include="SupplierServices\SupplierService.cs" />
     <Compile Include="SupplyServices\ISupplyManager.cs" />
     <Compile Include="SupplyServices\SupplyDAO.cs" />

@@ -19,6 +19,7 @@ namespace Model
         {
             this.WasteSupplies = new HashSet<WasteSupply>();
             this.SupplierOrder_Supply = new HashSet<SupplierOrder_Supply>();
+            this.RecipeSupplies = new HashSet<RecipeSupply>();
         }
     
         public int SupplyID { get; set; }
@@ -36,5 +37,7 @@ namespace Model
         public virtual ICollection<WasteSupply> WasteSupplies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecipeSupply> RecipeSupplies { get; set; }
     }
 }

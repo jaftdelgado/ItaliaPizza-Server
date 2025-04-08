@@ -1,23 +1,22 @@
 ﻿using Model;
 using System;
 using System.Data.Entity.Core;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 
 namespace Services
 {
-    public class CustomerDAO
+    public class SupplierDAO
     {
         private readonly italiapizzaEntities _context;
 
-        public CustomerDAO() : this (new italiapizzaEntities()) { }
+        public SupplierDAO() : this(new italiapizzaEntities()) { }
 
-        public CustomerDAO(italiapizzaEntities context)
+        public SupplierDAO(italiapizzaEntities context)
         {
             _context = context;
         }
 
-        public int RegisterCustomer(Customer customer, Address address)
+        public int RegisterSupplier(Supplier supplier)
         {
             int result = 0;
 
@@ -27,10 +26,7 @@ namespace Services
                 {
                     try
                     {
-                        _context.Addresses.Add(address);
-                        _context.SaveChanges();
-
-                        _context.Customers.Add(customer);
+                        _context.Suppliers.Add(supplier);
                         _context.SaveChanges();
 
                         transaction.Commit();
@@ -48,19 +44,14 @@ namespace Services
                         }
                         result = 0;
                     }
-                    catch (DbUpdateException ex)
-                    {
-                        transaction.Rollback();
-                        Console.WriteLine("DbUpdateException occurred:" + ex.Message);
-                        result = 0;
-                    }
                 }
-            } 
-            catch (EntityException ex)
+            }
+            catch (EntityException ex) 
             {
                 Console.WriteLine(ex.Message);
                 result = 0;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 result = 0;
