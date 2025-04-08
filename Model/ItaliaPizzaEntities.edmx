@@ -10,9 +10,9 @@
             <PropertyRef Name="AddressID" />
           </Key>
           <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AddressName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ZipCode" Type="int" Nullable="false" />
-          <Property Name="District" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddressName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <EntityType Name="CashRegister">
           <Key>
@@ -29,10 +29,13 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
-          <Property Name="AddressID" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RegDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -50,7 +53,7 @@
           <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
           <Property Name="OrderDate" Type="datetime" />
-          <Property Name="Total" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="6" Scale="2" />
           <Property Name="Status" Type="varchar" MaxLength="255" />
           <Property Name="IsDelivery" Type="bit" />
           <Property Name="PersonalID" Type="int" />
@@ -70,8 +73,6 @@
           </Key>
           <Property Name="PersonalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="FatherName" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="MotherName" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="RFC" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="16" />
           <Property Name="Password" Type="varchar" MaxLength="64" />
@@ -79,6 +80,10 @@
           <Property Name="HireDate" Type="date" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -214,15 +219,6 @@
           <Property Name="OrderID" Type="int" />
           <Property Name="CashRegisterID" Type="int" />
         </EntityType>
-        <EntityType Name="Waste">
-          <Key>
-            <PropertyRef Name="WasteID" />
-          </Key>
-          <Property Name="WasteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Reason" Type="varchar" MaxLength="100" />
-          <Property Name="ReportDate" Type="datetime" />
-          <Property Name="WasteDescription" Type="varchar" MaxLength="150" />
-        </EntityType>
         <EntityType Name="WasteSupply">
           <Key>
             <PropertyRef Name="WasteID" />
@@ -244,7 +240,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customer_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
@@ -312,6 +308,18 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="IDState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personal_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Personal">
+              <PropertyRef Name="AddressID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,7 +522,6 @@
           <EntitySet Name="SupplyCategory" EntityType="Self.SupplyCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Waste" EntityType="Self.Waste" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WasteSupply" EntityType="Self.WasteSupply" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Personal__RoleID__3493CFA7" Association="Self.FK__Personal__RoleID__3493CFA7">
             <End Role="Roles" EntitySet="Roles" />
@@ -543,6 +550,10 @@
           <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
             <End Role="OrderState" EntitySet="OrderState" />
             <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personal_Address" Association="Self.FK_Personal_Address">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Personal" EntitySet="Personal" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
@@ -611,11 +622,12 @@
             <PropertyRef Name="AddressID" />
           </Key>
           <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AddressName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ZipCode" Type="Int32" Nullable="false" />
-          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddressName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Address" FromRole="Address" ToRole="Customer" />
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Delivery_Address" FromRole="Address" ToRole="Delivery" />
+          <NavigationProperty Name="Personals" Relationship="Self.FK_Personal_Address" FromRole="Address" ToRole="Personal" />
         </EntityType>
         <EntityType Name="CashRegister">
           <Key>
@@ -633,10 +645,13 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="AddressID" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Customer_Address" FromRole="Customer" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
         </EntityType>
@@ -658,7 +673,7 @@
           <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="Int32" />
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="Total" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IsDelivery" Type="Boolean" />
           <Property Name="PersonalID" Type="Int32" />
@@ -685,8 +700,6 @@
           </Key>
           <Property Name="PersonalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FatherName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="MotherName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
@@ -694,6 +707,11 @@
           <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_Personal_Address" FromRole="Personal" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Personal" FromRole="Personal" ToRole="Order" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Personal__RoleID__3493CFA7" FromRole="Personal" ToRole="Roles" />
         </EntityType>
@@ -856,15 +874,6 @@
           <NavigationProperty Name="CashRegister" Relationship="Self.FK_Transaction_CashRegister" FromRole="Transaction" ToRole="CashRegister" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Transaction_Order" FromRole="Transaction" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Waste">
-          <Key>
-            <PropertyRef Name="WasteID" />
-          </Key>
-          <Property Name="WasteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ReportDate" Type="DateTime" Precision="3" />
-          <Property Name="WasteDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="WasteSupply">
           <Key>
             <PropertyRef Name="WasteID" />
@@ -875,7 +884,7 @@
           <NavigationProperty Name="Supply" Relationship="Self.FK_Waste_Supply" FromRole="WasteSupply" ToRole="Supply" />
         </EntityType>
         <Association Name="FK_Customer_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
@@ -894,6 +903,18 @@
               <PropertyRef Name="AddressID" />
             </Principal>
             <Dependent Role="Delivery">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personal_Address">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Personal">
               <PropertyRef Name="AddressID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1157,7 +1178,6 @@
           <EntitySet Name="SupplyCategories" EntityType="Self.SupplyCategory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
-          <EntitySet Name="Wastes" EntityType="Self.Waste" />
           <EntitySet Name="WasteSupplies" EntityType="Self.WasteSupply" />
           <AssociationSet Name="FK_Customer_Address" Association="Self.FK_Customer_Address">
             <End Role="Address" EntitySet="Addresses" />
@@ -1166,6 +1186,10 @@
           <AssociationSet Name="FK_Delivery_Address" Association="Self.FK_Delivery_Address">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personal_Address" Association="Self.FK_Personal_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Personal" EntitySet="Personals" />
           </AssociationSet>
           <AssociationSet Name="FK_Transaction_CashRegister" Association="Self.FK_Transaction_CashRegister">
             <End Role="CashRegister" EntitySet="CashRegisters" />
@@ -1256,7 +1280,7 @@
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
                 <ScalarProperty Name="AddressName" ColumnName="AddressName" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="City" ColumnName="City" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1277,7 +1301,10 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1320,8 +1347,6 @@
               <MappingFragment StoreEntitySet="Personal">
                 <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
                 <ScalarProperty Name="RFC" ColumnName="RFC" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1329,6 +1354,10 @@
                 <ScalarProperty Name="HireDate" ColumnName="HireDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1474,16 +1503,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="CashRegisterID" ColumnName="CashRegisterID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Wastes">
-            <EntityTypeMapping TypeName="italiapizzaModel.Waste">
-              <MappingFragment StoreEntitySet="Waste">
-                <ScalarProperty Name="WasteID" ColumnName="WasteID" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
-                <ScalarProperty Name="WasteDescription" ColumnName="WasteDescription" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

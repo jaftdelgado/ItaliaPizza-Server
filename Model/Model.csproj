@@ -130,9 +130,6 @@
     <Compile Include="Transaction.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Waste.cs">
-      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="WasteSupply.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>

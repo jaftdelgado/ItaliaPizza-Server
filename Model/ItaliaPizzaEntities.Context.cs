@@ -45,7 +45,6 @@ namespace Model
         public virtual DbSet<SupplyCategory> SupplyCategories { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
-        public virtual DbSet<Waste> Wastes { get; set; }
         public virtual DbSet<WasteSupply> WasteSupplies { get; set; }
     }
 }
