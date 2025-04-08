@@ -57,6 +57,8 @@
     <Compile Include="Dtos\CustomerDTO.cs" />
     <Compile Include="Dtos\PersonalDTO.cs" />
     <Compile Include="Dtos\ProductDTO.cs" />
+    <Compile Include="Dtos\RecipeDTO.cs" />
+    <Compile Include="Dtos\RecipeSupplyDTO.cs" />
     <Compile Include="Dtos\SupplierDTO.cs" />
     <Compile Include="Dtos\SupplierOrderDTO.cs" />
     <Compile Include="Dtos\SupplyCategoryDTO.cs" />
@@ -77,6 +79,9 @@
     <Compile Include="ProductServices\ProductDAO.cs" />
     <Compile Include="ProductServices\ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipesServices\IRecipeManager.cs" />
+    <Compile Include="RecipesServices\RecipeDAO.cs" />
+    <Compile Include="RecipesServices\RecipeService.cs" />
     <Compile Include="SupplierServices\ISupplierManager.cs" />
     <Compile Include="SupplierServices\SupplierService.cs" />
     <Compile Include="SupplyServices\ISupplyManager.cs" />
