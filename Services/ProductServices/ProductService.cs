@@ -5,7 +5,7 @@ namespace Services
 {
     public class ProductService : IProductManager
     {
-        public int AddProduct(ProductDTO productDTO)
+        public ProductDTO AddProduct(ProductDTO productDTO)
         {
             var product = new Product
             {
@@ -20,8 +20,16 @@ namespace Services
             };
 
             ProductDAO productDAO = new ProductDAO();
-            int result = productDAO.AddProduct(product);
-            return result;
+            Product result = productDAO.AddProduct(product);
+            if (result != null)
+            {
+                productDTO.Id = result.ProductID;
+                return productDTO;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

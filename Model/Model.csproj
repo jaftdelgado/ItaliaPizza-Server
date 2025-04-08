@@ -100,6 +100,9 @@
     <Compile Include="Recipe.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="RecipeSupply.cs">
+      <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>ItaliaPizzaEntities.tt</DependentUpon>
     </Compile>
