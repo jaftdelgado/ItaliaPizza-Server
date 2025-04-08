@@ -4,6 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+      <Diagram DiagramId="d4e9e01078754e8ea573289c862e4312" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Customer" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Delivery" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Order" Width="1.5" PointX="5.375" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.OrderState" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Product" Width="1.5" PointX="2.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Product_Order" Width="1.5" PointX="7.375" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Recipe" Width="1.5" PointX="4.875" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Role" Width="1.5" PointX="0.625" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.StockReport" Width="1.5" PointX="8.625" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supplier" Width="1.5" PointX="2.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="8.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.SupplyCategory" Width="1.5" PointX="10.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.sysdiagram" Width="1.5" PointX="10.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Transaction" Width="1.5" PointX="10.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.WasteSupply" Width="1.5" PointX="10.625" PointY="13.625" IsExpanded="true" />
       <Diagram DiagramId="5bfae67252d84becb974efdd1a74b509" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="3" IsExpanded="true" />
@@ -48,6 +66,18 @@
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Supply" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Supply_SupplyCategory" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Waste_Supply" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="2.75" PointY="10.25" />
+        <AssociationConnector Association="italiapizzaModel.FK__Personal__RoleID__3493CFA7" />
+        <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" />
+        <EntityTypeShape EntityType="italiapizzaModel.SupplierOrder_Supply" Width="1.5" PointX="8.5" PointY="11" />
+        <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Supply" />
+        <EntityTypeShape EntityType="italiapizzaModel.SupplierOrder" Width="1.5" PointX="5.625" PointY="14.375" />
+        <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" />
+        <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Order" />
+        <AssociationConnector Association="italiapizzaModel.FK_Personal_Address" />
+        <EntityTypeShape EntityType="italiapizzaModel.RecipeSupply" Width="1.5" PointX="13.75" PointY="15.875" />
+        <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Recipe" />
+        <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Supply" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

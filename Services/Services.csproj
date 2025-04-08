@@ -55,6 +55,8 @@
     <Compile Include="CustomerServices\ICustomerManager.cs" />
     <Compile Include="Dtos\AddressDTO.cs" />
     <Compile Include="Dtos\CustomerDTO.cs" />
+    <Compile Include="Dtos\OrderDTO.cs" />
+    <Compile Include="Dtos\OrderSummaryDTO.cs" />
     <Compile Include="Dtos\PersonalDTO.cs" />
     <Compile Include="Dtos\ProductDTO.cs" />
     <Compile Include="Dtos\RecipeDTO.cs" />
@@ -69,6 +71,9 @@
     <Compile Include="FinanceServices\IFinanceManager.cs" />
     <Compile Include="IMainManager.cs" />
     <Compile Include="MainService.cs" />
+    <Compile Include="OrderServices\IOrderManager.cs" />
+    <Compile Include="OrderServices\OrderDAO.cs" />
+    <Compile Include="OrderServices\OrderService.cs" />
     <Compile Include="OrderSupplierServices\ISupplierOrderManager.cs" />
     <Compile Include="OrderSupplierServices\SupplierOrderDAO.cs" />
     <Compile Include="OrderSupplierServices\SupplierOrderService.cs" />
