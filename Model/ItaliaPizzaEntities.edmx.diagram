@@ -44,9 +44,9 @@
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Order" />
         <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="0.75" PointY="7.75" />
-        <AssociationConnector Association="italiapizzaModel.FK_Customer_Address" />
         <AssociationConnector Association="italiapizzaModel.FK_Delivery_Address" />
         <AssociationConnector Association="italiapizzaModel.FK_Personal_Address" />
+        <AssociationConnector Association="italiapizzaModel.FK_Customer_Address" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

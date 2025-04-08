@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using Services.SupplyServices;
 using Services.FinanceServices;
-
+using Services;
 
 namespace Services
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class MainService : IMainManager
     {
-        // Servicios subyacentes (creados internamente)
+        private readonly ICustomerManager _customerService;
         private readonly ISupplyManager _supplyService;
         private readonly ISupplierManager _supplierService;
         private readonly IPersonalManager _personalService;
@@ -20,10 +20,9 @@ namespace Services
         private readonly ISupplierOrderManager _supplierOrderService;
         private readonly ISupplyManager supplyService = new SupplyService();
 
-
-        // Constructor que crea las instancias directamente
         public MainService()
         {
+            _customerService = new CustomerService();
             _supplyService = new SupplyService();
             _supplierService = new SupplierService();
             _personalService = new PersonalService();
@@ -37,6 +36,10 @@ namespace Services
             Console.WriteLine("Ping received. The server is available.");
             return true;
         }
+
+        public int AddCustomer(CustomerDTO customer) => _customerService.AddCustomer(customer);
+        public bool IsCustomerEmailAvailable(string email) => _customerService.IsCustomerEmailAvailable(email);
+
 
         public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
 

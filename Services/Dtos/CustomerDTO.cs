@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Services.Dtos
 {
@@ -11,7 +6,7 @@ namespace Services.Dtos
     public class CustomerDTO
     {
         [DataMember]
-        public int Id { get; set; }
+        public int CustomerID { get; set; }
 
         [DataMember]
         public string FirstName { get; set; }
@@ -21,6 +16,15 @@ namespace Services.Dtos
 
         [DataMember]
         public string PhoneNumber { get; set; }
+
+        [DataMember]
+        public string EmailAddress { get; set; }
+
+        [DataMember]
+        public int AddressID { get; set; }
+
+        [DataMember]
+        public AddressDTO Address { get; set; }
 
     }
 }

@@ -29,10 +29,13 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
-          <Property Name="AddressID" Type="int" />
+          <Property Name="FirstName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="RegDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -228,7 +231,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customer_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
@@ -583,11 +586,14 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="AddressID" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="RegDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="italiapizzaModel.FK_Customer_Address" FromRole="Customer" ToRole="Address" />
         </EntityType>
         <EntityType Name="Delivery">
@@ -1013,10 +1019,6 @@
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
           </AssociationSet>
           <EntitySet Name="Addresses" EntityType="italiapizzaModel.Address" />
-          <AssociationSet Name="FK_Customer_Address" Association="italiapizzaModel.FK_Customer_Address">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Delivery_Address" Association="italiapizzaModel.FK_Delivery_Address">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="Delivery" EntitySet="Deliveries" />
@@ -1024,6 +1026,10 @@
           <AssociationSet Name="FK_Personal_Address" Association="italiapizzaModel.FK_Personal_Address">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="Personal" EntitySet="Personals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Address" Association="italiapizzaModel.FK_Customer_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Personal">
@@ -1145,22 +1151,10 @@
           <Property Name="AddressName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Customers" Relationship="italiapizzaModel.FK_Customer_Address" FromRole="Address" ToRole="Customer" />
           <NavigationProperty Name="Deliveries" Relationship="italiapizzaModel.FK_Delivery_Address" FromRole="Address" ToRole="Delivery" />
           <NavigationProperty Name="Personals" Relationship="italiapizzaModel.FK_Personal_Address" FromRole="Address" ToRole="Personal" />
+          <NavigationProperty Name="Customers" Relationship="italiapizzaModel.FK_Customer_Address" FromRole="Address" ToRole="Customer" />
         </EntityType>
-        <Association Name="FK_Customer_Address">
-          <End Type="italiapizzaModel.Address" Role="Address" Multiplicity="0..1" />
-          <End Type="italiapizzaModel.Customer" Role="Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressID" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="AddressID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Delivery_Address">
           <End Type="italiapizzaModel.Address" Role="Address" Multiplicity="1" />
           <End Type="italiapizzaModel.Delivery" Role="Delivery" Multiplicity="*" />
@@ -1185,6 +1179,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Customer_Address">
+          <End Type="italiapizzaModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="italiapizzaModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1205,6 +1211,9 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="italiapizzaModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

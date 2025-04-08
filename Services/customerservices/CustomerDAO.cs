@@ -1,51 +1,35 @@
 ﻿using Model;
 using System;
-using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
+using System.Linq;
 
-namespace Services.CustomerServices
+namespace Services
 {
     public class CustomerDAO
     {
-        private readonly italiapizzaEntities _context;
-
-        public CustomerDAO() : this (new italiapizzaEntities()) { }
-
-        public CustomerDAO(italiapizzaEntities context)
-        {
-            _context = context;
-        }
-
-        public int RegisterCustomer(Customer customer)
+        public int AddCustomer(Customer customer, Address address)
         {
             int result = 0;
-
-            try
+            using (var context = new italiapizzaEntities())
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        _context.Customers.Add(customer);
-                        _context.SaveChanges();
+                        context.Addresses.Add(address);
+                        context.SaveChanges();
 
-                        var address = new Address
-                        {
-                            AddressID = customer.CustomerID,
-                            AddressName = "Prueba 1",
-                            ZipCode = "99999",
-                            City = ""
-                        };
+                        customer.AddressID = address.AddressID;
 
-                        _context.Addresses.Add(address);
-                        _context.SaveChanges();
+                        context.Customers.Add(customer);
+                        context.SaveChanges();
 
-                        transaction.Commit();
+                        dbContextTransaction.Commit();
                         result = 1;
                     }
                     catch (DbEntityValidationException ex)
                     {
-                        transaction.Rollback();
+                        dbContextTransaction.Rollback();
                         foreach (var validationErrors in ex.EntityValidationErrors)
                         {
                             foreach (var validationError in validationErrors.ValidationErrors)
@@ -57,17 +41,15 @@ namespace Services.CustomerServices
                     }
                 }
             }
-            catch (EntityException ex)
-            {
-                Console.WriteLine(ex.Message);
-                result = 0;
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                result = 0;
-            }
-
             return result;
+        }
+
+        public bool IsCustomerEmailAvailable(string email)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return !context.Customers.Any(p => p.EmailAddress == email);
+            }
         }
     }
 }
