@@ -23,7 +23,6 @@ namespace Services.OrderServices
                     if (order.Status != "Entregada")
                         throw new InvalidOperationException("La orden no tiene estado 'Entregada'.");
 
-                    // Cambiar estado de la orden a "Pagada"
                     var estadoPagado = context.OrderStates.FirstOrDefault(s => s.Status == "Pagada");
 
                     if (estadoPagado == null)

@@ -5,6 +5,7 @@ using System.ServiceModel;
 using Services.SupplyServices;
 using Services.FinanceServices;
 using Services;
+using Services.OrderServices;
 
 namespace Services
 {
@@ -18,7 +19,6 @@ namespace Services
         private readonly IProductManager _productService;
         private readonly IFinanceManager _financeService;
         private readonly ISupplierOrderManager _supplierOrderService;
-        private readonly ISupplyManager _supplyService = new SupplyService();
         private readonly IOrderManager _orderService;
         private readonly IRecipeManager _recipeService;
 
@@ -45,7 +45,7 @@ namespace Services
         public bool IsCustomerEmailAvailable(string email) => _customerService.IsCustomerEmailAvailable(email);
 
 
-        public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+        public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
 
         #region Personal
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
