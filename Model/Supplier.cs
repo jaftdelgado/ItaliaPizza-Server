@@ -18,8 +18,8 @@ namespace Model
         public Supplier()
         {
             this.Products = new HashSet<Product>();
-            this.Supplier_Order = new HashSet<Supplier_Order>();
             this.Supplies = new HashSet<Supply>();
+            this.SupplierOrders = new HashSet<SupplierOrder>();
         }
     
         public int SupplierID { get; set; }
@@ -30,8 +30,8 @@ namespace Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supplier_Order> Supplier_Order { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supply> Supplies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SupplierOrder> SupplierOrders { get; set; }
     }
 }

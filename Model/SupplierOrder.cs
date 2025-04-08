@@ -12,18 +12,24 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplier_Order
+    public partial class SupplierOrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SupplierOrder()
+        {
+            this.SupplierOrder_Supply = new HashSet<SupplierOrder_Supply>();
+        }
+    
+        public int SupplierOrderID { get; set; }
         public int SupplierID { get; set; }
-        public int SupplyID { get; set; }
         public System.DateTime OrderedDate { get; set; }
         public Nullable<System.DateTime> Delivered { get; set; }
         public string OrderFolio { get; set; }
         public decimal Total { get; set; }
-        public decimal Quantity { get; set; }
         public string Status { get; set; }
     
         public virtual Supplier Supplier { get; set; }
-        public virtual Supply Supply { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
     }
 }

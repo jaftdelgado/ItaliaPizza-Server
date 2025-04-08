@@ -37,7 +37,6 @@ namespace Model
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StockReport> StockReports { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<Supplier_Order> Supplier_Order { get; set; }
         public virtual DbSet<Supply> Supplies { get; set; }
         public virtual DbSet<SupplyCategory> SupplyCategories { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
@@ -45,5 +44,7 @@ namespace Model
         public virtual DbSet<Waste> Wastes { get; set; }
         public virtual DbSet<WasteSupply> WasteSupplies { get; set; }
         public virtual DbSet<Personal> Personals { get; set; }
+        public virtual DbSet<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
+        public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
     }
 }
