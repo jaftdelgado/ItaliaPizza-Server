@@ -4,32 +4,35 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using Services.SupplyServices;
 using Services.FinanceServices;
-
+using Services;
+using Services.OrderServices;
 
 namespace Services
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class MainService : IMainManager
     {
-        // Servicios subyacentes (creados internamente)
+        private readonly ICustomerManager _customerService;
         private readonly ISupplyManager _supplyService;
         private readonly ISupplierManager _supplierService;
         private readonly IPersonalManager _personalService;
         private readonly IProductManager _productService;
         private readonly IFinanceManager _financeService;
         private readonly ISupplierOrderManager _supplierOrderService;
-        private readonly ISupplyManager supplyService = new SupplyService();
+        private readonly IOrderManager _orderService;
+        private readonly IRecipeManager _recipeService;
 
-
-        // Constructor que crea las instancias directamente
         public MainService()
         {
+            _customerService = new CustomerService();
             _supplyService = new SupplyService();
             _supplierService = new SupplierService();
             _personalService = new PersonalService();
             _productService = new ProductService();
             _financeService = new FinanceService();
             _supplierOrderService = new SupplierOrderService();
+            _orderService = new OrderService();
+            _recipeService = new RecipeService();
         }
 
         public bool Ping()
@@ -38,36 +41,42 @@ namespace Services
             return true;
         }
 
-        public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+        public int AddCustomer(CustomerDTO customer) => _customerService.AddCustomer(customer);
+        public bool IsCustomerEmailAvailable(string email) => _customerService.IsCustomerEmailAvailable(email);
 
+
+        public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+
+        #region Personal
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
+
         public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
+
         public bool IsRfcUnique(string rfc) => _personalService.IsRfcUnique(rfc);
+
         public bool IsEmailAvailable(string email) => _personalService.IsEmailAvailable(email);
+        #endregion
 
-        public List<SupplyCategoryDTO> GetAllCategories()
-        {
-            return supplyService.GetAllCategories();
-        }
+        #region Supply
+        public List<SupplyCategoryDTO> GetAllCategories() => _supplyService.GetAllCategories();
 
-        public List<SupplierDTO> GetSuppliersByCategory(int categoryId)
-        {
-            return supplyService.GetSuppliersByCategory(categoryId);
-        }
+        public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplyService.GetSuppliersByCategory(categoryId);
 
-        public List<SupplyDTO> GetSuppliesBySupplier(int supplierId)
-        {
-            return supplyService.GetSuppliesBySupplier(supplierId);
-        }
-        public int RegisterOrder(SupplierOrderDTO dto)
-        {
-            return _supplierOrderService.RegisterOrder(dto);
-        }
+        public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
 
-        public bool RegisterTransaction(TransactionDTO transaction)
-        {
-            return _financeService.RegisterTransaction(transaction);
-        }
+        public LinkedList<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
+        #endregion
 
+        #region Order
+        public int RegisterOrder(SupplierOrderDTO dto) => _supplierOrderService.RegisterOrder(dto);
+
+        public bool RegisterOrderPayment(OrderDTO dto) => _orderService.RegisterOrderPayment(dto);
+
+        public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
+        #endregion
+
+        #region Recipe
+        public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.RegisterRecipe(recipe, supplies);
+        #endregion
     }
 }

@@ -1,12 +1,16 @@
 ﻿using Model;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ProductDAO
+    class RecipeDAO
     {
-        public Product AddProduct(Product product)
+        public int RegisterRecipe(Recipe recipe, List<RecipeSupply> recipeSupplies)
         {
             int result = 0;
             using (var context = new italiapizzaEntities())
@@ -15,7 +19,13 @@ namespace Services
                 {
                     try
                     {
-                        context.Products.Add(product);
+                        context.Recipes.Add(recipe);
+                        context.SaveChanges();
+                        foreach (var recipeSupply in recipeSupplies)
+                        {
+                            recipeSupply.RecipeID = recipe.RecipeID;
+                            context.RecipeSupplies.Add(recipeSupply);
+                        }
                         context.SaveChanges();
                         dbContextTransaction.Commit();
                         result = 1;
@@ -34,7 +44,7 @@ namespace Services
                     }
                 }
             }
-            return product ;
+            return result;
         }
     }
 }

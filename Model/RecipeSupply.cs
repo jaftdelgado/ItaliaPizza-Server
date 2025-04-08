@@ -10,10 +10,16 @@
 namespace Model
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class RecipeSupply
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int RecipeSupplyID { get; set; }
+        public int RecipeID { get; set; }
+        public int SupplyID { get; set; }
+        public decimal UseQuantity { get; set; }
+    
+        public virtual Recipe Recipe { get; set; }
+        public virtual Supply Supply { get; set; }
     }
 }

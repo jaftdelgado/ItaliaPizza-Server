@@ -1,5 +1,4 @@
-﻿using Services.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -9,10 +8,9 @@ using System.Threading.Tasks;
 namespace Services
 {
     [ServiceContract]
-    public interface IProductManager
+    public interface IRecipeManager
     {
         [OperationContract]
-        ProductDTO AddProduct(ProductDTO productDTO);
-
+        int RegisterRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies);
     }
 }

@@ -1,12 +1,15 @@
 ﻿using Services.Dtos;
 using System.ServiceModel;
 
-namespace Services.CustomerServices
+namespace Services
 {
     [ServiceContract]
     public interface ICustomerManager
     {
         [OperationContract]
-        int RegisterCustomer(CustomerDTO customerDTO);
+        int AddCustomer(CustomerDTO customerDTO);
+
+        [OperationContract]
+        bool IsCustomerEmailAvailable(string email);
     }
 }

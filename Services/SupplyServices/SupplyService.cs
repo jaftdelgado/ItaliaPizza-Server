@@ -45,5 +45,25 @@ namespace Services.SupplyServices
                     SupplierID = s.SupplierID
                 }).ToList();
         }
+
+        public LinkedList<SupplyDTO> GetAllSupplies()
+        {
+            var supplies = dao.GetAllSupplies();
+            LinkedList<SupplyDTO> supplyList = new LinkedList<SupplyDTO>();
+            foreach (var supply in supplies)
+            {
+                supplyList.AddLast(new SupplyDTO
+                {
+                    Id = supply.SupplyID,
+                    Name = supply.SupplyName,
+                    Price = supply.Price,
+                    MeasureUnit = supply.MeasureUnit,
+                    Brand = supply.Brand,
+                    SupplyCategoryID = supply.SupplyCategoryID,
+                    SupplierID = supply.SupplierID
+                });
+            }
+            return supplyList;
+        }
     }
 }
