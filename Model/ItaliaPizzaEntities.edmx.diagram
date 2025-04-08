@@ -22,20 +22,48 @@
         <EntityTypeShape EntityType="italiapizzaModel.sysdiagram" Width="1.5" PointX="10.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Transaction" Width="1.5" PointX="10.5" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.WasteSupply" Width="1.5" PointX="10.625" PointY="13.625" IsExpanded="true" />
+      <Diagram DiagramId="5bfae67252d84becb974efdd1a74b509" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Customer" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Delivery" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Order" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.OrderState" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="8" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Product" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Product_Order" Width="1.5" PointX="10.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Recipe" Width="1.5" PointX="13" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.RecipeSupply" Width="1.5" PointX="15.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Role" Width="1.5" PointX="5.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.StockReport" Width="1.5" PointX="13" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supplier" Width="1.5" PointX="6" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.SupplierOrder" Width="1.5" PointX="13" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.SupplierOrder_Supply" Width="1.5" PointX="15.25" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="13" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.SupplyCategory" Width="1.5" PointX="10.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.sysdiagram" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Transaction" Width="1.5" PointX="10.5" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.WasteSupply" Width="1.5" PointX="15.25" PointY="23.5" IsExpanded="true" />
         <AssociationConnector Association="italiapizzaModel.FK_Customer_Address" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Delivery_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK_Personal_Address" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_CashRegister" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Order_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Order_Delivery" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Order_State" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Order" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK__Personal__RoleID__3493CFA7" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Product" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Recipe_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Recipe" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Supply" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Supply_Supplier" ManuallyRouted="false" >
-        </AssociationConnector>
+        <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Supply" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Supply_SupplyCategory" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Waste_Supply" ManuallyRouted="false" />
         <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="2.75" PointY="10.25" />

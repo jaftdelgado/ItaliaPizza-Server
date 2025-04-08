@@ -33,5 +33,13 @@ namespace Services.SupplyServices
                     .ToList();
             }
         }
+
+        public List<Supply> GetAllSupplies()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Supplies.ToList();
+            }
+        }
     }
 }

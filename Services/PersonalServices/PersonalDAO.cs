@@ -7,7 +7,7 @@ namespace Services
 {
     public class PersonalDAO
     {
-        public int AddPersonal(Personal personal)
+        public int AddPersonal(Personal personal, Address address)
         {
             int result = 0;
             using (var context = new italiapizzaEntities())
@@ -16,8 +16,14 @@ namespace Services
                 {
                     try
                     {
+                        context.Addresses.Add(address);
+                        context.SaveChanges();
+
+                        personal.AddressID = address.AddressID;
+
                         context.Personals.Add(personal);
                         context.SaveChanges();
+
                         dbContextTransaction.Commit();
                         result = 1;
                     }
@@ -51,6 +57,14 @@ namespace Services
             using (var context = new italiapizzaEntities())
             {
                 return !context.Personals.Any(p => p.RFC == rfc);
+            }
+        }
+
+        public bool IsEmailAvailable(string email)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return !context.Personals.Any(p => p.EmailAddress == email);
             }
         }
     }

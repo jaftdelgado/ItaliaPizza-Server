@@ -34,7 +34,7 @@ namespace Services.CustomerServices
                             AddressID = customer.CustomerID,
                             AddressName = "Prueba 1",
                             ZipCode = "99999",
-                            City = "Evergreen"
+                            City = ""
                         };
 
                         _context.Addresses.Add(address);
