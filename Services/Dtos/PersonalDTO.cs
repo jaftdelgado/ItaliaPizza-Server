@@ -13,13 +13,16 @@ namespace Services.Dtos
         public string FirstName { get; set; }
 
         [DataMember]
-        public string FatherName { get; set; }
-
-        [DataMember]
-        public string MotherName { get; set; }
+        public string LastName { get; set; }
 
         [DataMember]
         public string RFC { get; set; }
+
+        [DataMember]
+        public string EmailAddress { get; set; }
+
+        [DataMember]
+        public string PhoneNumber { get; set; }
 
         [DataMember]
         public string Username { get; set; }
@@ -38,6 +41,12 @@ namespace Services.Dtos
 
         [DataMember]
         public int RoleID { get; set; }
-    }
 
+        [DataMember]
+        public int AddressID { get; set; }
+
+        [DataMember]
+        public AddressDTO Address { get; set; }
+
+    }
 }

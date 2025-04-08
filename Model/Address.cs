@@ -19,17 +19,19 @@ namespace Model
         {
             this.Customers = new HashSet<Customer>();
             this.Deliveries = new HashSet<Delivery>();
+            this.Personals = new HashSet<Personal>();
         }
     
         public int AddressID { get; set; }
         public string AddressName { get; set; }
-        public int ZipCode { get; set; }
-        public string District { get; set; }
+        public string ZipCode { get; set; }
+        public string City { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Delivery> Deliveries { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Personal> Personals { get; set; }
     }
 }

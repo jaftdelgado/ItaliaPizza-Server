@@ -34,5 +34,6 @@ namespace Services
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
         public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
         public bool IsRfcUnique(string rfc) => _personalService.IsRfcUnique(rfc);
+        public bool IsEmailAvailable(string email) => _personalService.IsEmailAvailable(email);
     }
 }
