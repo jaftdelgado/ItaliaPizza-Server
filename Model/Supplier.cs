@@ -18,7 +18,6 @@ namespace Model
         public Supplier()
         {
             this.Products = new HashSet<Product>();
-            this.Supplies = new HashSet<Supply>();
             this.SupplierOrders = new HashSet<SupplierOrder>();
         }
     
@@ -29,8 +28,6 @@ namespace Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supply> Supplies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder> SupplierOrders { get; set; }
     }

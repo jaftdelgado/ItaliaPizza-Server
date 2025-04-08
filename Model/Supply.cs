@@ -17,8 +17,9 @@ namespace Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Supply()
         {
-            this.WasteSupplies = new HashSet<WasteSupply>();
+            this.RecipeSupplies = new HashSet<RecipeSupply>();
             this.SupplierOrder_Supply = new HashSet<SupplierOrder_Supply>();
+            this.WasteSupplies = new HashSet<WasteSupply>();
         }
     
         public int SupplyID { get; set; }
@@ -30,11 +31,12 @@ namespace Model
         public decimal Price { get; set; }
         public string MeasureUnit { get; set; }
     
-        public virtual Supplier Supplier { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecipeSupply> RecipeSupplies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
         public virtual SupplyCategory SupplyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WasteSupply> WasteSupplies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
     }
 }

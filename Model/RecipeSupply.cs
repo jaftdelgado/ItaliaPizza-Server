@@ -12,14 +12,14 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class SupplierOrder_Supply
+    public partial class RecipeSupply
     {
-        public int SupplierOrderID { get; set; }
+        public int RecipeSupplyID { get; set; }
+        public int RecipeID { get; set; }
         public int SupplyID { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal Total { get; set; }
+        public decimal UseQuantity { get; set; }
     
-        public virtual SupplierOrder SupplierOrder { get; set; }
+        public virtual Recipe Recipe { get; set; }
         public virtual Supply Supply { get; set; }
     }
 }

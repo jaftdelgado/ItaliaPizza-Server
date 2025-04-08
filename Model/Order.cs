@@ -33,11 +33,11 @@ namespace Model
     
         public virtual Customer Customer { get; set; }
         public virtual Delivery Delivery { get; set; }
+        public virtual Personal Personal { get; set; }
         public virtual OrderState OrderState { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Order> Product_Order { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual Personal Personal { get; set; }
     }
 }

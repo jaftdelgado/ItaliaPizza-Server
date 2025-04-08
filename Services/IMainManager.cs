@@ -7,7 +7,7 @@ using Services.FinanceServices;
 namespace Services
 {
     [ServiceContract]
-    public interface IMainManager : IPersonalManager, ISupplierManager, ISupplyManager, IProductManager, IFinanceManager, ISupplierOrderManager
+    public interface IMainManager : IPersonalManager, ISupplierManager, ISupplyManager, IProductManager, IFinanceManager, ISupplierOrderManager, IRecipeManager
     {
         [OperationContract]
         bool Ping();

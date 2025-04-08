@@ -19,6 +19,7 @@ namespace Services
         private readonly IFinanceManager _financeService;
         private readonly ISupplierOrderManager _supplierOrderService;
         private readonly ISupplyManager supplyService = new SupplyService();
+        private readonly IRecipeManager recipeService;
 
 
         // Constructor que crea las instancias directamente
@@ -30,6 +31,7 @@ namespace Services
             _productService = new ProductService();
             _financeService = new FinanceService();
             _supplierOrderService = new SupplierOrderService();
+            recipeService = new RecipeService();
         }
 
         public bool Ping()
@@ -38,7 +40,7 @@ namespace Services
             return true;
         }
 
-        public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+        public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
 
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
         public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
@@ -72,5 +74,7 @@ namespace Services
         {
             return supplyService.GetAllSupplies();
         }
+
+        public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => recipeService.RegisterRecipe(recipe, supplies);
     }
 }

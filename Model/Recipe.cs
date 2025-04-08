@@ -14,11 +14,19 @@ namespace Model
     
     public partial class Recipe
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Recipe()
+        {
+            this.RecipeSupplies = new HashSet<RecipeSupply>();
+        }
+    
         public int RecipeID { get; set; }
         public string Description { get; set; }
         public int PreparationTime { get; set; }
         public int ProductID { get; set; }
     
         public virtual Product Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecipeSupply> RecipeSupplies { get; set; }
     }
 }

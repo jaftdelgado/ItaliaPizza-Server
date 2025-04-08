@@ -20,13 +20,13 @@ namespace Model
             this.SupplierOrder_Supply = new HashSet<SupplierOrder_Supply>();
         }
     
-        public int SupplierOrderID { get; set; }
         public int SupplierID { get; set; }
         public System.DateTime OrderedDate { get; set; }
         public Nullable<System.DateTime> Delivered { get; set; }
         public string OrderFolio { get; set; }
         public decimal Total { get; set; }
         public string Status { get; set; }
+        public int SupplierOrderID { get; set; }
     
         public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
