@@ -2,11 +2,20 @@
 using System.Data.Entity.Validation;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Services
 {
     public class PersonalDAO
     {
+        public List<Personal> GetAllPersonals()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Personals.Include("Address").ToList();
+            }
+        }
+
         public int AddPersonal(Personal personal, Address address)
         {
             int result = 0;
@@ -44,6 +53,21 @@ namespace Services
             return result;
         }
 
+        public bool DeletePersonal(int personalID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var personal = context.Personals.FirstOrDefault(p => p.PersonalID == personalID);
+                if (personal != null)
+                {
+                    personal.IsActive = false;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public bool IsUsernameAvailable(string username)
         {
             using (var context = new italiapizzaEntities())
@@ -60,7 +84,7 @@ namespace Services
             }
         }
 
-        public bool IsEmailAvailable(string email)
+        public bool IsPersonalEmailAvailable(string email)
         {
             using (var context = new italiapizzaEntities())
             {

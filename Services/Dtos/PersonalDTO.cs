@@ -46,7 +46,11 @@ namespace Services.Dtos
         public int AddressID { get; set; }
 
         [DataMember]
+        public bool IsOnline { get; set; }
+
+        [DataMember]
         public AddressDTO Address { get; set; }
+
 
     }
 }

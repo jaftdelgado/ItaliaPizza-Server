@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -84,6 +84,7 @@
           <Property Name="EmailAddress" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="IsOnline" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -612,8 +613,7 @@
             <End Role="WasteSupply" EntitySet="WasteSupply" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="italiapizzaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -714,6 +714,7 @@
           <NavigationProperty Name="Address" Relationship="Self.FK_Personal_Address" FromRole="Personal" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Personal" FromRole="Personal" ToRole="Order" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Personal__RoleID__3493CFA7" FromRole="Personal" ToRole="Roles" />
+          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1345,6 +1346,7 @@
           <EntitySetMapping Name="Personals">
             <EntityTypeMapping TypeName="italiapizzaModel.Personal">
               <MappingFragment StoreEntitySet="Personal">
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
                 <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="RFC" ColumnName="RFC" />

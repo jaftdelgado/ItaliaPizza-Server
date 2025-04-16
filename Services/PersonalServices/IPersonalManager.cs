@@ -1,4 +1,5 @@
 ﻿using Services.Dtos;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace Services
@@ -7,7 +8,13 @@ namespace Services
     public interface IPersonalManager
     {
         [OperationContract]
+        List<PersonalDTO> GetAllPersonals();
+
+        [OperationContract]
         int AddPersonal(PersonalDTO personalDTO);
+
+        [OperationContract]
+        bool DeletePersonal(int personalID);
 
         [OperationContract]
         bool IsUsernameAvailable(string username);
@@ -16,6 +23,6 @@ namespace Services
         bool IsRfcUnique(string rfc);
 
         [OperationContract]
-        bool IsEmailAvailable(string email);
+        bool IsPersonalEmailAvailable(string email);
     }
 }

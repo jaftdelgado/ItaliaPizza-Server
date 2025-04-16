@@ -41,20 +41,20 @@ namespace Services
             return true;
         }
 
+        #region Customer
         public int AddCustomer(CustomerDTO customer) => _customerService.AddCustomer(customer);
         public bool IsCustomerEmailAvailable(string email) => _customerService.IsCustomerEmailAvailable(email);
-
+        #endregion
 
         public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
 
         #region Personal
+        public List<PersonalDTO> GetAllPersonals() => _personalService.GetAllPersonals();
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
-
+        public bool DeletePersonal(int personalID) => _personalService.DeletePersonal(personalID);
         public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
-
         public bool IsRfcUnique(string rfc) => _personalService.IsRfcUnique(rfc);
-
-        public bool IsEmailAvailable(string email) => _personalService.IsEmailAvailable(email);
+        public bool IsPersonalEmailAvailable(string email) => _personalService.IsPersonalEmailAvailable(email);
         #endregion
 
         #region Supply
