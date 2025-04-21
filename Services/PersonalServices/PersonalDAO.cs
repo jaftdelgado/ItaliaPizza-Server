@@ -53,6 +53,33 @@ namespace Services
             return result;
         }
 
+        public bool UpdatePersonal(Personal updatedPersonal, Address updatedAddress)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var existingPersonal = context.Personals.FirstOrDefault(p => p.PersonalID == updatedPersonal.PersonalID);
+                if (existingPersonal == null) return false;
+
+                var existingAddress = context.Addresses.FirstOrDefault(a => a.AddressID == existingPersonal.AddressID);
+                if (existingAddress == null) return false;
+
+                existingPersonal.FirstName = updatedPersonal.FirstName;
+                existingPersonal.LastName = updatedPersonal.LastName;
+                existingPersonal.RFC = updatedPersonal.RFC;
+                existingPersonal.EmailAddress = updatedPersonal.EmailAddress;
+                existingPersonal.PhoneNumber = updatedPersonal.PhoneNumber;
+                existingPersonal.ProfilePic = updatedPersonal.ProfilePic;
+                existingPersonal.RoleID = updatedPersonal.RoleID;
+
+                existingAddress.AddressName = updatedAddress.AddressName;
+                existingAddress.ZipCode = updatedAddress.ZipCode;
+                existingAddress.City = updatedAddress.City;
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
         public bool DeletePersonal(int personalID)
         {
             using (var context = new italiapizzaEntities())
@@ -61,6 +88,22 @@ namespace Services
                 if (personal != null)
                 {
                     personal.IsActive = false;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool ReactivatePersonal(int personalID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var personal = context.Personals.FirstOrDefault(p => p.PersonalID == personalID);
+                if (personal != null && !personal.IsActive)
+                {
+                    personal.IsActive = true;
+                    personal.HireDate = DateTime.Now;
                     context.SaveChanges();
                     return true;
                 }

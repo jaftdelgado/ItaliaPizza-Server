@@ -14,7 +14,13 @@ namespace Services
         int AddPersonal(PersonalDTO personalDTO);
 
         [OperationContract]
+        bool UpdatePersonal(PersonalDTO personalDTO);
+
+        [OperationContract]
         bool DeletePersonal(int personalID);
+
+        [OperationContract]
+        bool ReactivatePersonal(int personalID);
 
         [OperationContract]
         bool IsUsernameAvailable(string username);
