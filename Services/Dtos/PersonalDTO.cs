@@ -50,7 +50,5 @@ namespace Services.Dtos
 
         [DataMember]
         public AddressDTO Address { get; set; }
-
-
     }
 }
