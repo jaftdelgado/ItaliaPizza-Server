@@ -51,7 +51,9 @@ namespace Services
         #region Personal
         public List<PersonalDTO> GetAllPersonals() => _personalService.GetAllPersonals();
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
+        public bool UpdatePersonal(PersonalDTO personalDTO) => _personalService.UpdatePersonal(personalDTO);
         public bool DeletePersonal(int personalID) => _personalService.DeletePersonal(personalID);
+        public bool ReactivatePersonal(int personalID) => _personalService.ReactivatePersonal(personalID);
         public bool IsUsernameAvailable(string username) => _personalService.IsUsernameAvailable(username);
         public bool IsRfcUnique(string rfc) => _personalService.IsRfcUnique(rfc);
         public bool IsPersonalEmailAvailable(string email) => _personalService.IsPersonalEmailAvailable(email);

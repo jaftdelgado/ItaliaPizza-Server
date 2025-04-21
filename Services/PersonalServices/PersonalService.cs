@@ -68,10 +68,42 @@ namespace Services
             return result;
         }
 
+        public bool UpdatePersonal(PersonalDTO personalDTO)
+        {
+            var updatedPersonal = new Personal
+            {
+                PersonalID = personalDTO.PersonalID,
+                FirstName = personalDTO.FirstName,
+                LastName = personalDTO.LastName,
+                RFC = personalDTO.RFC,
+                EmailAddress = personalDTO.EmailAddress,
+                PhoneNumber = personalDTO.PhoneNumber,
+                ProfilePic = personalDTO.ProfilePic,
+                RoleID = personalDTO.RoleID
+            };
+
+            var updatedAddress = new Address
+            {
+                AddressID = personalDTO.AddressID,
+                AddressName = personalDTO.Address.AddressName,
+                ZipCode = personalDTO.Address.ZipCode,
+                City = personalDTO.Address.City
+            };
+
+            var dao = new PersonalDAO();
+            return dao.UpdatePersonal(updatedPersonal, updatedAddress);
+        }
+
         public bool DeletePersonal(int personalID)
         {
             PersonalDAO personalDAO = new PersonalDAO();
             return personalDAO.DeletePersonal(personalID);
+        }
+
+        public bool ReactivatePersonal(int personalID)
+        {
+            PersonalDAO personalDAO = new PersonalDAO();
+            return personalDAO.ReactivatePersonal(personalID);
         }
 
         public bool IsUsernameAvailable(string username)
