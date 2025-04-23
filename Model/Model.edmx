@@ -183,13 +183,13 @@
             <PropertyRef Name="SupplyID" />
           </Key>
           <Property Name="SupplyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SupplyName" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Brand" Type="varchar" MaxLength="255" />
+          <Property Name="SupplyName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Brand" Type="varchar" MaxLength="32" />
           <Property Name="SupplyCategoryID" Type="int" Nullable="false" />
           <Property Name="Stock" Type="decimal" Precision="6" Scale="3" Nullable="false" />
           <Property Name="SupplierID" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="4" Scale="2" Nullable="false" />
-          <Property Name="MeasureUnit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MeasureUnit" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplyCategory">
           <Key>
@@ -765,7 +765,7 @@
           <Property Name="SupplyID" Type="Int32" Nullable="false" />
           <Property Name="UseQuantity" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
           <NavigationProperty Name="Recipe" Relationship="Self.FK_RecipeSupply_Recipe" FromRole="RecipeSupply" ToRole="Recipe" />
-          <NavigationProperty Name="Supply" Relationship="Self.FK_RecipeSupply_Supply" FromRole="RecipeSupply" ToRole="Supply" />
+          <NavigationProperty Name="Supply" Relationship="italiapizzaModel.FK_RecipeSupply_Supply" FromRole="RecipeSupply" ToRole="Supply" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -823,24 +823,7 @@
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.FK_SupplierOrderSupply_Order" FromRole="SupplierOrder_Supply" ToRole="SupplierOrder" />
-          <NavigationProperty Name="Supply" Relationship="Self.FK_SupplierOrderSupply_Supply" FromRole="SupplierOrder_Supply" ToRole="Supply" />
-        </EntityType>
-        <EntityType Name="Supply">
-          <Key>
-            <PropertyRef Name="SupplyID" />
-          </Key>
-          <Property Name="SupplyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SupplyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Brand" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="SupplyCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Stock" Type="Decimal" Precision="6" Scale="3" Nullable="false" />
-          <Property Name="SupplierID" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
-          <Property Name="MeasureUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="RecipeSupplies" Relationship="Self.FK_RecipeSupply_Supply" FromRole="Supply" ToRole="RecipeSupply" />
-          <NavigationProperty Name="SupplierOrder_Supply" Relationship="Self.FK_SupplierOrderSupply_Supply" FromRole="Supply" ToRole="SupplierOrder_Supply" />
-          <NavigationProperty Name="SupplyCategory" Relationship="Self.FK_Supply_SupplyCategory" FromRole="Supply" ToRole="SupplyCategory" />
-          <NavigationProperty Name="WasteSupplies" Relationship="Self.FK_Waste_Supply" FromRole="Supply" ToRole="WasteSupply" />
+          <NavigationProperty Name="Supply" Relationship="italiapizzaModel.FK_SupplierOrderSupply_Supply" FromRole="SupplierOrder_Supply" ToRole="Supply" />
         </EntityType>
         <EntityType Name="SupplyCategory">
           <Key>
@@ -849,7 +832,7 @@
           <Property Name="SupplyCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="StockReports" Relationship="Self.FK_Product_Category" FromRole="SupplyCategory" ToRole="StockReport" />
-          <NavigationProperty Name="Supplies" Relationship="Self.FK_Supply_SupplyCategory" FromRole="SupplyCategory" ToRole="Supply" />
+          <NavigationProperty Name="Supplies" Relationship="italiapizzaModel.FK_Supply_SupplyCategory" FromRole="SupplyCategory" ToRole="Supply" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -882,7 +865,7 @@
           <Property Name="WasteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Quantity" Type="Decimal" Precision="4" Scale="3" />
           <Property Name="SupplyID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Supply" Relationship="Self.FK_Waste_Supply" FromRole="WasteSupply" ToRole="Supply" />
+          <NavigationProperty Name="Supply" Relationship="italiapizzaModel.FK_Waste_Supply" FromRole="WasteSupply" ToRole="Supply" />
         </EntityType>
         <Association Name="FK_Customer_Address">
           <End Role="Address" Type="Self.Address" Multiplicity="1" />
@@ -1066,20 +1049,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RecipeSupply_Supply">
-          <End Role="Supply" Type="Self.Supply" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="RecipeSupply" Type="Self.RecipeSupply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supply">
-              <PropertyRef Name="SupplyID" />
-            </Principal>
-            <Dependent Role="RecipeSupply">
-              <PropertyRef Name="SupplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Product_Category">
           <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1" />
           <End Role="StockReport" Type="Self.StockReport" Multiplicity="*" />
@@ -1118,46 +1087,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SupplierOrderSupply_Supply">
-          <End Role="Supply" Type="Self.Supply" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="SupplierOrder_Supply" Type="Self.SupplierOrder_Supply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supply">
-              <PropertyRef Name="SupplyID" />
-            </Principal>
-            <Dependent Role="SupplierOrder_Supply">
-              <PropertyRef Name="SupplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Supply_SupplyCategory">
-          <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplyCategory">
-              <PropertyRef Name="SupplyCategoryID" />
-            </Principal>
-            <Dependent Role="Supply">
-              <PropertyRef Name="SupplyCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Waste_Supply">
-          <End Role="Supply" Type="Self.Supply" Multiplicity="1" />
-          <End Role="WasteSupply" Type="Self.WasteSupply" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supply">
-              <PropertyRef Name="SupplyID" />
-            </Principal>
-            <Dependent Role="WasteSupply">
-              <PropertyRef Name="SupplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="italiapizzaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="CashRegisters" EntityType="Self.CashRegister" />
@@ -1175,7 +1104,6 @@
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="SupplierOrders" EntityType="Self.SupplierOrder" />
           <EntitySet Name="SupplierOrder_Supply" EntityType="Self.SupplierOrder_Supply" />
-          <EntitySet Name="Supplies" EntityType="Self.Supply" />
           <EntitySet Name="SupplyCategories" EntityType="Self.SupplyCategory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
@@ -1240,10 +1168,6 @@
             <End Role="Recipe" EntitySet="Recipes" />
             <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
           </AssociationSet>
-          <AssociationSet Name="FK_RecipeSupply_Supply" Association="Self.FK_RecipeSupply_Supply">
-            <End Role="Supply" EntitySet="Supplies" />
-            <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
-          </AssociationSet>
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
             <End Role="SupplyCategory" EntitySet="SupplyCategories" />
             <End Role="StockReport" EntitySet="StockReports" />
@@ -1256,19 +1180,95 @@
             <End Role="SupplierOrder" EntitySet="SupplierOrders" />
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierOrderSupply_Supply" Association="Self.FK_SupplierOrderSupply_Supply">
+          <EntitySet Name="Supplies" EntityType="italiapizzaModel.Supply" />
+          <AssociationSet Name="FK_RecipeSupply_Supply" Association="italiapizzaModel.FK_RecipeSupply_Supply">
+            <End Role="Supply" EntitySet="Supplies" />
+            <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierOrderSupply_Supply" Association="italiapizzaModel.FK_SupplierOrderSupply_Supply">
             <End Role="Supply" EntitySet="Supplies" />
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
           </AssociationSet>
-          <AssociationSet Name="FK_Supply_SupplyCategory" Association="Self.FK_Supply_SupplyCategory">
+          <AssociationSet Name="FK_Supply_SupplyCategory" Association="italiapizzaModel.FK_Supply_SupplyCategory">
             <End Role="SupplyCategory" EntitySet="SupplyCategories" />
             <End Role="Supply" EntitySet="Supplies" />
           </AssociationSet>
-          <AssociationSet Name="FK_Waste_Supply" Association="Self.FK_Waste_Supply">
+          <AssociationSet Name="FK_Waste_Supply" Association="italiapizzaModel.FK_Waste_Supply">
             <End Role="Supply" EntitySet="Supplies" />
             <End Role="WasteSupply" EntitySet="WasteSupplies" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
+        <EntityType Name="Supply">
+          <Key>
+            <PropertyRef Name="SupplyID" />
+          </Key>
+          <Property Name="SupplyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplyName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="SupplyCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Stock" Type="Decimal" Nullable="false" Precision="6" Scale="3" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+          <Property Name="MeasureUnit" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RecipeSupplies" Relationship="italiapizzaModel.FK_RecipeSupply_Supply" FromRole="Supply" ToRole="RecipeSupply" />
+          <NavigationProperty Name="SupplierOrder_Supply" Relationship="italiapizzaModel.FK_SupplierOrderSupply_Supply" FromRole="Supply" ToRole="SupplierOrder_Supply" />
+          <NavigationProperty Name="SupplyCategory" Relationship="italiapizzaModel.FK_Supply_SupplyCategory" FromRole="Supply" ToRole="SupplyCategory" />
+          <NavigationProperty Name="WasteSupplies" Relationship="italiapizzaModel.FK_Waste_Supply" FromRole="Supply" ToRole="WasteSupply" />
+        </EntityType>
+        <Association Name="FK_RecipeSupply_Supply">
+          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="italiapizzaModel.RecipeSupply" Role="RecipeSupply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply">
+              <PropertyRef Name="SupplyID" />
+            </Principal>
+            <Dependent Role="RecipeSupply">
+              <PropertyRef Name="SupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierOrderSupply_Supply">
+          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="italiapizzaModel.SupplierOrder_Supply" Role="SupplierOrder_Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply">
+              <PropertyRef Name="SupplyID" />
+            </Principal>
+            <Dependent Role="SupplierOrder_Supply">
+              <PropertyRef Name="SupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supply_SupplyCategory">
+          <End Type="italiapizzaModel.SupplyCategory" Role="SupplyCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplyCategory">
+              <PropertyRef Name="SupplyCategoryID" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="SupplyCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Waste_Supply">
+          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="1" />
+          <End Type="italiapizzaModel.WasteSupply" Role="WasteSupply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply">
+              <PropertyRef Name="SupplyID" />
+            </Principal>
+            <Dependent Role="WasteSupply">
+              <PropertyRef Name="SupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1462,20 +1462,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Supplies">
-            <EntityTypeMapping TypeName="italiapizzaModel.Supply">
-              <MappingFragment StoreEntitySet="Supply">
-                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
-                <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
-                <ScalarProperty Name="Brand" ColumnName="Brand" />
-                <ScalarProperty Name="SupplyCategoryID" ColumnName="SupplyCategoryID" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="MeasureUnit" ColumnName="MeasureUnit" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SupplyCategories">
             <EntityTypeMapping TypeName="italiapizzaModel.SupplyCategory">
               <MappingFragment StoreEntitySet="SupplyCategory">
@@ -1513,6 +1499,20 @@
               <MappingFragment StoreEntitySet="WasteSupply">
                 <ScalarProperty Name="WasteID" ColumnName="WasteID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplies">
+            <EntityTypeMapping TypeName="italiapizzaModel.Supply">
+              <MappingFragment StoreEntitySet="Supply">
+                <ScalarProperty Name="MeasureUnit" ColumnName="MeasureUnit" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="SupplyCategoryID" ColumnName="SupplyCategoryID" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="SupplyName" ColumnName="SupplyName" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
               </MappingFragment>
             </EntityTypeMapping>

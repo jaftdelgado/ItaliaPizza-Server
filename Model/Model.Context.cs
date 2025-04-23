@@ -41,10 +41,10 @@ namespace Model
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
         public virtual DbSet<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
-        public virtual DbSet<Supply> Supplies { get; set; }
         public virtual DbSet<SupplyCategory> SupplyCategories { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<WasteSupply> WasteSupplies { get; set; }
+        public virtual DbSet<Supply> Supplies { get; set; }
     }
 }

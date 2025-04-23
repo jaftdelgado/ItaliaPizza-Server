@@ -13,7 +13,7 @@ public class SupplyDTO
     public decimal Price { get; set; }
 
     [DataMember]
-    public string MeasureUnit { get; set; }
+    public int MeasureUnit { get; set; }
 
     [DataMember]
     public int SupplyCategoryID { get; set; }
