@@ -11,6 +11,7 @@ public class OrderSummaryDTO
     [DataMember]
     public DateTime OrderDate { get; set; }
 
+
     [DataMember]
     public decimal Total { get; set; }
 

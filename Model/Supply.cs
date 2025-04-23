@@ -29,7 +29,7 @@ namespace Model
         public decimal Stock { get; set; }
         public int SupplierID { get; set; }
         public decimal Price { get; set; }
-        public string MeasureUnit { get; set; }
+        public int MeasureUnit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeSupply> RecipeSupplies { get; set; }
