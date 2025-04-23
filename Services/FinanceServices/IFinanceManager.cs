@@ -6,6 +6,7 @@ namespace Services.FinanceServices
     [ServiceContract]
     public interface IFinanceManager
     {
-        
+        [OperationContract]
+        bool RegisterOrderPayment(int orderId);
     }
 }
