@@ -8,11 +8,9 @@ namespace Services.OrderServices
     public interface IOrderManager
     {
         [OperationContract]
-        bool RegisterOrderPayment(OrderDTO dto);
-
-        [OperationContract]
         List<OrderSummaryDTO> GetDeliveredOrders();
-
+        [OperationContract]
+        List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID);
     }
 
 }

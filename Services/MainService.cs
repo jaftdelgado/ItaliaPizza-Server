@@ -74,10 +74,14 @@ namespace Services
         public int AddSupplier(SupplierDTO supplierDTO) => _supplierService.AddSupplier(supplierDTO);
         #endregion
 
-        #region Order
+        #region Finance
+        public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
+        #endregion
+
+        #region OrderSupplier
         public int RegisterOrder(SupplierOrderDTO dto) => _supplierOrderService.RegisterOrder(dto);
 
-        public bool RegisterOrderPayment(OrderDTO dto) => _orderService.RegisterOrderPayment(dto);
+        public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID) => _orderService.GetOrderItemsByOrderID(orderID);
 
         public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
         #endregion
