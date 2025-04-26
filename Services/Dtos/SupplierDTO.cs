@@ -7,10 +7,19 @@ public class SupplierDTO
     public int Id { get; set; }
 
     [DataMember]
+    public string SupplierName { get; set; }
+    
+    [DataMember]
     public string ContactName { get; set; }
 
     [DataMember]
     public string PhoneNumber { get; set; }
+    
+    [DataMember]
+    public string EmailAddress { get; set; }
+    
+    [DataMember]
+    public string Description { get; set; }
 
     [DataMember]
     public int CategorySupply { get; set; } 

@@ -22,12 +22,16 @@ namespace Model
         }
     
         public int SupplierID { get; set; }
-        public string PhoneNumber { get; set; }
+        public string SupplierName { get; set; }
         public string ContactName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public string Description { get; set; }
         public int CategorySupply { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        public virtual SupplyCategory SupplyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder> SupplierOrders { get; set; }
     }

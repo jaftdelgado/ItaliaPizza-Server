@@ -69,6 +69,11 @@ namespace Services
         public LinkedList<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
         #endregion
 
+        #region Supplier
+        public List<SupplierDTO> GetAllSuppliers() => _supplierService.GetAllSuppliers();
+        public int AddSupplier(SupplierDTO supplierDTO) => _supplierService.AddSupplier(supplierDTO);
+        #endregion
+
         #region Finance
         public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
         #endregion
