@@ -19,6 +19,7 @@ namespace Model
         {
             this.StockReports = new HashSet<StockReport>();
             this.Supplies = new HashSet<Supply>();
+            this.Suppliers = new HashSet<Supplier>();
         }
     
         public int SupplyCategoryID { get; set; }
@@ -28,5 +29,7 @@ namespace Model
         public virtual ICollection<StockReport> StockReports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supply> Supplies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Supplier> Suppliers { get; set; }
     }
 }
