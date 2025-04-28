@@ -68,7 +68,6 @@ namespace Services
         public int AddSupply(SupplyDTO supplyDTO) => _supplyService.AddSupply(supplyDTO);
         #endregion
 
-
         #region Supplier
         public List<SupplierDTO> GetAllSuppliers() => _supplierService.GetAllSuppliers();
         public int AddSupplier(SupplierDTO supplierDTO) => _supplierService.AddSupplier(supplierDTO);
