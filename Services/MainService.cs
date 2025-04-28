@@ -61,12 +61,11 @@ namespace Services
 
         #region Supply
         public List<SupplyCategoryDTO> GetAllCategories() => _supplyService.GetAllCategories();
-
         public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplyService.GetSuppliersByCategory(categoryId);
-
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
-
-        public LinkedList<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
+        public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId) => _supplyService.GetSuppliesAvailableByCategory(categoryId);
+        public List<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
+        public int AddSupply(SupplyDTO supplyDTO) => _supplyService.AddSupply(supplyDTO);
         #endregion
 
         #region Supplier
