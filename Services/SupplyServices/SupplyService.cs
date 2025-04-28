@@ -1,5 +1,4 @@
 ﻿using Model;
-using Services.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,13 +45,28 @@ namespace Services.SupplyServices
                 }).ToList();
         }
 
-        public LinkedList<SupplyDTO> GetAllSupplies()
+        public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId)
+        {
+            return dao.GetSuppliesAvailableByCategory(categoryId)
+                .Select(s => new SupplyDTO
+                {
+                    Id = s.SupplyID,
+                    Name = s.SupplyName,
+                    Price = s.Price,
+                    MeasureUnit = s.MeasureUnit,
+                    Brand = s.Brand,
+                    SupplyCategoryID = s.SupplyCategoryID,
+                    SupplierID = s.SupplierID
+                }).ToList();
+        }
+
+        public List<SupplyDTO> GetAllSupplies()
         {
             var supplies = dao.GetAllSupplies();
-            LinkedList<SupplyDTO> supplyList = new LinkedList<SupplyDTO>();
+            List<SupplyDTO> supplyList = new List<SupplyDTO>();
             foreach (var supply in supplies)
             {
-                supplyList.AddLast(new SupplyDTO
+                supplyList.Add(new SupplyDTO
                 {
                     Id = supply.SupplyID,
                     Name = supply.SupplyName,
@@ -65,5 +79,25 @@ namespace Services.SupplyServices
             }
             return supplyList;
         }
+
+        public int AddSupply(SupplyDTO supplyDTO)
+        {
+            var supply = new Supply
+            {
+                SupplyName = supplyDTO.Name,
+                Price = supplyDTO.Price,
+                MeasureUnit = supplyDTO.MeasureUnit,
+                SupplyCategoryID = supplyDTO.SupplyCategoryID,
+                Brand = supplyDTO.Brand,
+                Stock = 0,
+                SupplyPic = supplyDTO.SupplyPic,
+                Description = supplyDTO.Description
+            };
+
+            SupplyDAO supplyDAO = new SupplyDAO();
+            int result = supplyDAO.AddSupply(supply);
+            return result;
+        }
+
     }
 }
