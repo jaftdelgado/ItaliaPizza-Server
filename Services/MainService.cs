@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using Services.SupplyServices;
 using Services.FinanceServices;
-using Services;
 using Services.OrderServices;
 
 namespace Services
@@ -66,6 +65,9 @@ namespace Services
         public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId) => _supplyService.GetSuppliesAvailableByCategory(categoryId);
         public List<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
         public int AddSupply(SupplyDTO supplyDTO) => _supplyService.AddSupply(supplyDTO);
+        public bool UpdateSupply(SupplyDTO supplyDTO) => _supplyService.UpdateSupply(supplyDTO);
+        public bool DeleteSupply(int supplyID) => _supplyService.DeleteSupply(supplyID);
+        public bool ReactivateSupply(int supplyID) => _supplyService.ReactivateSupply(supplyID);
         #endregion
 
         #region Supplier

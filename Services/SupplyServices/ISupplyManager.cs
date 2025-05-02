@@ -24,5 +24,12 @@ namespace Services.SupplyServices
 
         [OperationContract]
         int AddSupply(SupplyDTO supplyDTO);
+
+        [OperationContract]
+        bool UpdateSupply(SupplyDTO supplyDTO);
+        [OperationContract]
+        bool DeleteSupply(int supplyId);
+        [OperationContract]
+        bool ReactivateSupply(int supplyId);
     }
 }
