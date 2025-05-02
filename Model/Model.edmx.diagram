@@ -14,8 +14,8 @@
         <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="8" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Product" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Product_Order" Width="1.5" PointX="10.5" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.Recipe" Width="1.5" PointX="13" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.RecipeSupply" Width="1.5" PointX="15.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.Recipe" Width="1.5" PointX="15.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="italiapizzaModel.RecipeSupply" Width="1.5" PointX="15.75" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Role" Width="1.5" PointX="5.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.StockReport" Width="1.5" PointX="13" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.SupplierOrder" Width="1.5" PointX="13" PointY="8.625" IsExpanded="true" />
@@ -44,8 +44,9 @@
         <AssociationConnector Association="italiapizzaModel.FK_Product_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_Supplier_SupplyCategory" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" />
-        <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="12.875" PointY="16.125" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="12.875" PointY="16.5" />
         <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Supply" />
+        <AssociationConnector Association="italiapizzaModel.FK_Supply_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Supply" />
         <AssociationConnector Association="italiapizzaModel.FK_Supply_SupplyCategory" />
         <AssociationConnector Association="italiapizzaModel.FK_Waste_Supply" />

@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 
@@ -51,7 +52,7 @@ namespace Services.SupplyServices
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Supplies.ToList();
+                return context.Supplies.Include(s => s.Supplier).ToList();
             }
         }
 
@@ -87,5 +88,55 @@ namespace Services.SupplyServices
             return result;
         }
 
+        public bool UpdateSupply(Supply updatedSupply)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var existingSupply = context.Supplies.FirstOrDefault(s => s.SupplyID == updatedSupply.SupplyID);
+                if (existingSupply == null)
+                    return false;
+
+                existingSupply.SupplyName = updatedSupply.SupplyName;
+                existingSupply.Price = updatedSupply.Price;
+                existingSupply.MeasureUnit = updatedSupply.MeasureUnit;
+                existingSupply.Brand = updatedSupply.Brand;
+                existingSupply.SupplyPic = updatedSupply.SupplyPic;
+                existingSupply.Description = updatedSupply.Description;
+                existingSupply.SupplyCategoryID = updatedSupply.SupplyCategoryID;
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteSupply(int supplyID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supply = context.Supplies.FirstOrDefault(p => p.SupplyID == supplyID);
+                if (supply != null)
+                {
+                    supply.IsActive = false;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool ReactivateSupply(int supplyID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supply = context.Supplies.FirstOrDefault(p => p.SupplyID == supplyID);
+                if (supply != null && !supply.IsActive)
+                {
+                    supply.IsActive = true;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

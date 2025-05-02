@@ -470,6 +470,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Supply_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Supply_SupplyCategory">
           <End Role="SupplyCategory" Type="Self.SupplyCategory" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -617,6 +629,10 @@
           <AssociationSet Name="FK_SupplierOrderSupply_Supply" Association="Self.FK_SupplierOrderSupply_Supply">
             <End Role="Supply" EntitySet="Supply" />
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supply_Supplier" Association="Self.FK_Supply_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Supply" EntitySet="Supply" />
           </AssociationSet>
           <AssociationSet Name="FK_Supply_SupplyCategory" Association="Self.FK_Supply_SupplyCategory">
             <End Role="SupplyCategory" EntitySet="SupplyCategory" />
@@ -1177,6 +1193,10 @@
             <End Role="Supply" EntitySet="Supplies" />
             <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
           </AssociationSet>
+          <AssociationSet Name="FK_Supply_Supplier" Association="italiapizzaModel.FK_Supply_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Supply" EntitySet="Supplies" />
+          </AssociationSet>
           <AssociationSet Name="FK_SupplierOrderSupply_Supply" Association="italiapizzaModel.FK_SupplierOrderSupply_Supply">
             <End Role="Supply" EntitySet="Supplies" />
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
@@ -1204,6 +1224,7 @@
           <NavigationProperty Name="Products" Relationship="italiapizzaModel.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
           <NavigationProperty Name="SupplyCategory" Relationship="italiapizzaModel.FK_Supplier_SupplyCategory" FromRole="Supplier" ToRole="SupplyCategory" />
           <NavigationProperty Name="SupplierOrders" Relationship="italiapizzaModel.FK_SupplierOrder_Supplier" FromRole="Supplier" ToRole="SupplierOrder" />
+          <NavigationProperty Name="Supplies" Relationship="italiapizzaModel.FK_Supply_Supplier" FromRole="Supplier" ToRole="Supply" />
         </EntityType>
         <Association Name="FK_Product_Supplier">
           <End Type="italiapizzaModel.Supplier" Role="Supplier" Multiplicity="0..1" />
@@ -1257,6 +1278,7 @@
           <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RecipeSupplies" Relationship="italiapizzaModel.FK_RecipeSupply_Supply" FromRole="Supply" ToRole="RecipeSupply" />
+          <NavigationProperty Name="Supplier" Relationship="italiapizzaModel.FK_Supply_Supplier" FromRole="Supply" ToRole="Supplier" />
           <NavigationProperty Name="SupplierOrder_Supply" Relationship="italiapizzaModel.FK_SupplierOrderSupply_Supply" FromRole="Supply" ToRole="SupplierOrder_Supply" />
           <NavigationProperty Name="SupplyCategory" Relationship="italiapizzaModel.FK_Supply_SupplyCategory" FromRole="Supply" ToRole="SupplyCategory" />
           <NavigationProperty Name="WasteSupplies" Relationship="italiapizzaModel.FK_Waste_Supply" FromRole="Supply" ToRole="WasteSupply" />
@@ -1272,6 +1294,18 @@
             </Principal>
             <Dependent Role="RecipeSupply">
               <PropertyRef Name="SupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supply_Supplier">
+          <End Type="italiapizzaModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="SupplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
