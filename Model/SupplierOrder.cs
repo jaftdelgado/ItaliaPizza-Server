@@ -28,8 +28,8 @@ namespace Model
         public string Status { get; set; }
         public int SupplierOrderID { get; set; }
     
-        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

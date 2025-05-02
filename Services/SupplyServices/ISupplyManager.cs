@@ -15,8 +15,14 @@ namespace Services.SupplyServices
 
         [OperationContract]
         List<SupplyDTO> GetSuppliesBySupplier(int supplierId);
+        
+        [OperationContract]
+        List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId);
 
         [OperationContract]
-        LinkedList<SupplyDTO> GetAllSupplies();
+        List<SupplyDTO> GetAllSupplies();
+
+        [OperationContract]
+        int AddSupply(SupplyDTO supplyDTO);
     }
 }
