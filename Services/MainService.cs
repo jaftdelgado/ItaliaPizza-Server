@@ -21,6 +21,7 @@ namespace Services
         private readonly ISupplierOrderManager _supplierOrderService;
         private readonly IOrderManager _orderService;
         private readonly IRecipeManager _recipeService;
+        private readonly ISesionManager _sesionService;
 
         public MainService()
         {
@@ -33,6 +34,7 @@ namespace Services
             _supplierOrderService = new SupplierOrderService();
             _orderService = new OrderService();
             _recipeService = new RecipeService();
+            _sesionService = new SesionService();
         }
 
         public bool Ping()
@@ -87,6 +89,9 @@ namespace Services
 
         #region Recipe
         public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.RegisterRecipe(recipe, supplies);
+        #endregion
+        #region Session
+        public PersonalDTO Login(string username, string password) => _sesionService.Login(username, password);
         #endregion
     }
 }

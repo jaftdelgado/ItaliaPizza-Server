@@ -6,7 +6,7 @@ using Services.OrderServices;
 namespace Services
 {
     [ServiceContract]
-    public interface IMainManager : IPersonalManager, ISupplierManager, ISupplyManager, IProductManager, IFinanceManager, ISupplierOrderManager, IOrderManager, IRecipeManager, ICustomerManager
+    public interface IMainManager : IPersonalManager, ISupplierManager, ISupplyManager, IProductManager, IFinanceManager, ISupplierOrderManager, IOrderManager, IRecipeManager, ICustomerManager, ISesionManager
     {
         [OperationContract]
         bool Ping();
