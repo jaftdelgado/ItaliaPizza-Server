@@ -87,6 +87,9 @@
     <Compile Include="RecipesServices\IRecipeManager.cs" />
     <Compile Include="RecipesServices\RecipeDAO.cs" />
     <Compile Include="RecipesServices\RecipeService.cs" />
+    <Compile Include="SesionServices\ISesionManager.cs" />
+    <Compile Include="SesionServices\SesionDAO.cs" />
+    <Compile Include="SesionServices\SesionService.cs" />
     <Compile Include="SupplierServices\ISupplierManager.cs" />
     <Compile Include="SupplierServices\SupplierService.cs" />
     <Compile Include="SupplyServices\ISupplyManager.cs" />
