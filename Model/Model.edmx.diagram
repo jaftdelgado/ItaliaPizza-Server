@@ -44,7 +44,7 @@
         <AssociationConnector Association="italiapizzaModel.FK_Product_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_Supplier_SupplyCategory" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" />
-        <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="12.875" PointY="16.5" />
+        <EntityTypeShape EntityType="italiapizzaModel.Supply" Width="1.5" PointX="13" PointY="16.25" />
         <AssociationConnector Association="italiapizzaModel.FK_RecipeSupply_Supply" />
         <AssociationConnector Association="italiapizzaModel.FK_Supply_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Supply" />

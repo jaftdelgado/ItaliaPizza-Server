@@ -29,6 +29,7 @@ namespace Model
         public string EmailAddress { get; set; }
         public string Description { get; set; }
         public int CategorySupply { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

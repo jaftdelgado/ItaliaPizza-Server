@@ -20,6 +20,9 @@ public class SupplierDTO
     
     [DataMember]
     public string Description { get; set; }
+    
+    [DataMember]
+    public bool IsActive { get; set; }
 
     [DataMember]
     public int CategorySupply { get; set; } 

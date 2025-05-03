@@ -13,5 +13,14 @@ namespace Services
 
         [OperationContract]
         int AddSupplier(SupplierDTO supplierDTO);
+
+        [OperationContract]
+        bool UpdateSupplier(SupplierDTO supplierDTO);
+
+        [OperationContract]
+        bool DeleteSupplier(int supplierID);
+
+        [OperationContract]
+        bool ReactivateSupplier(int supplierID);
     }
 }

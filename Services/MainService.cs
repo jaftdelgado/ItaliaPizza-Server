@@ -64,17 +64,22 @@ namespace Services
         public List<SupplyCategoryDTO> GetAllCategories() => _supplyService.GetAllCategories();
         public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplyService.GetSuppliersByCategory(categoryId);
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
-        public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId) => _supplyService.GetSuppliesAvailableByCategory(categoryId);
+        public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId) => _supplyService.GetSuppliesAvailableByCategory(categoryId, supplierId);
         public List<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
         public int AddSupply(SupplyDTO supplyDTO) => _supplyService.AddSupply(supplyDTO);
         public bool UpdateSupply(SupplyDTO supplyDTO) => _supplyService.UpdateSupply(supplyDTO);
         public bool DeleteSupply(int supplyID) => _supplyService.DeleteSupply(supplyID);
         public bool ReactivateSupply(int supplyID) => _supplyService.ReactivateSupply(supplyID);
+        public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId) => _supplyService.AssignSupplierToSupply(supplyIds, supplierId);
+        public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId) => _supplyService.UnassignSupplierFromSupply(supplyIds, supplierId);
         #endregion
 
         #region Supplier
         public List<SupplierDTO> GetAllSuppliers() => _supplierService.GetAllSuppliers();
         public int AddSupplier(SupplierDTO supplierDTO) => _supplierService.AddSupplier(supplierDTO);
+        public bool UpdateSupplier(SupplierDTO supplierDTO) => _supplierService.UpdateSupplier(supplierDTO);
+        public bool DeleteSupplier(int supplierID) => _supplierService.DeleteSupplier(supplierID);
+        public bool ReactivateSupplier(int supplierID) => _supplierService.ReactivateSupplier(supplierID);
         #endregion
 
         #region Finance
