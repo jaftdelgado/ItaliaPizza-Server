@@ -1,5 +1,6 @@
 ﻿using Model;
 using Services.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,9 +47,9 @@ namespace Services.SupplyServices
                 }).ToList();
         }
 
-        public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId)
+        public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId)
         {
-            return dao.GetSuppliesAvailableByCategory(categoryId)
+            return dao.GetSuppliesAvailableByCategory(categoryId, supplierId)
                 .Select(s => new SupplyDTO
                 {
                     Id = s.SupplyID,
@@ -95,6 +96,7 @@ namespace Services.SupplyServices
                 SupplyCategoryID = supplyDTO.SupplyCategoryID,
                 Brand = supplyDTO.Brand,
                 Stock = 0,
+                IsActive = true,
                 SupplyPic = supplyDTO.SupplyPic,
                 Description = supplyDTO.Description
             };
@@ -131,6 +133,16 @@ namespace Services.SupplyServices
         {
             SupplyDAO supplyDAO = new SupplyDAO();
             return supplyDAO.ReactivateSupply(supplyID);
+        }
+
+        public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId)
+        {
+            return dao.AssignSupplierToSupply(supplyIds, supplierId);
+        }
+
+        public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId)
+        {
+            return dao.UnassignSupplierFromSupply(supplyIds, supplierId);
         }
 
     }

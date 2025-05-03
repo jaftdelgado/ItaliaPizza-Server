@@ -1,4 +1,5 @@
 ﻿using Model;
+using Services.SupplyServices;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,8 @@ namespace Services
                 PhoneNumber = s.PhoneNumber,
                 EmailAddress = s.EmailAddress,
                 Description = s.Description,
-                CategorySupply = s.CategorySupply
+                CategorySupply = s.CategorySupply,
+                IsActive = s.IsActive
             }).ToList();
         }
 
@@ -36,9 +38,37 @@ namespace Services
             };
 
             SupplierDAO supplierDAO = new SupplierDAO();
-            int result = supplierDAO.AddSupplier(supplier);
-            return result;
+            int supplierId = supplierDAO.AddSupplier(supplier);
+            return supplierId;
         }
 
+        public bool UpdateSupplier(SupplierDTO supplierDTO)
+        {
+            var updatedSupplier = new Supplier
+            {
+                SupplierID = supplierDTO.Id,
+                SupplierName = supplierDTO.SupplierName,
+                ContactName = supplierDTO.ContactName,
+                PhoneNumber = supplierDTO.PhoneNumber,
+                EmailAddress = supplierDTO.EmailAddress,
+                Description = supplierDTO.Description,
+                CategorySupply = supplierDTO.CategorySupply
+            };
+
+            var dao = new SupplierDAO();
+            return dao.UpdateSupplier(updatedSupplier);
+        }
+
+        public bool DeleteSupplier(int supplierID)
+        {
+            SupplierDAO supplierDAO = new SupplierDAO();
+            return supplierDAO.DeleteSupplier(supplierID);
+        }
+
+        public bool ReactivateSupplier(int supplierID)
+        {
+            SupplierDAO supplierDAO = new SupplierDAO();
+            return supplierDAO.ReactivateSupplier(supplierID);
+        }
     }
 }

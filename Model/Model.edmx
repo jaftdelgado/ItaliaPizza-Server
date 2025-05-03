@@ -158,6 +158,7 @@
           <Property Name="EmailAddress" Type="varchar" MaxLength="32" />
           <Property Name="Description" Type="varchar" MaxLength="128" />
           <Property Name="CategorySupply" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierOrder">
           <Key>
@@ -1224,6 +1225,7 @@
           <NavigationProperty Name="Products" Relationship="italiapizzaModel.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
           <NavigationProperty Name="SupplyCategory" Relationship="italiapizzaModel.FK_Supplier_SupplyCategory" FromRole="Supplier" ToRole="SupplyCategory" />
           <NavigationProperty Name="SupplierOrders" Relationship="italiapizzaModel.FK_SupplierOrder_Supplier" FromRole="Supplier" ToRole="SupplierOrder" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Supplies" Relationship="italiapizzaModel.FK_Supply_Supplier" FromRole="Supplier" ToRole="Supply" />
         </EntityType>
         <Association Name="FK_Product_Supplier">
@@ -1576,6 +1578,7 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="italiapizzaModel.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CategorySupply" ColumnName="CategorySupply" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />

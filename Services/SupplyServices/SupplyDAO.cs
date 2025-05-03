@@ -37,13 +37,14 @@ namespace Services.SupplyServices
             }
         }
 
-        public List<Supply> GetSuppliesAvailableByCategory(int categoryId)
+        public List<Supply> GetSuppliesAvailableByCategory(int categoryId, int? supplierId)
         {
             using (var context = new italiapizzaEntities())
             {
                 return context.Supplies
-                    .Where(s => s.SupplierID == null || s.SupplierID == 0)
-                    .Where(s => s.SupplyCategoryID == categoryId)
+                    .Where(s => s.SupplyCategoryID == categoryId &&
+                                s.IsActive &&
+                                (s.SupplierID == null || s.SupplierID == 0 || s.SupplierID == supplierId))
                     .ToList();
             }
         }
@@ -136,6 +137,48 @@ namespace Services.SupplyServices
                     return true;
                 }
                 return false;
+            }
+        }
+
+        public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supplies = context.Supplies
+                    .Where(s => supplyIds.Contains(s.SupplyID) && s.IsActive)
+                    .ToList();
+
+                if (!supplies.Any()) return false;
+
+                foreach (var supply in supplies)
+                {
+                    supply.SupplierID = supplierId;
+                }
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supplies = context.Supplies
+                    .Where(s => supplyIds.Contains(s.SupplyID) &&
+                                s.SupplierID == supplierId &&
+                                s.IsActive)
+                    .ToList();
+
+                if (!supplies.Any()) return false;
+
+                foreach (var supply in supplies)
+                {
+                    supply.SupplierID = null;
+                }
+
+                context.SaveChanges();
+                return true;
             }
         }
     }
