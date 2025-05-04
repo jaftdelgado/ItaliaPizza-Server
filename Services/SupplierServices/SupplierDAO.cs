@@ -18,7 +18,6 @@ namespace Services
 
         public int AddSupplier(Supplier supplier)
         {
-            int result = 0;
             using (var context = new italiapizzaEntities())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -29,7 +28,7 @@ namespace Services
                         context.SaveChanges();
 
                         dbContextTransaction.Commit();
-                        result = 1;
+                        return supplier.SupplierID;
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -41,12 +40,61 @@ namespace Services
                                 Console.WriteLine($"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage}");
                             }
                         }
-                        result = 0;
+                        return -1;
                     }
                 }
             }
-            return result;
         }
+
+        public bool UpdateSupplier(Supplier updatedSupplier)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var existingSupplier = context.Suppliers.FirstOrDefault(s => s.SupplierID == updatedSupplier.SupplierID);
+                if (existingSupplier == null) return false;
+
+                existingSupplier.SupplierName = updatedSupplier.SupplierName;
+                existingSupplier.ContactName = updatedSupplier.ContactName;
+                existingSupplier.PhoneNumber = updatedSupplier.PhoneNumber;
+                existingSupplier.EmailAddress = updatedSupplier.EmailAddress;
+                existingSupplier.Description = updatedSupplier.Description;
+                existingSupplier.CategorySupply = updatedSupplier.CategorySupply;
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteSupplier(int supplierID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supplier = context.Suppliers.FirstOrDefault(p => p.SupplierID == supplierID);
+                if (supplier != null)
+                {
+                    supplier.IsActive = false;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool ReactivateSupplier(int supplierID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supplier = context.Suppliers.FirstOrDefault(p => p.SupplierID == supplierID);
+                if (supplier != null && !supplier.IsActive)
+                {
+                    supplier.IsActive = true;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 
@@ -36,13 +37,14 @@ namespace Services.SupplyServices
             }
         }
 
-        public List<Supply> GetSuppliesAvailableByCategory(int categoryId)
+        public List<Supply> GetSuppliesAvailableByCategory(int categoryId, int? supplierId)
         {
             using (var context = new italiapizzaEntities())
             {
                 return context.Supplies
-                    .Where(s => s.SupplierID == null || s.SupplierID == 0)
-                    .Where(s => s.SupplyCategoryID == categoryId)
+                    .Where(s => s.SupplyCategoryID == categoryId &&
+                                s.IsActive &&
+                                (s.SupplierID == null || s.SupplierID == 0 || s.SupplierID == supplierId))
                     .ToList();
             }
         }
@@ -51,7 +53,7 @@ namespace Services.SupplyServices
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Supplies.ToList();
+                return context.Supplies.Include(s => s.Supplier).ToList();
             }
         }
 
@@ -87,5 +89,97 @@ namespace Services.SupplyServices
             return result;
         }
 
+        public bool UpdateSupply(Supply updatedSupply)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var existingSupply = context.Supplies.FirstOrDefault(s => s.SupplyID == updatedSupply.SupplyID);
+                if (existingSupply == null)
+                    return false;
+
+                existingSupply.SupplyName = updatedSupply.SupplyName;
+                existingSupply.Price = updatedSupply.Price;
+                existingSupply.MeasureUnit = updatedSupply.MeasureUnit;
+                existingSupply.Brand = updatedSupply.Brand;
+                existingSupply.SupplyPic = updatedSupply.SupplyPic;
+                existingSupply.Description = updatedSupply.Description;
+                existingSupply.SupplyCategoryID = updatedSupply.SupplyCategoryID;
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteSupply(int supplyID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supply = context.Supplies.FirstOrDefault(p => p.SupplyID == supplyID);
+                if (supply != null)
+                {
+                    supply.IsActive = false;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool ReactivateSupply(int supplyID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supply = context.Supplies.FirstOrDefault(p => p.SupplyID == supplyID);
+                if (supply != null && !supply.IsActive)
+                {
+                    supply.IsActive = true;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supplies = context.Supplies
+                    .Where(s => supplyIds.Contains(s.SupplyID) && s.IsActive)
+                    .ToList();
+
+                if (!supplies.Any()) return false;
+
+                foreach (var supply in supplies)
+                {
+                    supply.SupplierID = supplierId;
+                }
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var supplies = context.Supplies
+                    .Where(s => supplyIds.Contains(s.SupplyID) &&
+                                s.SupplierID == supplierId &&
+                                s.IsActive)
+                    .ToList();
+
+                if (!supplies.Any()) return false;
+
+                foreach (var supply in supplies)
+                {
+                    supply.SupplierID = null;
+                }
+
+                context.SaveChanges();
+                return true;
+            }
+        }
     }
 }

@@ -17,12 +17,27 @@ namespace Services.SupplyServices
         List<SupplyDTO> GetSuppliesBySupplier(int supplierId);
         
         [OperationContract]
-        List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId);
+        List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId);
 
         [OperationContract]
         List<SupplyDTO> GetAllSupplies();
 
         [OperationContract]
         int AddSupply(SupplyDTO supplyDTO);
+
+        [OperationContract]
+        bool UpdateSupply(SupplyDTO supplyDTO);
+        
+        [OperationContract]
+        bool DeleteSupply(int supplyId);
+        
+        [OperationContract]
+        bool ReactivateSupply(int supplyId);
+
+        [OperationContract]
+        bool AssignSupplierToSupply(List<int> supplyIds, int supplierId);
+
+        [OperationContract]
+        bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId);
     }
 }
