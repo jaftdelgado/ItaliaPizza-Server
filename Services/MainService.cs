@@ -90,8 +90,10 @@ namespace Services
         #region Recipe
         public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.RegisterRecipe(recipe, supplies);
         #endregion
+
         #region Session
         public PersonalDTO Login(string username, string password) => _sesionService.Login(username, password);
+        public int updateActivity(int personalID) => _sesionService.updateActivity(personalID);
         #endregion
     }
 }
