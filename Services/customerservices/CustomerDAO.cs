@@ -1,5 +1,6 @@
 ﻿using Model;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 
@@ -49,6 +50,14 @@ namespace Services
             using (var context = new italiapizzaEntities())
             {
                 return !context.Customers.Any(p => p.EmailAddress == email);
+            }
+        }
+
+        public List<Customer> GetCustomers()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Customers.Include("Address").ToList();
             }
         }
     }

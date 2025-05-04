@@ -45,6 +45,11 @@ namespace Services
         #region Customer
         public int AddCustomer(CustomerDTO customer) => _customerService.AddCustomer(customer);
         public bool IsCustomerEmailAvailable(string email) => _customerService.IsCustomerEmailAvailable(email);
+
+        public List<CustomerDTO> GetCustomers() => _customerService.GetCustomers();
+        public bool UpdateCustomer(CustomerDTO customerDTO) => _customerService.UpdateCustomer(customerDTO);
+        public bool DeleteCustomer(int customerID) => _customerService.DeleteCustomer(customerID);
+        public bool ReactivateCustomer(int customerID) => _customerService.ReactivateCustomer(customerID);
         #endregion
 
         public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
