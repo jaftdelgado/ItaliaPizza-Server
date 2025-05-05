@@ -16,6 +16,16 @@ namespace Services
             }
         }
 
+        public List<Supplier> GetSuppliersByCategory(int categoryId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Suppliers
+                    .Where(s => s.CategorySupply == categoryId && s.IsActive)
+                    .ToList();
+            }
+        }
+
         public int AddSupplier(Supplier supplier)
         {
             using (var context = new italiapizzaEntities())
