@@ -25,6 +25,22 @@ namespace Services
             }).ToList();
         }
 
+        public List<SupplierDTO> GetSuppliersByCategory(int categoryId)
+        {
+            SupplierDAO dao = new SupplierDAO();
+
+            return dao.GetSuppliersByCategory(categoryId)
+                .Select(s => new SupplierDTO
+                {
+                    Id = s.SupplierID,
+                    SupplierName = s.SupplierName,
+                    ContactName = s.ContactName,
+                    PhoneNumber = s.PhoneNumber,
+                    CategorySupply = s.CategorySupply,
+                    IsActive = s.IsActive
+                }).ToList();
+        }
+
         public int AddSupplier(SupplierDTO supplierDTO)
         {
             var supplier = new Supplier

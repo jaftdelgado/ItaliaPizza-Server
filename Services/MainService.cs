@@ -62,7 +62,6 @@ namespace Services
 
         #region Supply
         public List<SupplyCategoryDTO> GetAllCategories() => _supplyService.GetAllCategories();
-        public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplyService.GetSuppliersByCategory(categoryId);
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
         public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId) => _supplyService.GetSuppliesAvailableByCategory(categoryId, supplierId);
         public List<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
@@ -76,6 +75,7 @@ namespace Services
 
         #region Supplier
         public List<SupplierDTO> GetAllSuppliers() => _supplierService.GetAllSuppliers();
+        public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplierService.GetSuppliersByCategory(categoryId);
         public int AddSupplier(SupplierDTO supplierDTO) => _supplierService.AddSupplier(supplierDTO);
         public bool UpdateSupplier(SupplierDTO supplierDTO) => _supplierService.UpdateSupplier(supplierDTO);
         public bool DeleteSupplier(int supplierID) => _supplierService.DeleteSupplier(supplierID);
