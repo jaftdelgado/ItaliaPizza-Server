@@ -14,6 +14,7 @@ namespace Services
         //Login service
         [OperationContract]
         PersonalDTO Login(string username, string password);
-
+        [OperationContract]
+        int updateActivity(int personalID);
     }
 }

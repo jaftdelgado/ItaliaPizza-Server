@@ -22,5 +22,11 @@ namespace Services
                 return null;
             }
         }
+        int ISesionManager.updateActivity(int personalID)
+        {
+            SesionDAO sesionDAO = new SesionDAO();
+            int result = sesionDAO.UpdateActivity(personalID);
+            return result;
+        }
     }
 }

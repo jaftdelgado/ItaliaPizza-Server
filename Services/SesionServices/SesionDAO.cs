@@ -35,5 +35,19 @@ namespace Services
                 return null;
             }
         }
+        public int UpdateActivity(int personalID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var personal = context.Personals.FirstOrDefault(p => p.PersonalID == personalID);
+                if (personal != null)
+                {
+                    personal.IsOnline = true;
+                    context.SaveChanges();
+                    return 1; // Success
+                }
+                return 0; // Failure
+            }
+        }
     }
 }
