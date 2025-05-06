@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Services.Dtos
 {
@@ -19,6 +20,12 @@ namespace Services.Dtos
 
         [DataMember]
         public string EmailAddress { get; set; }
+
+        [DataMember]
+        public DateTime RegDate { get; set; }
+
+        [DataMember]
+        public bool IsActive { get; set; }
 
         [DataMember]
         public int AddressID { get; set; }

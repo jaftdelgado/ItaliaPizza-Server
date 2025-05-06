@@ -46,5 +46,13 @@ namespace Services
             }
             return result;
         }
+
+        public List<Recipe> GetRecipes()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Recipes.ToList();
+            }
+        }
     }
 }
