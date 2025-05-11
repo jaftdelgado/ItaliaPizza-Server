@@ -102,6 +102,10 @@
       <Project>{fb6f14a3-e487-4c64-b334-cc07f3ccf416}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerUtilities\ServerUtilities.csproj">
+      <Project>{cdc415bb-1af9-4f0b-a803-fdb58260912e}</Project>
+      <Name>ServerUtilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
