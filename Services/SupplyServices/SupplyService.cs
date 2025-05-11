@@ -28,6 +28,7 @@ namespace Services.SupplyServices
                     Id = s.SupplyID,
                     Name = s.SupplyName,
                     Price = s.Price,
+                    Stock = s.Stock,
                     MeasureUnit = s.MeasureUnit,
                     Brand = s.Brand,
                     SupplyPic = s.SupplyPic,

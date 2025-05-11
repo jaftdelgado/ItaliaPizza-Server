@@ -1,4 +1,5 @@
 ﻿using Services.Dtos;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace Services
@@ -7,6 +8,13 @@ namespace Services
     public interface ISupplierOrderManager
     {
         [OperationContract]
-        int RegisterOrder(SupplierOrderDTO order);
+        List<SupplierOrderDTO> GetAllSupplierOrders();
+
+        [OperationContract]
+        int AddSupplierOrder(SupplierOrderDTO orderDTO);
+
+        [OperationContract]
+        bool CancelSupplierOrder(int supplierOrderID);
+
     }
 }

@@ -87,8 +87,12 @@ namespace Services
         #endregion
 
         #region OrderSupplier
-        public int RegisterOrder(SupplierOrderDTO dto) => _supplierOrderService.RegisterOrder(dto);
+        public List<SupplierOrderDTO> GetAllSupplierOrders() => _supplierOrderService.GetAllSupplierOrders();
+        public int AddSupplierOrder(SupplierOrderDTO orderDTO) => _supplierOrderService.AddSupplierOrder(orderDTO);
+        public bool CancelSupplierOrder(int supplierOrderID) => _supplierOrderService.CancelSupplierOrder(supplierOrderID);
+        #endregion
 
+        #region Orders
         public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID) => _orderService.GetOrderItemsByOrderID(orderID);
 
         public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
