@@ -22,9 +22,10 @@ namespace Model
     
         public int CashRegisterID { get; set; }
         public Nullable<System.DateTime> ClosingDate { get; set; }
-        public Nullable<decimal> InitialBalance { get; set; }
+        public decimal InitialBalance { get; set; }
         public Nullable<decimal> FinalBalance { get; set; }
-        public Nullable<System.DateTime> LogDate { get; set; }
+        public System.DateTime OpeningDate { get; set; }
+        public Nullable<decimal> CashierAmount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }

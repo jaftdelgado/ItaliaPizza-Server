@@ -10,13 +10,19 @@ namespace Services.Dtos
         public int TransactionID { get; set; }
 
         [DataMember]
-        public string Type { get; set; }
+        public int CashRegisterID { get; set; }
 
         [DataMember]
-        public decimal Total { get; set; }
+        public char FinancialFlow { get; set; }
+
+        [DataMember]
+        public decimal Amount { get; set; }
 
         [DataMember]
         public DateTime Date { get; set; }
+
+        [DataMember]
+        public int Concept { get; set; }
 
         [DataMember]
         public string Description { get; set; }
@@ -25,6 +31,7 @@ namespace Services.Dtos
         public int? OrderID { get; set; }
 
         [DataMember]
-        public int? CashRegisterID { get; set; }
+        public int? SupplierOrderID { get; set; }
+
     }
 }

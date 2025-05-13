@@ -27,8 +27,8 @@ namespace Services.FinanceServices
 
                 var transaction = new Transaction
                 {
-                    Type = "Ingreso",
-                    Total = total,
+                    FinancialFlow = "I",
+                    Amount = total,
                     Date = DateTime.Now,
                     Description = "Pago de comanda",
                     OrderID = orderId,

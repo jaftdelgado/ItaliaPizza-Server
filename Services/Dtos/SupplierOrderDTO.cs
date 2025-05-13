@@ -8,6 +8,9 @@ namespace Services.Dtos
     public class SupplierOrderDTO
     {
         [DataMember]
+        public int SupplierOrderID { get; set; }
+
+        [DataMember]
         public int SupplierID { get; set; }
 
         [DataMember]
@@ -21,6 +24,9 @@ namespace Services.Dtos
 
         [DataMember]
         public string OrderFolio { get; set; }
+
+        [DataMember]
+        public int CategorySupplyID { get; set; }
 
         [DataMember]
         public decimal Total { get; set; }
