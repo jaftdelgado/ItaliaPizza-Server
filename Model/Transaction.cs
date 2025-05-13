@@ -15,14 +15,17 @@ namespace Model
     public partial class Transaction
     {
         public int TransactionID { get; set; }
-        public string Type { get; set; }
-        public Nullable<decimal> Total { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public string FinancialFlow { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public System.DateTime Date { get; set; }
         public string Description { get; set; }
         public Nullable<int> OrderID { get; set; }
-        public Nullable<int> CashRegisterID { get; set; }
+        public int CashRegisterID { get; set; }
+        public Nullable<int> SupplierOrderID { get; set; }
+        public int Concept { get; set; }
     
         public virtual CashRegister CashRegister { get; set; }
         public virtual Order Order { get; set; }
+        public virtual SupplierOrder SupplierOrder { get; set; }
     }
 }

@@ -120,9 +120,6 @@
     <Compile Include="SupplyCategory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Transaction.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

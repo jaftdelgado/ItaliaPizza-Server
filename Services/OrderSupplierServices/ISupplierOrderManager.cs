@@ -14,6 +14,12 @@ namespace Services
         int AddSupplierOrder(SupplierOrderDTO orderDTO);
 
         [OperationContract]
+        bool UpdateSupplierOrder(SupplierOrderDTO orderDTO);
+
+        [OperationContract]
+        bool DeliverOrder(int supplierOrderID);
+
+        [OperationContract]
         bool CancelSupplierOrder(int supplierOrderID);
 
     }

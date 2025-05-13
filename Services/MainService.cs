@@ -94,6 +94,8 @@ namespace Services
         #region OrderSupplier
         public List<SupplierOrderDTO> GetAllSupplierOrders() => _supplierOrderService.GetAllSupplierOrders();
         public int AddSupplierOrder(SupplierOrderDTO orderDTO) => _supplierOrderService.AddSupplierOrder(orderDTO);
+        public bool UpdateSupplierOrder(SupplierOrderDTO orderDTO) => _supplierOrderService.UpdateSupplierOrder(orderDTO);
+        public bool DeliverOrder(int supplierOrderID) => _supplierOrderService.DeliverOrder(supplierOrderID);
         public bool CancelSupplierOrder(int supplierOrderID) => _supplierOrderService.CancelSupplierOrder(supplierOrderID);
         #endregion
 
