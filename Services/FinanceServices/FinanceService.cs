@@ -10,5 +10,10 @@ namespace Services.FinanceServices
             var dao = new FinanceDAO();
             return dao.RegisterOrderPayment(orderId);
         }
+        public bool OpenCashRegister(decimal initialAmount)
+        {
+            var dao = new FinanceDAO();
+            return dao.OpenCashRegister(initialAmount);
+        }
     }
 }

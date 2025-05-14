@@ -89,6 +89,8 @@ namespace Services
 
         #region Finance
         public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
+
+        public bool OpenCashRegister(decimal initialAmout) => _financeService.OpenCashRegister(initialAmout);
         #endregion
 
         #region OrderSupplier

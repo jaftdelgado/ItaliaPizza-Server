@@ -8,5 +8,7 @@ namespace Services.FinanceServices
     {
         [OperationContract]
         bool RegisterOrderPayment(int orderId);
+        [OperationContract]
+        bool OpenCashRegister(decimal initialAmount);
     }
 }
