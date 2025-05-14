@@ -15,5 +15,10 @@ namespace Services.FinanceServices
             var dao = new FinanceDAO();
             return dao.OpenCashRegister(initialAmount);
         }
+        public int RegisterCashOut(decimal amount, string description)
+        {
+            var dao = new FinanceDAO();
+            return dao.RegisterCashOut(amount, description);
+        }
     }
 }

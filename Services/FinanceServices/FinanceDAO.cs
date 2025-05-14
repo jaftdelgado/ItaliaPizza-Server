@@ -62,7 +62,37 @@ namespace Services.FinanceServices
                 return true;
             }
         }
+        public int RegisterCashOut(decimal amount, string description)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var openCashRegister = context.CashRegisters
+                    .FirstOrDefault(c => c.ClosingDate == null);
 
+                if (openCashRegister == null)
+                    return -1;
+
+                if (openCashRegister.FinalBalance < amount)
+                    return -2;
+
+                var transaction = new Transaction
+                {
+                    FinancialFlow = "O",
+                    Amount = amount,
+                    Date = DateTime.Now,
+                    Description = description,
+                    CashRegisterID = openCashRegister.CashRegisterID,
+                    Concept = 2,
+                    OrderID = null,
+                    SupplierOrderID = null
+                };
+
+                context.Transactions.Add(transaction);
+                openCashRegister.FinalBalance -= amount;
+
+                context.SaveChanges();
+                return 1;
+            }
+        }
     }
-
 }
