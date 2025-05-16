@@ -51,7 +51,7 @@ namespace Services
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Recipes.ToList();
+                return context.Recipes.Include("Product").ToList();
             }
         }
     }
