@@ -15,5 +15,6 @@ namespace Services
 
         [OperationContract]
         List<RecipeDTO> GetAllRecipes();
+        List<RecipeDTO> GetRecipes();
     }
 }

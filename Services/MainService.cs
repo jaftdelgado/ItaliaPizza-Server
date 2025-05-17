@@ -45,6 +45,11 @@ namespace Services
         #region Customer
         public int AddCustomer(CustomerDTO customer) => _customerService.AddCustomer(customer);
         public bool IsCustomerEmailAvailable(string email) => _customerService.IsCustomerEmailAvailable(email);
+
+        public List<CustomerDTO> GetCustomers() => _customerService.GetCustomers();
+        public bool UpdateCustomer(CustomerDTO customerDTO) => _customerService.UpdateCustomer(customerDTO);
+        public bool DeleteCustomer(int customerID) => _customerService.DeleteCustomer(customerID);
+        public bool ReactivateCustomer(int customerID) => _customerService.ReactivateCustomer(customerID);
         #endregion
 
         public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
@@ -62,7 +67,6 @@ namespace Services
 
         #region Supply
         public List<SupplyCategoryDTO> GetAllCategories() => _supplyService.GetAllCategories();
-        public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplyService.GetSuppliersByCategory(categoryId);
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
         public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId) => _supplyService.GetSuppliesAvailableByCategory(categoryId, supplierId);
         public List<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
@@ -77,6 +81,7 @@ namespace Services
 
         #region Supplier
         public List<SupplierDTO> GetAllSuppliers() => _supplierService.GetAllSuppliers();
+        public List<SupplierDTO> GetSuppliersByCategory(int categoryId) => _supplierService.GetSuppliersByCategory(categoryId);
         public int AddSupplier(SupplierDTO supplierDTO) => _supplierService.AddSupplier(supplierDTO);
         public bool UpdateSupplier(SupplierDTO supplierDTO) => _supplierService.UpdateSupplier(supplierDTO);
         public bool DeleteSupplier(int supplierID) => _supplierService.DeleteSupplier(supplierID);
@@ -85,11 +90,21 @@ namespace Services
 
         #region Finance
         public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
+
+        public bool OpenCashRegister(decimal initialAmout) => _financeService.OpenCashRegister(initialAmout);
+
+        public int RegisterCashOut(decimal amount, string description) => _financeService.RegisterCashOut(amount, description);
         #endregion
 
         #region OrderSupplier
-        public int RegisterOrder(SupplierOrderDTO dto) => _supplierOrderService.RegisterOrder(dto);
+        public List<SupplierOrderDTO> GetAllSupplierOrders() => _supplierOrderService.GetAllSupplierOrders();
+        public int AddSupplierOrder(SupplierOrderDTO orderDTO) => _supplierOrderService.AddSupplierOrder(orderDTO);
+        public bool UpdateSupplierOrder(SupplierOrderDTO orderDTO) => _supplierOrderService.UpdateSupplierOrder(orderDTO);
+        public bool DeliverOrder(int supplierOrderID) => _supplierOrderService.DeliverOrder(supplierOrderID);
+        public bool CancelSupplierOrder(int supplierOrderID) => _supplierOrderService.CancelSupplierOrder(supplierOrderID);
+        #endregion
 
+        #region Orders
         public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID) => _orderService.GetOrderItemsByOrderID(orderID);
 
         public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
@@ -99,6 +114,7 @@ namespace Services
         public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.RegisterRecipe(recipe, supplies);
 
         public List<RecipeDTO> GetAllRecipes() => _recipeService.GetAllRecipes();
+        public List<RecipeDTO> GetRecipes() => _recipeService.GetRecipes();
         #endregion
 
         #region Session

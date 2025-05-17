@@ -19,7 +19,7 @@ namespace Model
         public decimal Quantity { get; set; }
         public decimal Total { get; set; }
     
-        public virtual SupplierOrder SupplierOrder { get; set; }
         public virtual Supply Supply { get; set; }
+        public virtual SupplierOrder SupplierOrder { get; set; }
     }
 }

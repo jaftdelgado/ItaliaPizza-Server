@@ -12,6 +12,9 @@ namespace Services
         List<SupplierDTO> GetAllSuppliers();
 
         [OperationContract]
+        List<SupplierDTO> GetSuppliersByCategory(int categoryId);
+
+        [OperationContract]
         int AddSupplier(SupplierDTO supplierDTO);
 
         [OperationContract]

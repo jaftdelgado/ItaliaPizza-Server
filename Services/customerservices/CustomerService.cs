@@ -1,5 +1,7 @@
 ﻿using Model;
 using Services.Dtos;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services
 {
@@ -28,10 +30,49 @@ namespace Services
             return result;
         }
 
+        public List<CustomerDTO> GetCustomers()
+        {
+            var dao = new CustomerDAO();
+            var customers = dao.GetCustomers();
+
+            return customers.Select(c => new CustomerDTO
+            {
+                CustomerID = c.CustomerID,
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                EmailAddress = c.EmailAddress,
+                PhoneNumber = c.PhoneNumber,
+                IsActive = c.IsActive,
+                AddressID = c.AddressID,
+                Address = new AddressDTO
+                {
+                    Id = c.Address.AddressID,
+                    AddressName = c.Address.AddressName,
+                    ZipCode = c.Address.ZipCode,
+                    City = c.Address.City
+                }
+            }).ToList();
+        }
+
         public bool IsCustomerEmailAvailable(string email)
         {
             CustomerDAO customerDAO = new CustomerDAO();
             return customerDAO.IsCustomerEmailAvailable(email);
+        }
+
+        bool ICustomerManager.DeleteCustomer(int customerID)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        bool ICustomerManager.ReactivateCustomer(int customerID)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        bool ICustomerManager.UpdateCustomer(CustomerDTO customerDTO)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

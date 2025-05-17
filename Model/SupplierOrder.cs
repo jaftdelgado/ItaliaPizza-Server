@@ -18,6 +18,7 @@ namespace Model
         public SupplierOrder()
         {
             this.SupplierOrder_Supply = new HashSet<SupplierOrder_Supply>();
+            this.Transactions = new HashSet<Transaction>();
         }
     
         public int SupplierID { get; set; }
@@ -25,11 +26,13 @@ namespace Model
         public Nullable<System.DateTime> Delivered { get; set; }
         public string OrderFolio { get; set; }
         public decimal Total { get; set; }
-        public string Status { get; set; }
+        public Nullable<int> Status { get; set; }
         public int SupplierOrderID { get; set; }
     
+        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierOrder_Supply> SupplierOrder_Supply { get; set; }
-        public virtual Supplier Supplier { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

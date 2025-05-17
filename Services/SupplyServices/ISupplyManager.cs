@@ -11,9 +11,6 @@ namespace Services.SupplyServices
         List<SupplyCategoryDTO> GetAllCategories();
 
         [OperationContract]
-        List<SupplierDTO> GetSuppliersByCategory(int categoryId);
-
-        [OperationContract]
         List<SupplyDTO> GetSuppliesBySupplier(int supplierId);
         
         [OperationContract]

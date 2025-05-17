@@ -20,18 +20,6 @@ namespace Services.SupplyServices
                 }).ToList();
         }
 
-        public List<SupplierDTO> GetSuppliersByCategory(int categoryId)
-        {
-            return dao.GetSuppliersByCategory(categoryId)
-                .Select(s => new SupplierDTO
-                {
-                    Id = s.SupplierID,
-                    ContactName = s.ContactName,
-                    PhoneNumber = s.PhoneNumber,
-                    CategorySupply = s.CategorySupply
-                }).ToList();
-        }
-
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId)
         {
             return dao.GetSuppliesBySupplier(supplierId)
@@ -40,9 +28,10 @@ namespace Services.SupplyServices
                     Id = s.SupplyID,
                     Name = s.SupplyName,
                     Price = s.Price,
+                    Stock = s.Stock,
                     MeasureUnit = s.MeasureUnit,
                     Brand = s.Brand,
-                    SupplyCategoryID = s.SupplyCategoryID,
+                    SupplyPic = s.SupplyPic,
                     SupplierID = s.SupplierID
                 }).ToList();
         }

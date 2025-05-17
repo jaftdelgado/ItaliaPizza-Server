@@ -17,22 +17,12 @@ namespace Services.SupplyServices
             }
         }
 
-        public List<Supplier> GetSuppliersByCategory(int categoryId)
-        {
-            using (var context = new italiapizzaEntities())
-            {
-                return context.Suppliers
-                    .Where(s => s.CategorySupply == categoryId)
-                    .ToList();
-            }
-        }
-
         public List<Supply> GetSuppliesBySupplier(int supplierId)
         {
             using (var context = new italiapizzaEntities())
             {
                 return context.Supplies
-                    .Where(s => s.SupplierID == supplierId)
+                    .Where(s => s.SupplierID == supplierId && s.IsActive)
                     .ToList();
             }
         }

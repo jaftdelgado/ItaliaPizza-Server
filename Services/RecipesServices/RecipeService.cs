@@ -33,5 +33,17 @@ namespace Services
             var recipes = recipeDAO.GetAllRecipes();
             return recipes;
         }
+        public List<RecipeDTO> GetRecipes()
+        {
+            var dao = new RecipeDAO();
+            var recipes = dao.GetRecipes();
+
+            return recipes.Select(r => new RecipeDTO
+            {
+                RecipeID = r.RecipeID,
+                Description = r.Description,
+                PreparationTime = r.PreparationTime
+            }).ToList();
+        }
     }
 }
