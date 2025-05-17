@@ -26,5 +26,12 @@ namespace Services
             var recipeDAO = new RecipeDAO();
             return recipeDAO.RegisterRecipe(recipe, recipeSupplies);
         }
+
+        public List<RecipeDTO> GetAllRecipes()
+        {
+            var recipeDAO = new RecipeDAO();
+            var recipes = recipeDAO.GetAllRecipes();
+            return recipes;
+        }
     }
 }

@@ -21,6 +21,8 @@ namespace Services.SupplyServices
 
         [OperationContract]
         List<SupplyDTO> GetAllSupplies();
+        [OperationContract]
+        List<SupplyDTO> GetAllSuppliesPage(int pageNumber, int pageSize);
 
         [OperationContract]
         int AddSupply(SupplyDTO supplyDTO);

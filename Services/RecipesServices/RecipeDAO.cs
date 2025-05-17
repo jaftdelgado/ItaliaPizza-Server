@@ -46,5 +46,23 @@ namespace Services
             }
             return result;
         }
+
+        public List<RecipeDTO> GetAllRecipes()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var recipes = context.Recipes
+                    .Include("Product")
+                    .ToList();
+                return recipes.Select(r => new RecipeDTO
+                {
+                    RecipeID = r.RecipeID,
+                    Description = r.Description,
+                    PreparationTime = r.PreparationTime,
+                    ProductID = r.ProductID,
+                    ProductName = r.Product.Name,
+                }).ToList();
+            }
+        }
     }
 }

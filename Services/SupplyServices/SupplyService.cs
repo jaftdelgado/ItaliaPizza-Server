@@ -86,6 +86,32 @@ namespace Services.SupplyServices
             return supplyList;
         }
 
+        public List<SupplyDTO> GetAllSuppliesPage(int pageNumber, int pageSize)
+        {
+            var supplies = dao.GetAllSupplies();
+            List<SupplyDTO> supplyList = new List<SupplyDTO>();
+            foreach (var supply in supplies.OrderBy(s => s.SupplyID)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize))
+            {
+                supplyList.Add(new SupplyDTO
+                {
+                    Id = supply.SupplyID,
+                    Name = supply.SupplyName,
+                    Price = supply.Price,
+                    MeasureUnit = supply.MeasureUnit,
+                    Brand = supply.Brand,
+                    SupplyPic = supply.SupplyPic,
+                    Description = supply.Description,
+                    IsActive = supply.IsActive,
+                    SupplyCategoryID = supply.SupplyCategoryID,
+                    SupplierID = supply.SupplierID,
+                    SupplierName = supply.Supplier?.SupplierName
+                });
+            }
+            return supplyList;
+        }
+
         public int AddSupply(SupplyDTO supplyDTO)
         {
             var supply = new Supply
