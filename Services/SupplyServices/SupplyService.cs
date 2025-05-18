@@ -47,6 +47,48 @@ namespace Services.SupplyServices
             return supplies;
         }
 
+        public List<SupplyDTO> GetAllSuppliesPage(int pageNumber, int pageSize)
+        {
+            var supplies = dao.GetAllSupplies();
+            List<SupplyDTO> supplyList = new List<SupplyDTO>();
+            foreach (var supply in supplies.OrderBy(s => s.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize))
+            {
+                supplyList.Add(new SupplyDTO
+                {
+                    Id = supply.Id,
+                    Name = supply.Name,
+                    Price = supply.Price,
+                    MeasureUnit = supply.MeasureUnit,
+                    Brand = supply.Brand,
+                    SupplyPic = supply.SupplyPic,
+                    Description = supply.Description,
+                    IsActive = supply.IsActive,
+                    SupplyCategoryID = supply.SupplyCategoryID,
+                    SupplierID = supply.SupplierID,
+                    SupplierName = supply?.SupplierName
+                });
+            }
+            return supplyList;
+        }
+
+        public List<RecipeSupplyDTO> GetSuppliesByRecipe(int recipeId)
+        {
+            var recipeSupplies = dao.GetSuppliesByRecipe(recipeId);
+            List<RecipeSupplyDTO> recipeSupplyList = new List<RecipeSupplyDTO>();
+            foreach (var recipeSupply in recipeSupplies)
+            {
+                recipeSupplyList.Add(new RecipeSupplyDTO
+                {
+                    SupplyID = recipeSupply.SupplyID,
+                    UseQuantity = recipeSupply.UseQuantity,
+                    RecipeSupplyName = recipeSupply.Supply.SupplyName,
+                    MeasureUnit = recipeSupply.Supply.MeasureUnit,
+                });
+            }
+            return recipeSupplyList;
+        }
         public int AddSupply(SupplyDTO supplyDTO)
         {
             var supply = new Supply

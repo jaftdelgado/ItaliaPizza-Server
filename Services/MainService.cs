@@ -69,12 +69,14 @@ namespace Services
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
         public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId) => _supplyService.GetSuppliesAvailableByCategory(categoryId, supplierId);
         public List<SupplyDTO> GetAllSupplies(bool activeOnly = false) => _supplyService.GetAllSupplies(activeOnly = false);
+        public List<SupplyDTO> GetAllSuppliesPage(int pageNumber, int pageSize) => _supplyService.GetAllSuppliesPage(pageNumber, pageSize);
         public int AddSupply(SupplyDTO supplyDTO) => _supplyService.AddSupply(supplyDTO);
         public bool UpdateSupply(SupplyDTO supplyDTO) => _supplyService.UpdateSupply(supplyDTO);
         public bool DeleteSupply(int supplyID) => _supplyService.DeleteSupply(supplyID);
         public bool ReactivateSupply(int supplyID) => _supplyService.ReactivateSupply(supplyID);
         public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId) => _supplyService.AssignSupplierToSupply(supplyIds, supplierId);
         public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId) => _supplyService.UnassignSupplierFromSupply(supplyIds, supplierId);
+        public List<RecipeSupplyDTO> GetSuppliesByRecipe(int recipeId) => _supplyService.GetSuppliesByRecipe(recipeId);
         public bool IsSupplyDeletable(int supplyId) => _supplyService.IsSupplyDeletable(supplyId);
         #endregion
 
@@ -111,6 +113,8 @@ namespace Services
 
         #region Recipe
         public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.RegisterRecipe(recipe, supplies);
+
+        public List<RecipeDTO> GetAllRecipes() => _recipeService.GetAllRecipes();
         public List<RecipeDTO> GetRecipes() => _recipeService.GetRecipes();
         #endregion
 

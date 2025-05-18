@@ -192,6 +192,16 @@ namespace Services.SupplyServices
             }
         }
 
+        public List<RecipeSupply> GetSuppliesByRecipe(int recipeId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.RecipeSupplies
+                    .Include(rs => rs.Supply)
+                    .Where(rs => rs.RecipeID == recipeId)
+                    .ToList();
+            }
+        }
         public bool IsSupplyDeletable(int supplyId)
         {
             using (var context = new italiapizzaEntities())

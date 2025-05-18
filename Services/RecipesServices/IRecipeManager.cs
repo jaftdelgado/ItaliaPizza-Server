@@ -14,6 +14,8 @@ namespace Services
         int RegisterRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies);
 
         [OperationContract]
+        List<RecipeDTO> GetAllRecipes();
+        [OperationContract]
         List<RecipeDTO> GetRecipes();
     }
 }

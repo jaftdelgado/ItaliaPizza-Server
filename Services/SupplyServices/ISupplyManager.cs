@@ -15,6 +15,12 @@ namespace Services.SupplyServices
 
         [OperationContract]
         List<SupplyDTO> GetAllSupplies(bool activeOnly = false);
+      
+        [OperationContract]
+        List<SupplyDTO> GetAllSuppliesPage(int pageNumber, int pageSize);
+      
+        [OperationContract]
+        List<RecipeSupplyDTO> GetSuppliesByRecipe(int recipeId);
 
         [OperationContract]
         int AddSupply(SupplyDTO supplyDTO);
