@@ -46,7 +46,6 @@ namespace Services.FinanceServices
         {
             using (var context = new italiapizzaEntities())
             {
-                // Verificar si ya hay una caja abierta
                 if (context.CashRegisters.Any(c => c.ClosingDate == null))
                     return false;
 
@@ -94,5 +93,51 @@ namespace Services.FinanceServices
                 return 1;
             }
         }
+        public int RegisterSupplierOrderExpense(int supplierOrderID)
+        {
+            using (var context = new italiapizzaEntities())
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var order = context.SupplierOrders.FirstOrDefault(o => o.SupplierOrderID == supplierOrderID);
+                    if (order == null || order.Status != 1) 
+                        return -1;
+
+                    var total = order.Total;
+
+                    var cashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
+                    if (cashRegister == null)
+                        return -2;
+
+                    if (cashRegister.FinalBalance < total)
+                        return -3;
+
+                    var transactionRecord = new Transaction
+                    {
+                        FinancialFlow = "O",
+                        Amount = total,
+                        Date = DateTime.Now,
+                        Description = $"Pago a proveedor - Pedido {order.OrderFolio}",
+                        CashRegisterID = cashRegister.CashRegisterID,
+                        SupplierOrderID = supplierOrderID,
+                        Concept = 3 
+                    };
+                    context.Transactions.Add(transactionRecord);
+
+                    cashRegister.FinalBalance -= total;
+
+                    context.SaveChanges();
+                    transaction.Commit();
+                    return 1;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return 0;
+                }
+            }
+        }
+
     }
 }
