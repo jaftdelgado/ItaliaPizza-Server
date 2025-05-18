@@ -41,9 +41,9 @@ namespace Services.SupplyServices
                 }).ToList();
         }
 
-        public List<SupplyDTO> GetAllSupplies()
+        public List<SupplyDTO> GetAllSupplies(bool activeOnly = false)
         {
-            var supplies = dao.GetAllSupplies();
+            var supplies = dao.GetAllSupplies(activeOnly);
             return supplies;
         }
 

@@ -26,7 +26,7 @@ namespace Model
         public string SupplyName { get; set; }
         public string Brand { get; set; }
         public int SupplyCategoryID { get; set; }
-        public decimal Stock { get; set; }
+        public Nullable<decimal> Stock { get; set; }
         public Nullable<int> SupplierID { get; set; }
         public decimal Price { get; set; }
         public int MeasureUnit { get; set; }

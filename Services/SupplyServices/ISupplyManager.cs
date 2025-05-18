@@ -14,9 +14,11 @@ namespace Services.SupplyServices
         List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId);
 
         [OperationContract]
-        List<SupplyDTO> GetAllSupplies();
+        List<SupplyDTO> GetAllSupplies(bool activeOnly = false);
+      
         [OperationContract]
         List<SupplyDTO> GetAllSuppliesPage(int pageNumber, int pageSize);
+      
         [OperationContract]
         List<RecipeSupplyDTO> GetSuppliesByRecipe(int recipeId);
 
