@@ -191,7 +191,7 @@
           <Property Name="SupplyName" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="Brand" Type="varchar" MaxLength="32" />
           <Property Name="SupplyCategoryID" Type="int" Nullable="false" />
-          <Property Name="Stock" Type="decimal" Precision="6" Scale="3" Nullable="false" />
+          <Property Name="Stock" Type="decimal" Precision="5" Scale="2" />
           <Property Name="SupplierID" Type="int" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="MeasureUnit" Type="int" Nullable="false" />
@@ -1196,7 +1196,7 @@
           <Property Name="SupplyName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Brand" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="SupplyCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="Stock" Type="Decimal" Nullable="false" Precision="6" Scale="3" />
+          <Property Name="Stock" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="SupplierID" Type="Int32" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
           <Property Name="MeasureUnit" Type="Int32" Nullable="false" />
