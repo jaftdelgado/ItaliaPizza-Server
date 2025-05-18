@@ -66,7 +66,6 @@ namespace Services
         #endregion
 
         #region Supply
-        public List<SupplyCategoryDTO> GetAllCategories() => _supplyService.GetAllCategories();
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId) => _supplyService.GetSuppliesBySupplier(supplierId);
         public List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId) => _supplyService.GetSuppliesAvailableByCategory(categoryId, supplierId);
         public List<SupplyDTO> GetAllSupplies() => _supplyService.GetAllSupplies();
@@ -76,6 +75,7 @@ namespace Services
         public bool ReactivateSupply(int supplyID) => _supplyService.ReactivateSupply(supplyID);
         public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId) => _supplyService.AssignSupplierToSupply(supplyIds, supplierId);
         public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId) => _supplyService.UnassignSupplierFromSupply(supplyIds, supplierId);
+        public bool IsSupplyDeletable(int supplyId) => _supplyService.IsSupplyDeletable(supplyId);
         #endregion
 
         #region Supplier

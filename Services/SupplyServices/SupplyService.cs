@@ -10,16 +10,6 @@ namespace Services.SupplyServices
     {
         private readonly SupplyDAO dao = new SupplyDAO();
 
-        public List<SupplyCategoryDTO> GetAllCategories()
-        {
-            return dao.GetCategories()
-                .Select(c => new SupplyCategoryDTO
-                {
-                    Id = c.SupplyCategoryID,
-                    Name = c.CategoryName
-                }).ToList();
-        }
-
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId)
         {
             return dao.GetSuppliesBySupplier(supplierId)
@@ -54,25 +44,7 @@ namespace Services.SupplyServices
         public List<SupplyDTO> GetAllSupplies()
         {
             var supplies = dao.GetAllSupplies();
-            List<SupplyDTO> supplyList = new List<SupplyDTO>();
-            foreach (var supply in supplies)
-            {
-                supplyList.Add(new SupplyDTO
-                {
-                    Id = supply.SupplyID,
-                    Name = supply.SupplyName,
-                    Price = supply.Price,
-                    MeasureUnit = supply.MeasureUnit,
-                    Brand = supply.Brand,
-                    SupplyPic = supply.SupplyPic,
-                    Description = supply.Description,
-                    IsActive = supply.IsActive,
-                    SupplyCategoryID = supply.SupplyCategoryID,
-                    SupplierID = supply.SupplierID,
-                    SupplierName = supply.Supplier?.SupplierName
-                });
-            }
-            return supplyList;
+            return supplies;
         }
 
         public int AddSupply(SupplyDTO supplyDTO)
@@ -132,6 +104,11 @@ namespace Services.SupplyServices
         public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId)
         {
             return dao.UnassignSupplierFromSupply(supplyIds, supplierId);
+        }
+
+        public bool IsSupplyDeletable(int supplyId)
+        {
+            return dao.IsSupplyDeletable(supplyId);
         }
 
     }

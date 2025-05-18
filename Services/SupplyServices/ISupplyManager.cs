@@ -8,9 +8,6 @@ namespace Services.SupplyServices
     public interface ISupplyManager
     {
         [OperationContract]
-        List<SupplyCategoryDTO> GetAllCategories();
-
-        [OperationContract]
         List<SupplyDTO> GetSuppliesBySupplier(int supplierId);
         
         [OperationContract]
@@ -36,5 +33,8 @@ namespace Services.SupplyServices
 
         [OperationContract]
         bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId);
+
+        [OperationContract]
+        bool IsSupplyDeletable(int supplyId);
     }
 }
