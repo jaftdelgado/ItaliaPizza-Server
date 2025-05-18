@@ -14,7 +14,7 @@ namespace Services.SupplyServices
         List<SupplyDTO> GetSuppliesAvailableByCategory(int categoryId, int? supplierId);
 
         [OperationContract]
-        List<SupplyDTO> GetAllSupplies();
+        List<SupplyDTO> GetAllSupplies(bool activeOnly = false);
 
         [OperationContract]
         int AddSupply(SupplyDTO supplyDTO);
