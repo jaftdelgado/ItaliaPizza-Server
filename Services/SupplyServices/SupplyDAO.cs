@@ -171,5 +171,16 @@ namespace Services.SupplyServices
                 return true;
             }
         }
+
+        public List<RecipeSupply> GetSuppliesByRecipe(int recipeId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.RecipeSupplies
+                    .Include(rs => rs.Supply)
+                    .Where(rs => rs.RecipeID == recipeId)
+                    .ToList();
+            }
+        }
     }
 }

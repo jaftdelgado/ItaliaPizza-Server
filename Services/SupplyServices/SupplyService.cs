@@ -101,6 +101,22 @@ namespace Services.SupplyServices
             return supplyList;
         }
 
+        public List<RecipeSupplyDTO> GetSuppliesByRecipe(int recipeId)
+        {
+            var recipeSupplies = dao.GetSuppliesByRecipe(recipeId);
+            List<RecipeSupplyDTO> recipeSupplyList = new List<RecipeSupplyDTO>();
+            foreach (var recipeSupply in recipeSupplies)
+            {
+                recipeSupplyList.Add(new RecipeSupplyDTO
+                {
+                    SupplyID = recipeSupply.SupplyID,
+                    UseQuantity = recipeSupply.UseQuantity,
+                    RecipeSupplyName = recipeSupply.Supply.SupplyName,
+                    MeasureUnit = recipeSupply.Supply.MeasureUnit,
+                });
+            }
+            return recipeSupplyList;
+        }
         public int AddSupply(SupplyDTO supplyDTO)
         {
             var supply = new Supply

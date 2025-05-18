@@ -13,10 +13,14 @@ namespace Services
         [DataMember]
         public int RecipeSupplyID { get; set; }
         [DataMember]
+        public string RecipeSupplyName { get; set; }
+        [DataMember]
         public int RecipeID { get; set; }
         [DataMember]
         public int SupplyID { get; set; }
         [DataMember]
         public decimal UseQuantity { get; set; }
+        [DataMember]
+        public int MeasureUnit { get; set; }
     }
 }

@@ -42,7 +42,9 @@ namespace Services
             {
                 RecipeID = r.RecipeID,
                 Description = r.Description,
-                PreparationTime = r.PreparationTime
+                PreparationTime = r.PreparationTime,
+                ProductID = r.ProductID,
+                ProductName = r.Product.Name,
             }).ToList();
         }
     }

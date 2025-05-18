@@ -77,6 +77,7 @@ namespace Services
         public bool ReactivateSupply(int supplyID) => _supplyService.ReactivateSupply(supplyID);
         public bool AssignSupplierToSupply(List<int> supplyIds, int supplierId) => _supplyService.AssignSupplierToSupply(supplyIds, supplierId);
         public bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId) => _supplyService.UnassignSupplierFromSupply(supplyIds, supplierId);
+        public List<RecipeSupplyDTO> GetSuppliesByRecipe(int recipeId) => _supplyService.GetSuppliesByRecipe(recipeId);
         #endregion
 
         #region Supplier

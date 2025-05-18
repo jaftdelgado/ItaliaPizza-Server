@@ -23,6 +23,7 @@ namespace Services
         public int ProductID { get; set; }
         [DataMember]
         public ProductDTO Product { get; set; }
+        [DataMember]
 
         public string ProductName { get; set; }
 
