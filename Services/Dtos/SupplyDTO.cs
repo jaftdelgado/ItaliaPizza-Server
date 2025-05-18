@@ -40,6 +40,8 @@ namespace Services.Dtos
 
         [DataMember]
         public string SupplierName { get; set; }
-    }
 
+        [DataMember]
+        public bool IsDeletable { get; set; }
+    }
 }

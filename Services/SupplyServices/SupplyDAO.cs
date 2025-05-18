@@ -1,4 +1,5 @@
 ﻿using Model;
+using Services.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,14 +10,6 @@ namespace Services.SupplyServices
 {
     public class SupplyDAO
     {
-        public List<SupplyCategory> GetCategories()
-        {
-            using (var context = new italiapizzaEntities())
-            {
-                return context.SupplyCategories.ToList();
-            }
-        }
-
         public List<Supply> GetSuppliesBySupplier(int supplierId)
         {
             using (var context = new italiapizzaEntities())
@@ -39,11 +32,33 @@ namespace Services.SupplyServices
             }
         }
 
-        public List<Supply> GetAllSupplies()
+        public List<SupplyDTO> GetAllSupplies()
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Supplies.Include(s => s.Supplier).ToList();
+                var supplies = context.Supplies.Include(s => s.Supplier).ToList();
+
+                var usedInRecipes = context.RecipeSupplies.Select(rs => rs.SupplyID).Distinct().ToHashSet();
+                var withSuppliers = supplies
+                    .Where(s => s.SupplierID != null)
+                    .Select(s => s.SupplyID)
+                    .ToHashSet();
+
+                return supplies.Select(s => new SupplyDTO
+                {
+                    Id = s.SupplyID,
+                    Name = s.SupplyName,
+                    Price = s.Price,
+                    MeasureUnit = s.MeasureUnit,
+                    Brand = s.Brand,
+                    SupplyPic = s.SupplyPic,
+                    Description = s.Description,
+                    IsActive = s.IsActive,
+                    SupplyCategoryID = s.SupplyCategoryID,
+                    SupplierID = s.SupplierID,
+                    SupplierName = s.Supplier?.SupplierName,
+                    IsDeletable = !usedInRecipes.Contains(s.SupplyID) && !withSuppliers.Contains(s.SupplyID)
+                }).ToList();
             }
         }
 
@@ -180,6 +195,19 @@ namespace Services.SupplyServices
                     .Include(rs => rs.Supply)
                     .Where(rs => rs.RecipeID == recipeId)
                     .ToList();
+            }
+        }
+        public bool IsSupplyDeletable(int supplyId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                bool hasSupplier = context.Supplies
+                    .Any(s => s.SupplyID == supplyId && s.SupplierID != null);
+
+                bool usedInRecipe = context.RecipeSupplies
+                    .Any(rs => rs.SupplyID == supplyId);
+
+                return !hasSupplier && !usedInRecipe;
             }
         }
     }
