@@ -4,9 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cd72523156b04e6cba77b79ae6343911" Name="Diagram1" ZoomLevel="67">
+      <Diagram DiagramId="cd72523156b04e6cba77b79ae6343911" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Customer" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Delivery" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Order" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
@@ -48,9 +47,10 @@
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrder_Supplier" />
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Order" />
         <EntityTypeShape EntityType="italiapizzaModel.Transaction" Width="1.5" PointX="17.5" PointY="6.125" />
-        <AssociationConnector Association="italiapizzaModel.FK_Transaction_CashRegister" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_Order" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_SupplierOrder" />
+        <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.375" PointY="1" />
+        <AssociationConnector Association="italiapizzaModel.FK_Transaction_CashRegister" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

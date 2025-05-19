@@ -26,6 +26,7 @@ namespace Model
         public Nullable<decimal> FinalBalance { get; set; }
         public System.DateTime OpeningDate { get; set; }
         public Nullable<decimal> CashierAmount { get; set; }
+        public decimal CurrentBalance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }

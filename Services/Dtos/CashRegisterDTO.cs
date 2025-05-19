@@ -14,6 +14,9 @@ namespace Services.Dtos
 
         [DataMember]
         public decimal InitialBalance { get; set; }
+        
+        [DataMember]
+        public decimal CurrentBalance { get; set; }
 
         [DataMember]
         public DateTime? ClosingDate { get; set; }

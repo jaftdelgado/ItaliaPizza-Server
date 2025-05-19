@@ -46,7 +46,6 @@ namespace Services.FinanceServices
         {
             using (var context = new italiapizzaEntities())
             {
-                // Verificar si ya hay una caja abierta
                 if (context.CashRegisters.Any(c => c.ClosingDate == null))
                     return false;
 
@@ -54,7 +53,7 @@ namespace Services.FinanceServices
                 {
                     OpeningDate = DateTime.Now,
                     InitialBalance = initialAmount,
-                    FinalBalance = initialAmount
+                    CurrentBalance = initialAmount
                 };
 
                 context.CashRegisters.Add(cashRegister);
