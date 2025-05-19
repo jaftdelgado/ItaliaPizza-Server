@@ -24,6 +24,7 @@
           <Property Name="FinalBalance" Type="decimal" Precision="6" Scale="2" />
           <Property Name="OpeningDate" Type="datetime" Nullable="false" />
           <Property Name="CashierAmount" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="CurrentBalance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -676,18 +677,6 @@
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Delivery_Address" FromRole="Address" ToRole="Delivery" />
           <NavigationProperty Name="Personals" Relationship="Self.FK_Personal_Address" FromRole="Address" ToRole="Personal" />
         </EntityType>
-        <EntityType Name="CashRegister">
-          <Key>
-            <PropertyRef Name="CashRegisterID" />
-          </Key>
-          <Property Name="CashRegisterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClosingDate" Type="DateTime" Precision="3" />
-          <Property Name="InitialBalance" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
-          <Property Name="FinalBalance" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="OpeningDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CashierAmount" Type="Decimal" Precision="8" Scale="2" />
-          <NavigationProperty Name="Transactions" Relationship="italiapizzaModel.FK_Transaction_CashRegister" FromRole="CashRegister" ToRole="Transaction" />
-        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -1027,7 +1016,6 @@
         </Association>
         <EntityContainer Name="italiapizzaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
-          <EntitySet Name="CashRegisters" EntityType="Self.CashRegister" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
@@ -1134,16 +1122,17 @@
             <End Role="SupplierOrder_Supply" EntitySet="SupplierOrder_Supply" />
           </AssociationSet>
           <EntitySet Name="Transactions" EntityType="italiapizzaModel.Transaction" />
-          <AssociationSet Name="FK_Transaction_CashRegister" Association="italiapizzaModel.FK_Transaction_CashRegister">
-            <End Role="CashRegister" EntitySet="CashRegisters" />
-            <End Role="Transaction" EntitySet="Transactions" />
-          </AssociationSet>
           <AssociationSet Name="FK_Transaction_Order" Association="italiapizzaModel.FK_Transaction_Order">
             <End Role="Order" EntitySet="Orders" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
           <AssociationSet Name="FK_Transaction_SupplierOrder" Association="italiapizzaModel.FK_Transaction_SupplierOrder">
             <End Role="SupplierOrder" EntitySet="SupplierOrders" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <EntitySet Name="CashRegisters" EntityType="italiapizzaModel.CashRegister" />
+          <AssociationSet Name="FK_Transaction_CashRegister" Association="italiapizzaModel.FK_Transaction_CashRegister">
+            <End Role="CashRegister" EntitySet="CashRegisters" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
           </EntityContainer>
@@ -1329,22 +1318,10 @@
           <Property Name="CashRegisterID" Type="Int32" Nullable="false" />
           <Property Name="SupplierOrderID" Type="Int32" />
           <Property Name="Concept" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CashRegister" Relationship="italiapizzaModel.FK_Transaction_CashRegister" FromRole="Transaction" ToRole="CashRegister" />
           <NavigationProperty Name="Order" Relationship="italiapizzaModel.FK_Transaction_Order" FromRole="Transaction" ToRole="Order" />
           <NavigationProperty Name="SupplierOrder" Relationship="italiapizzaModel.FK_Transaction_SupplierOrder" FromRole="Transaction" ToRole="SupplierOrder" />
+          <NavigationProperty Name="CashRegister" Relationship="italiapizzaModel.FK_Transaction_CashRegister" FromRole="Transaction" ToRole="CashRegister" />
         </EntityType>
-        <Association Name="FK_Transaction_CashRegister">
-          <End Type="italiapizzaModel.CashRegister" Role="CashRegister" Multiplicity="1" />
-          <End Type="italiapizzaModel.Transaction" Role="Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CashRegister">
-              <PropertyRef Name="CashRegisterID" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="CashRegisterID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Transaction_Order">
           <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="0..1" />
           <End Type="italiapizzaModel.Transaction" Role="Transaction" Multiplicity="*" />
@@ -1369,6 +1346,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CashRegister">
+          <Key>
+            <PropertyRef Name="CashRegisterID" />
+          </Key>
+          <Property Name="CashRegisterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClosingDate" Type="DateTime" Precision="3" />
+          <Property Name="InitialBalance" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="FinalBalance" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="OpeningDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CashierAmount" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="CurrentBalance" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Transactions" Relationship="italiapizzaModel.FK_Transaction_CashRegister" FromRole="CashRegister" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="FK_Transaction_CashRegister">
+          <End Type="italiapizzaModel.CashRegister" Role="CashRegister" Multiplicity="1" />
+          <End Type="italiapizzaModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashRegister">
+              <PropertyRef Name="CashRegisterID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="CashRegisterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1382,18 +1384,6 @@
                 <ScalarProperty Name="AddressName" ColumnName="AddressName" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="City" ColumnName="City" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CashRegisters">
-            <EntityTypeMapping TypeName="italiapizzaModel.CashRegister">
-              <MappingFragment StoreEntitySet="CashRegister">
-                <ScalarProperty Name="CashierAmount" ColumnName="CashierAmount" />
-                <ScalarProperty Name="OpeningDate" ColumnName="OpeningDate" />
-                <ScalarProperty Name="CashRegisterID" ColumnName="CashRegisterID" />
-                <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
-                <ScalarProperty Name="InitialBalance" ColumnName="InitialBalance" />
-                <ScalarProperty Name="FinalBalance" ColumnName="FinalBalance" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1613,6 +1603,19 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="FinancialFlow" ColumnName="FinancialFlow" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashRegisters">
+            <EntityTypeMapping TypeName="italiapizzaModel.CashRegister">
+              <MappingFragment StoreEntitySet="CashRegister">
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="CashierAmount" ColumnName="CashierAmount" />
+                <ScalarProperty Name="OpeningDate" ColumnName="OpeningDate" />
+                <ScalarProperty Name="FinalBalance" ColumnName="FinalBalance" />
+                <ScalarProperty Name="InitialBalance" ColumnName="InitialBalance" />
+                <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
+                <ScalarProperty Name="CashRegisterID" ColumnName="CashRegisterID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

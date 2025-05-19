@@ -26,7 +26,6 @@ namespace Model
         }
     
         public virtual DbSet<Address> Addresses { get; set; }
-        public virtual DbSet<CashRegister> CashRegisters { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Delivery> Deliveries { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -45,5 +44,6 @@ namespace Model
         public virtual DbSet<Supply> Supplies { get; set; }
         public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<CashRegister> CashRegisters { get; set; }
     }
 }
