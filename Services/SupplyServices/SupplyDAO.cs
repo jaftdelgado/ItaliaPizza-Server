@@ -32,11 +32,15 @@ namespace Services.SupplyServices
             }
         }
 
-        public List<SupplyDTO> GetAllSupplies()
+        public List<SupplyDTO> GetAllSupplies(bool activeOnly = false)
         {
             using (var context = new italiapizzaEntities())
             {
-                var supplies = context.Supplies.Include(s => s.Supplier).ToList();
+                var query = context.Supplies.Include(s => s.Supplier).AsQueryable();
+
+                if (activeOnly) query = query.Where(s => s.IsActive);
+
+                var supplies = query.ToList();
 
                 var usedInRecipes = context.RecipeSupplies.Select(rs => rs.SupplyID).Distinct().ToHashSet();
                 var withSuppliers = supplies
@@ -54,6 +58,7 @@ namespace Services.SupplyServices
                     SupplyPic = s.SupplyPic,
                     Description = s.Description,
                     IsActive = s.IsActive,
+                    Stock = s.Stock,
                     SupplyCategoryID = s.SupplyCategoryID,
                     SupplierID = s.SupplierID,
                     SupplierName = s.Supplier?.SupplierName,

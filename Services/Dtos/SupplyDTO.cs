@@ -27,7 +27,7 @@ namespace Services.Dtos
         public int? SupplierID { get; set; }
 
         [DataMember]
-        public decimal Stock { get; set; }
+        public decimal? Stock { get; set; }
 
         [DataMember]
         public byte[] SupplyPic { get; set; }
