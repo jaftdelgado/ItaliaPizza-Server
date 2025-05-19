@@ -20,5 +20,11 @@ namespace Services.FinanceServices
             var dao = new FinanceDAO();
             return dao.RegisterCashOut(amount, description);
         }
+        public int RegisterSupplierOrderExpense(int supplierOrderID)
+        {
+            var dao = new FinanceDAO();
+            return dao.RegisterSupplierOrderExpense(supplierOrderID);
+        }
+
     }
 }
