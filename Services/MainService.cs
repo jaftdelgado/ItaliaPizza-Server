@@ -116,6 +116,7 @@ namespace Services
 
         public List<RecipeDTO> GetAllRecipes() => _recipeService.GetAllRecipes();
         public List<RecipeDTO> GetRecipes() => _recipeService.GetRecipes();
+        public int UpdateRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.UpdateRecipe(recipe, supplies);
         #endregion
 
         #region Session

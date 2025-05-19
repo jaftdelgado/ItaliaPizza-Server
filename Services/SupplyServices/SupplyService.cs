@@ -81,6 +81,7 @@ namespace Services.SupplyServices
             {
                 recipeSupplyList.Add(new RecipeSupplyDTO
                 {
+                    RecipeSupplyID = recipeSupply.RecipeSupplyID,
                     SupplyID = recipeSupply.SupplyID,
                     UseQuantity = recipeSupply.UseQuantity,
                     RecipeSupplyName = recipeSupply.Supply.SupplyName,

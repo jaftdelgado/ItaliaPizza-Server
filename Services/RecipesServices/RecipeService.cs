@@ -47,5 +47,26 @@ namespace Services
                 ProductName = r.Product.Name,
             }).ToList();
         }
+
+        public int UpdateRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies)
+        {
+            var recipe = new Recipe
+            {
+                RecipeID = recipeDTO.RecipeID,
+                Description = recipeDTO.Description,
+                PreparationTime = recipeDTO.PreparationTime,
+                ProductID = recipeDTO.ProductID,
+            };
+            var recipeSupplies = supplies.Select(s => new RecipeSupply
+            {
+                RecipeID = recipeDTO.RecipeID,
+                RecipeSupplyID = s.RecipeSupplyID,
+                SupplyID = s.SupplyID,
+                UseQuantity = s.UseQuantity,
+
+            }).ToList();
+            var recipeDAO = new RecipeDAO();
+            return recipeDAO.UpdateRecipe(recipe, recipeSupplies);
+        }
     }
 }

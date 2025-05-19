@@ -72,5 +72,81 @@ namespace Services
                 return context.Recipes.Include("Product").ToList();
             }
         }
+        public int UpdateRecipe(Recipe updatedRecipe, List<RecipeSupply> updatedRecipeSupplies)
+        {
+            int result = 0;
+            using (var context = new italiapizzaEntities())
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var existingRecipe = context.Recipes
+                            .Include("RecipeSupplies")
+                            .FirstOrDefault(r => r.RecipeID == updatedRecipe.RecipeID);
+
+                        if (existingRecipe == null)
+                            return 0;
+
+
+                        existingRecipe.Description = updatedRecipe.Description;
+                        existingRecipe.PreparationTime = updatedRecipe.PreparationTime;
+
+                        var updatedIds = updatedRecipeSupplies.Select(rs => rs.RecipeSupplyID).ToList();
+
+
+                        foreach (var existingRs in existingRecipe.RecipeSupplies.ToList())
+                        {
+                            if (!updatedIds.Contains(existingRs.RecipeSupplyID))
+                            {
+                                context.RecipeSupplies.Remove(existingRs);
+                            }
+                        }
+
+                        foreach (var updatedRs in updatedRecipeSupplies)
+                        {
+                            if (updatedRs.RecipeSupplyID == 0)
+                            {
+                                updatedRs.RecipeID = existingRecipe.RecipeID;
+                                context.RecipeSupplies.Add(updatedRs);
+                            }
+                            else
+                            {
+                                var existingRs = existingRecipe.RecipeSupplies
+                                    .FirstOrDefault(rs => rs.RecipeSupplyID == updatedRs.RecipeSupplyID);
+
+                                if (existingRs != null)
+                                {
+                                    existingRs.UseQuantity = updatedRs.UseQuantity;
+                                    existingRs.SupplyID = updatedRs.SupplyID;
+                                }
+                                else
+                                {
+                                    updatedRs.RecipeID = existingRecipe.RecipeID;
+                                    context.RecipeSupplies.Add(updatedRs);
+                                }
+                            }
+                        }
+
+                        context.SaveChanges();
+                        dbContextTransaction.Commit();
+                        result = 1;
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        dbContextTransaction.Rollback();
+
+                        result = 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        dbContextTransaction.Rollback();
+                        result = 0;
+                    }
+                }
+            }
+            return result;
+        }
+
     }
 }
