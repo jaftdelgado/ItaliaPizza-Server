@@ -1,27 +1,79 @@
 ﻿using Model;
 using Services.Dtos;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Services.FinanceServices
 {
     public class FinanceDAO
     {
+        internal CashRegister GetOpenCashRegister()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
+            }
+        }
+
+        public bool HasOpenCashRegister()
+        {
+            return GetOpenCashRegister() != null;
+        }
+
+        public CashRegisterDTO GetOpenCashRegisterInfo()
+        {
+            var cashRegister = GetOpenCashRegister();
+            if (cashRegister == null) return null;
+
+            return new CashRegisterDTO
+            {
+                CashRegisterID = cashRegister.CashRegisterID,
+                InitialBalance = cashRegister.InitialBalance,
+                CurrentBalance = cashRegister.CurrentBalance,
+                OpeningDate = cashRegister.OpeningDate,
+                ClosingDate = cashRegister.ClosingDate
+            };
+        }
+
+        public List<TransactionDTO> GetCurrentTransactions()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var openCashRegister = GetOpenCashRegister();
+                if (openCashRegister == null)
+                    return new List<TransactionDTO>();
+
+                return context.Transactions
+                    .Where(t => t.CashRegisterID == openCashRegister.CashRegisterID)
+                    .OrderByDescending(t => t.Date)
+                    .Select(t => new TransactionDTO
+                    {
+                        TransactionID = t.TransactionID,
+                        CashRegisterID = t.CashRegisterID,
+                        FinancialFlow = t.FinancialFlow,
+                        Amount = t.Amount,
+                        Date = t.Date,
+                        Concept = t.Concept,
+                        Description = t.Description,
+                        OrderID = t.OrderID,
+                        SupplierOrderID = t.SupplierOrderID
+                    })
+                    .ToList();
+            }
+        }
+
         public bool RegisterOrderPayment(int orderId)
         {
             using (var context = new italiapizzaEntities())
             {
                 var order = context.Orders.FirstOrDefault(o => o.OrderID == orderId);
-                if (order == null || order.IDState != 4)
-                    return false;
+                if (order == null || order.IDState != 4) return false;
+
+                var openCashRegister = GetOpenCashRegister();
+                if (openCashRegister == null) return false;
 
                 var total = order.Total ?? 0m;
-
-                var openCashRegister = context.CashRegisters
-                    .FirstOrDefault(c => c.ClosingDate == null);
-
-                if (openCashRegister == null)
-                    return false;
 
                 order.IDState = 5;
 
@@ -36,19 +88,20 @@ namespace Services.FinanceServices
                 };
                 context.Transactions.Add(transaction);
 
-                openCashRegister.FinalBalance += total;
+                openCashRegister.CurrentBalance += total;
 
                 context.SaveChanges();
                 return true;
             }
         }
+
         public bool OpenCashRegister(decimal initialAmount)
         {
+            if (GetOpenCashRegister() != null)
+                return false;
+
             using (var context = new italiapizzaEntities())
             {
-                if (context.CashRegisters.Any(c => c.ClosingDate == null))
-                    return false;
-
                 var cashRegister = new CashRegister
                 {
                     OpeningDate = DateTime.Now,
@@ -61,17 +114,16 @@ namespace Services.FinanceServices
                 return true;
             }
         }
+
         public int RegisterCashOut(decimal amount, string description)
         {
             using (var context = new italiapizzaEntities())
             {
-                var openCashRegister = context.CashRegisters
-                    .FirstOrDefault(c => c.ClosingDate == null);
-
+                var openCashRegister = GetOpenCashRegister();
                 if (openCashRegister == null)
                     return -1;
 
-                if (openCashRegister.FinalBalance < amount)
+                if (openCashRegister.CurrentBalance < amount)
                     return -2;
 
                 var transaction = new Transaction
@@ -87,12 +139,13 @@ namespace Services.FinanceServices
                 };
 
                 context.Transactions.Add(transaction);
-                openCashRegister.FinalBalance -= amount;
+                openCashRegister.CurrentBalance -= amount;
 
                 context.SaveChanges();
                 return 1;
             }
         }
+
         public int RegisterSupplierOrderExpense(int supplierOrderID)
         {
             using (var context = new italiapizzaEntities())
@@ -101,16 +154,15 @@ namespace Services.FinanceServices
                 try
                 {
                     var order = context.SupplierOrders.FirstOrDefault(o => o.SupplierOrderID == supplierOrderID);
-                    if (order == null || order.Status != 1) 
+                    if (order == null || order.Status != 1)
                         return -1;
 
-                    var total = order.Total;
-
-                    var cashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
+                    var cashRegister = GetOpenCashRegister();
                     if (cashRegister == null)
                         return -2;
 
-                    if (cashRegister.FinalBalance < total)
+                    var total = order.Total;
+                    if (cashRegister.CurrentBalance < total)
                         return -3;
 
                     var transactionRecord = new Transaction
@@ -118,14 +170,14 @@ namespace Services.FinanceServices
                         FinancialFlow = "O",
                         Amount = total,
                         Date = DateTime.Now,
-                        Description = $"Pago a proveedor - Pedido {order.OrderFolio}",
+                        Description = $"Pago a {order.Supplier.SupplierName} - Pedido {order.OrderFolio}",
                         CashRegisterID = cashRegister.CashRegisterID,
                         SupplierOrderID = supplierOrderID,
-                        Concept = 3 
+                        Concept = 3
                     };
                     context.Transactions.Add(transactionRecord);
 
-                    cashRegister.FinalBalance -= total;
+                    cashRegister.CurrentBalance = cashRegister.CurrentBalance - total;
 
                     context.SaveChanges();
                     transaction.Commit();
@@ -138,6 +190,5 @@ namespace Services.FinanceServices
                 }
             }
         }
-
     }
 }

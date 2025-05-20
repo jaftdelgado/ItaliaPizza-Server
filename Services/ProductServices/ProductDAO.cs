@@ -8,7 +8,6 @@ namespace Services
     {
         public Product AddProduct(Product product)
         {
-            int result = 0;
             using (var context = new italiapizzaEntities())
             {
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -18,7 +17,6 @@ namespace Services
                         context.Products.Add(product);
                         context.SaveChanges();
                         dbContextTransaction.Commit();
-                        result = 1;
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -30,7 +28,6 @@ namespace Services
                                 Console.WriteLine($"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage}");
                             }
                         }
-                        result = 0;
                     }
                 }
             }

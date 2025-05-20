@@ -132,13 +132,13 @@ namespace Services
                         dbContextTransaction.Commit();
                         result = 1;
                     }
-                    catch (DbEntityValidationException ex)
+                    catch (DbEntityValidationException)
                     {
                         dbContextTransaction.Rollback();
 
                         result = 0;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         dbContextTransaction.Rollback();
                         result = 0;

@@ -13,10 +13,10 @@ namespace Services.Dtos
         public int CashRegisterID { get; set; }
 
         [DataMember]
-        public char FinancialFlow { get; set; }
+        public string FinancialFlow { get; set; }
 
         [DataMember]
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
 
         [DataMember]
         public DateTime Date { get; set; }
