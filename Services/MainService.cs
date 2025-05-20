@@ -1,5 +1,4 @@
 ﻿using Services.Dtos;
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using Services.SupplyServices;
@@ -20,7 +19,7 @@ namespace Services
         private readonly ISupplierOrderManager _supplierOrderService;
         private readonly IOrderManager _orderService;
         private readonly IRecipeManager _recipeService;
-        private readonly ISesionManager _sesionService;
+        private readonly ISessionManager _sessionService;
 
         public MainService()
         {
@@ -33,7 +32,7 @@ namespace Services
             _supplierOrderService = new SupplierOrderService();
             _orderService = new OrderService();
             _recipeService = new RecipeService();
-            _sesionService = new SesionService();
+            _sessionService = new SessionService();
         }
 
         public bool Ping()
@@ -123,8 +122,9 @@ namespace Services
         #endregion
 
         #region Session
-        public PersonalDTO Login(string username, string password) => _sesionService.Login(username, password);
-        public int updateActivity(int personalID) => _sesionService.updateActivity(personalID);
+        public PersonalDTO SignIn(string username, string password) => _sessionService.SignIn(username, password);
+        public int UpdateActivity(int personalID) => _sessionService.UpdateActivity(personalID);
+        public int SignOut(int personalID) => _sessionService.SignOut(personalID);
         #endregion
     }
 }
