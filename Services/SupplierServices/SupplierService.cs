@@ -86,5 +86,11 @@ namespace Services
             SupplierDAO supplierDAO = new SupplierDAO();
             return supplierDAO.ReactivateSupplier(supplierID);
         }
+        public bool CanDeleteSupplier(int supplierId)
+        {
+            var dao = new SupplierDAO();
+            return dao.CanDeleteSupplier(supplierId);
+        }
+
     }
 }

@@ -86,6 +86,8 @@ namespace Services
         public bool UpdateSupplier(SupplierDTO supplierDTO) => _supplierService.UpdateSupplier(supplierDTO);
         public bool DeleteSupplier(int supplierID) => _supplierService.DeleteSupplier(supplierID);
         public bool ReactivateSupplier(int supplierID) => _supplierService.ReactivateSupplier(supplierID);
+
+        public bool CanDeleteSupplier(int supplierId) => _supplierService.CanDeleteSupplier(supplierId);
         #endregion
 
         #region Finance

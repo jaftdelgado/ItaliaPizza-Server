@@ -15,7 +15,6 @@ namespace Services
                 return context.Suppliers.ToList();
             }
         }
-
         public List<Supplier> GetSuppliersByCategory(int categoryId)
         {
             using (var context = new italiapizzaEntities())
@@ -25,7 +24,6 @@ namespace Services
                     .ToList();
             }
         }
-
         public int AddSupplier(Supplier supplier)
         {
             using (var context = new italiapizzaEntities())
@@ -55,7 +53,6 @@ namespace Services
                 }
             }
         }
-
         public bool UpdateSupplier(Supplier updatedSupplier)
         {
             using (var context = new italiapizzaEntities())
@@ -74,19 +71,20 @@ namespace Services
                 return true;
             }
         }
-
-        public bool DeleteSupplier(int supplierID)
+        public bool DeleteSupplier(int supplierId)
         {
             using (var context = new italiapizzaEntities())
             {
-                var supplier = context.Suppliers.FirstOrDefault(p => p.SupplierID == supplierID);
-                if (supplier != null)
-                {
-                    supplier.IsActive = false;
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                if (!CanDeleteSupplier(supplierId))
+                    return false;
+
+                var supplier = context.Suppliers.FirstOrDefault(s => s.SupplierID == supplierId);
+                if (supplier == null)
+                    return false;
+
+                supplier.IsActive = false;
+                context.SaveChanges();
+                return true;
             }
         }
 
@@ -104,7 +102,15 @@ namespace Services
                 return false;
             }
         }
+        public bool CanDeleteSupplier(int supplierId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                bool hasPendingOrders = context.SupplierOrders
+                    .Any(o => o.SupplierID == supplierId && o.Status == 0);
 
-
+                return !hasPendingOrders;
+            }
+        }
     }
 }
