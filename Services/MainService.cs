@@ -38,7 +38,6 @@ namespace Services
 
         public bool Ping()
         {
-            Console.WriteLine("Ping received. The server is available.");
             return true;
         }
 
@@ -90,13 +89,17 @@ namespace Services
         #endregion
 
         #region Finance
+        public List<TransactionDTO> GetCurrentTransactions() => _financeService.GetCurrentTransactions();
         public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
 
+        public CashRegisterDTO GetOpenCashRegisterInfo() => _financeService.GetOpenCashRegisterInfo();
         public bool OpenCashRegister(decimal initialAmout) => _financeService.OpenCashRegister(initialAmout);
-
         public int RegisterCashOut(decimal amount, string description) => _financeService.RegisterCashOut(amount, description);
-        #endregion
         public int RegisterSupplierOrderExpense(int supplierOrderID) => _financeService.RegisterSupplierOrderExpense(supplierOrderID);
+
+        public bool HasOpenCashRegister() => _financeService.HasOpenCashRegister();
+        #endregion
+        
         #region OrderSupplier
         public List<SupplierOrderDTO> GetAllSupplierOrders() => _supplierOrderService.GetAllSupplierOrders();
         public int AddSupplierOrder(SupplierOrderDTO orderDTO) => _supplierOrderService.AddSupplierOrder(orderDTO);
