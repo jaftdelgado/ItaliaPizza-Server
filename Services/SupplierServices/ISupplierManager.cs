@@ -25,5 +25,7 @@ namespace Services
 
         [OperationContract]
         bool ReactivateSupplier(int supplierID);
+        [OperationContract]
+        bool CanDeleteSupplier(int supplierId);
     }
 }

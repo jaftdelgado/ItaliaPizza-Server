@@ -25,5 +25,7 @@ public class SupplierDTO
     public bool IsActive { get; set; }
 
     [DataMember]
-    public int CategorySupply { get; set; } 
+    public int CategorySupply { get; set; }
+    [DataMember]
+    public bool IsDeletable { get; set; }
 }

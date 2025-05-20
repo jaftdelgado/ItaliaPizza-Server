@@ -119,7 +119,7 @@ namespace Services.FinanceServices
         {
             using (var context = new italiapizzaEntities())
             {
-                var openCashRegister = GetOpenCashRegister();
+                var openCashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
                 if (openCashRegister == null)
                     return -1;
 
@@ -145,7 +145,6 @@ namespace Services.FinanceServices
                 return 1;
             }
         }
-
         public int RegisterSupplierOrderExpense(int supplierOrderID)
         {
             using (var context = new italiapizzaEntities())
@@ -157,7 +156,7 @@ namespace Services.FinanceServices
                     if (order == null || order.Status != 1)
                         return -1;
 
-                    var cashRegister = GetOpenCashRegister();
+                    var cashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
                     if (cashRegister == null)
                         return -2;
 
@@ -177,7 +176,7 @@ namespace Services.FinanceServices
                     };
                     context.Transactions.Add(transactionRecord);
 
-                    cashRegister.CurrentBalance = cashRegister.CurrentBalance - total;
+                    cashRegister.CurrentBalance -= total;
 
                     context.SaveChanges();
                     transaction.Commit();
