@@ -8,7 +8,7 @@ namespace Services
     [ServiceContract]
     public interface IMainManager : IPersonalManager, ISupplierManager, ISupplyManager, 
         IProductManager, IFinanceManager, ISupplierOrderManager, IOrderManager, 
-        IRecipeManager, ICustomerManager, ISessionManager
+        IRecipeManager, ICustomerManager, ISessionManager, IWasteManager
     {
         [OperationContract]
         bool Ping();

@@ -4,6 +4,7 @@ using System.ServiceModel;
 using Services.SupplyServices;
 using Services.FinanceServices;
 using Services.OrderServices;
+using Services.WasteServices;
 
 namespace Services
 {
@@ -20,6 +21,7 @@ namespace Services
         private readonly IOrderManager _orderService;
         private readonly IRecipeManager _recipeService;
         private readonly ISessionManager _sessionService;
+        private readonly IWasteManager _wasteService;
 
         public MainService()
         {
@@ -33,6 +35,7 @@ namespace Services
             _orderService = new OrderService();
             _recipeService = new RecipeService();
             _sessionService = new SessionService();
+            _wasteService = new WasteService();
         }
 
         public bool Ping()
@@ -127,6 +130,10 @@ namespace Services
         public PersonalDTO SignIn(string username, string password) => _sessionService.SignIn(username, password);
         public int UpdateActivity(int personalID) => _sessionService.UpdateActivity(personalID);
         public int SignOut(int personalID) => _sessionService.SignOut(personalID);
+        #endregion
+
+        #region Waste
+        public bool RegisterSupplyLoss(SupplyDTO supplyDTO) => _wasteService.RegisterSupplyLoss(supplyDTO);
         #endregion
     }
 }
