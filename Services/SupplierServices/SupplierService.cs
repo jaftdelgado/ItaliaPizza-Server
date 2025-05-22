@@ -50,6 +50,7 @@ namespace Services
                 PhoneNumber = supplierDTO.PhoneNumber,
                 EmailAddress = supplierDTO.EmailAddress,
                 Description = supplierDTO.Description,
+                IsActive = true,
                 CategorySupply = supplierDTO.CategorySupply
             };
 

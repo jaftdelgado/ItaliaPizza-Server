@@ -20,6 +20,9 @@ namespace Services.FinanceServices
         bool OpenCashRegister(decimal initialAmount);
 
         [OperationContract]
+        bool CloseCashRegister(decimal cashierAmount);
+
+        [OperationContract]
         int RegisterCashOut(decimal amount, string description);
 
         [OperationContract]

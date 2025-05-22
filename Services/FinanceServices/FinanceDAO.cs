@@ -115,6 +115,23 @@ namespace Services.FinanceServices
             }
         }
 
+        public bool CloseCashRegister(decimal cashierAmount)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var openCashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
+                if (openCashRegister == null)
+                    return false;
+
+                openCashRegister.ClosingDate = DateTime.Now;
+                openCashRegister.CashierAmount = cashierAmount;
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+
         public int RegisterCashOut(decimal amount, string description)
         {
             using (var context = new italiapizzaEntities())
@@ -153,8 +170,8 @@ namespace Services.FinanceServices
                 try
                 {
                     var order = context.SupplierOrders.FirstOrDefault(o => o.SupplierOrderID == supplierOrderID);
-                    if (order == null || order.Status != 1)
-                        return -1;
+
+                    if (order == null || order.Status != 0) return -1;
 
                     var cashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
                     if (cashRegister == null)

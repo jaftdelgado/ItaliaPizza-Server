@@ -92,9 +92,9 @@ namespace Services
         #region Finance
         public List<TransactionDTO> GetCurrentTransactions() => _financeService.GetCurrentTransactions();
         public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
-
         public CashRegisterDTO GetOpenCashRegisterInfo() => _financeService.GetOpenCashRegisterInfo();
         public bool OpenCashRegister(decimal initialAmout) => _financeService.OpenCashRegister(initialAmout);
+        public bool CloseCashRegister(decimal cashierAmount) => _financeService.CloseCashRegister(cashierAmount);
         public int RegisterCashOut(decimal amount, string description) => _financeService.RegisterCashOut(amount, description);
         public int RegisterSupplierOrderExpense(int supplierOrderID) => _financeService.RegisterSupplierOrderExpense(supplierOrderID);
 
