@@ -153,7 +153,7 @@ namespace Services.FinanceServices
                 try
                 {
                     var order = context.SupplierOrders.FirstOrDefault(o => o.SupplierOrderID == supplierOrderID);
-                    if (order == null || order.Status != 1)
+                    if (order == null || order.Status != 0)
                         return -1;
 
                     var cashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
