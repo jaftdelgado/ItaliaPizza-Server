@@ -62,17 +62,37 @@ namespace Services
 
         bool ICustomerManager.DeleteCustomer(int customerID)
         {
-            throw new System.NotImplementedException();
+            CustomerDAO customerDAO = new CustomerDAO();
+            return customerDAO.DeleteCustomer(customerID);
         }
 
         bool ICustomerManager.ReactivateCustomer(int customerID)
         {
-            throw new System.NotImplementedException();
+            CustomerDAO customerDAO = new CustomerDAO();
+            return customerDAO.ReactivateCustomer(customerID);
         }
 
         bool ICustomerManager.UpdateCustomer(CustomerDTO customerDTO)
         {
-            throw new System.NotImplementedException();
+            var updatedCustomer = new Customer
+            {
+                CustomerID = customerDTO.CustomerID,
+                FirstName = customerDTO.FirstName,
+                LastName = customerDTO.LastName,
+                EmailAddress = customerDTO.EmailAddress,
+                PhoneNumber = customerDTO.PhoneNumber,
+            };
+
+            var updatedAddress = new Address
+            {
+                AddressID = customerDTO.AddressID,
+                AddressName = customerDTO.Address.AddressName,
+                ZipCode = customerDTO.Address.ZipCode,
+                City = customerDTO.Address.City
+            };
+
+            var dao = new CustomerDAO();
+            return dao.UpdateCustomer(updatedCustomer, updatedAddress);
         }
     }
 }
