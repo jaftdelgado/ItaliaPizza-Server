@@ -11,8 +11,10 @@ namespace Services
 
         [OperationContract]
         List<RecipeDTO> GetAllRecipes();
+
         [OperationContract]
         List<RecipeDTO> GetRecipes();
+        
         [OperationContract]
         int UpdateRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies);
     }

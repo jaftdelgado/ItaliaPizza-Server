@@ -1,16 +1,12 @@
 ﻿using Model;
 using Services.Dtos;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
-     class SesionDAO
+     class SessionDAO
     {
-        public PersonalDTO Login(string username, string password)
+        public PersonalDTO SignIn(string username, string password)
         {
             using (var context = new italiapizzaEntities())
             {
@@ -44,10 +40,26 @@ namespace Services
                 {
                     personal.IsOnline = true;
                     context.SaveChanges();
-                    return 1; // Success
+                    return 1;
                 }
-                return 0; // Failure
+                return 0;
             }
         }
+
+        public int SignOut(int personalID)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var personal = context.Personals.FirstOrDefault(p => p.PersonalID == personalID);
+                if (personal != null)
+                {
+                    personal.IsOnline = false;
+                    context.SaveChanges();
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
     }
 }
