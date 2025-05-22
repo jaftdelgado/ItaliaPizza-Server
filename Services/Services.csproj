@@ -67,6 +67,7 @@
     <Compile Include="Dtos\SupplyCategoryDTO.cs" />
     <Compile Include="Dtos\SupplyDTO.cs" />
     <Compile Include="Dtos\TransactionDTO.cs" />
+    <Compile Include="Dtos\WasteSupplyDTO.cs" />
     <Compile Include="FinanceServices\FinanceDAO.cs" />
     <Compile Include="FinanceServices\FinanceService.cs" />
     <Compile Include="FinanceServices\IFinanceManager.cs" />
@@ -97,6 +98,9 @@
     <Compile Include="SupplyServices\ISupplyManager.cs" />
     <Compile Include="SupplyServices\SupplyDAO.cs" />
     <Compile Include="SupplyServices\SupplyService.cs" />
+    <Compile Include="WasteServices\IWasteManager.cs" />
+    <Compile Include="WasteServices\WasteDAO.cs" />
+    <Compile Include="WasteServices\WasteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
