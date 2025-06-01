@@ -1,31 +1,29 @@
 ﻿using Services.Dtos;
+using Services;
 
-namespace Services
+public class SessionService : ISessionManager
 {
-    class SessionService : ISessionManager
+    private readonly ISessionDAO _dao;
+
+    public SessionService() : this(new SessionDAO()) { }
+
+    public SessionService(ISessionDAO dao)
     {
-        public PersonalDTO SignIn(string username, string password)
-        {
-            SessionDAO sesionDAO = new SessionDAO();
-            PersonalDTO personal = sesionDAO.SignIn(username, password);
+        _dao = dao;
+    }
 
-            if (personal != null) return personal;
+    public PersonalDTO SignIn(string username, string password)
+    {
+        return _dao.SignIn(username, password);
+    }
 
-            else return null;
-        }
+    public int UpdateActivity(int personalID)
+    {
+        return _dao.UpdateActivity(personalID);
+    }
 
-        public int UpdateActivity(int personalID)
-        {
-            SessionDAO sesionDAO = new SessionDAO();
-            int result = sesionDAO.UpdateActivity(personalID);
-            return result;
-        }
-
-        public int SignOut(int personalID)
-        {
-            SessionDAO sessionDAO = new SessionDAO();
-            return sessionDAO.SignOut(personalID);
-        }
-
+    public int SignOut(int personalID)
+    {
+        return _dao.SignOut(personalID);
     }
 }

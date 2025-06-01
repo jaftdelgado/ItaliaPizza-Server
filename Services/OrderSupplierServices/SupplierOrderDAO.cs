@@ -6,7 +6,17 @@ using System.Linq;
 
 namespace Services
 {
-    public class SupplierOrderDAO
+    public interface ISupplierOrderDAO
+    {
+        List<SupplierOrder> GetAllSupplierOrders();
+        int AddSupplierOrder(SupplierOrder order, List<SupplierOrder_Supply> orderSupplies);
+        bool UpdateSupplierOrder(SupplierOrder updatedOrder, List<SupplierOrder_Supply> updatedSupplies);
+        bool DeliverOrder(int supplierOrderID);
+        bool CancelSupplierOrder(int supplierOrderID);
+        bool FolioExists(string folio);
+    }
+
+    public class SupplierOrderDAO : ISupplierOrderDAO
     {
         public List<SupplierOrder> GetAllSupplierOrders()
         {

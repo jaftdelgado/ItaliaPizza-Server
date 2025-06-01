@@ -9,10 +9,18 @@ namespace Services
 {
     public class SupplierOrderService : ISupplierOrderManager
     {
+        private readonly ISupplierOrderDAO _dao;
+
+        public SupplierOrderService() : this(new SupplierOrderDAO()) { }
+
+        public SupplierOrderService(ISupplierOrderDAO dao)
+        {
+            _dao = dao;
+        }
+
         public List<SupplierOrderDTO> GetAllSupplierOrders()
         {
-            var dao = new SupplierOrderDAO();
-            var orders = dao.GetAllSupplierOrders();
+            var orders = _dao.GetAllSupplierOrders();
 
             return orders.Select(o => new SupplierOrderDTO
             {
@@ -40,11 +48,9 @@ namespace Services
 
         public int AddSupplierOrder(SupplierOrderDTO orderDTO)
         {
-            var dao = new SupplierOrderDAO();
-
             string orderFolio = OrderFolio.GenerateUniqueFolio(
                 orderDTO.OrderedDate,
-                dao.FolioExists 
+                _dao.FolioExists
             );
 
             var supplierOrder = new SupplierOrder
@@ -64,13 +70,11 @@ namespace Services
                 Total = item.Subtotal
             }).ToList();
 
-            return dao.AddSupplierOrder(supplierOrder, supplies);
+            return _dao.AddSupplierOrder(supplierOrder, supplies);
         }
 
         public bool UpdateSupplierOrder(SupplierOrderDTO orderDTO)
         {
-            var dao = new SupplierOrderDAO();
-
             var order = new SupplierOrder
             {
                 SupplierOrderID = orderDTO.SupplierOrderID,
@@ -84,20 +88,17 @@ namespace Services
                 Total = item.Subtotal
             }).ToList();
 
-            return dao.UpdateSupplierOrder(order, supplies);
+            return _dao.UpdateSupplierOrder(order, supplies);
         }
 
         public bool DeliverOrder(int supplierOrderID)
         {
-            SupplierOrderDAO dao = new SupplierOrderDAO();
-            return dao.DeliverOrder(supplierOrderID);
+            return _dao.DeliverOrder(supplierOrderID);
         }
 
         public bool CancelSupplierOrder(int supplierOrderID)
         {
-            SupplierOrderDAO dao = new SupplierOrderDAO();
-            return dao.CancelSupplierOrder(supplierOrderID);
+            return _dao.CancelSupplierOrder(supplierOrderID);
         }
-
     }
 }

@@ -6,7 +6,19 @@ using System.Linq;
 
 namespace Services.FinanceServices
 {
-    public class FinanceDAO
+    public interface IFinanceDAO
+    {
+        List<TransactionDTO> GetCurrentTransactions();
+        bool RegisterOrderPayment(int orderId);
+        CashRegisterDTO GetOpenCashRegisterInfo();
+        bool OpenCashRegister(decimal initialAmount);
+        bool CloseCashRegister(decimal cashierAmount);
+        int RegisterCashOut(decimal amount, string description);
+        int RegisterSupplierOrderExpense(int supplierOrderID);
+        bool HasOpenCashRegister();
+    }
+
+    public class FinanceDAO : IFinanceDAO
     {
         internal CashRegister GetOpenCashRegister()
         {
