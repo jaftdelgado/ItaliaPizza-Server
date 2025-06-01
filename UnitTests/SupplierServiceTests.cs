@@ -85,5 +85,83 @@ namespace UnitTests
 
             Assert.IsTrue(result);
         }
+        [Test]
+        public void GetAllSuppliers_WhenDaoReturnsEmptyList_ReturnsEmptyList()
+        {
+            _mockDAO.Setup(d => d.GetAllSuppliers()).Returns(new List<Supplier>());
+
+            var result = _service.GetAllSuppliers();
+
+            Assert.That(result, Is.Empty);
+        }
+
+        [Test]
+        public void AddSupplier_WhenDaoReturnsNegativeOne_ReturnsNegativeOne()
+        {
+            var dto = new SupplierDTO { SupplierName = "ErrorProv", CategorySupply = 1 };
+            _mockDAO.Setup(d => d.AddSupplier(It.IsAny<Supplier>())).Returns(-1);
+
+            var result = _service.AddSupplier(dto);
+
+            Assert.That(result, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void UpdateSupplier_WhenDaoReturnsFalse_ReturnsFalse()
+        {
+            var dto = new SupplierDTO { Id = 7, SupplierName = "UpdateFail" };
+            _mockDAO.Setup(d => d.UpdateSupplier(It.IsAny<Supplier>())).Returns(false);
+
+            var result = _service.UpdateSupplier(dto);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void DeleteSupplier_WhenDaoReturnsFalse_ReturnsFalse()
+        {
+            _mockDAO.Setup(d => d.DeleteSupplier(9)).Returns(false);
+
+            var result = _service.DeleteSupplier(9);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void ReactivateSupplier_WhenDaoReturnsFalse_ReturnsFalse()
+        {
+            _mockDAO.Setup(d => d.ReactivateSupplier(11)).Returns(false);
+
+            var result = _service.ReactivateSupplier(11);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void CanDeleteSupplier_WhenDaoReturnsFalse_ReturnsFalse()
+        {
+            _mockDAO.Setup(d => d.CanDeleteSupplier(13)).Returns(false);
+
+            var result = _service.CanDeleteSupplier(13);
+
+            Assert.IsFalse(result);
+        }
+        [Test]
+        public void AddSupplier_WhenDaoThrowsException_ThrowsException()
+        {
+            var dto = new SupplierDTO { SupplierName = "Excepcional", CategorySupply = 2 };
+            _mockDAO.Setup(d => d.AddSupplier(It.IsAny<Supplier>())).Throws(new System.Exception("DB error"));
+
+            Assert.Throws<System.Exception>(() => _service.AddSupplier(dto));
+        }
+
+        [Test]
+        public void GetAllSuppliers_WhenDaoThrowsException_ThrowsException()
+        {
+            _mockDAO.Setup(d => d.GetAllSuppliers()).Throws(new System.Exception("Falló conexión"));
+
+            Assert.Throws<System.Exception>(() => _service.GetAllSuppliers());
+        }
+
     }
 }

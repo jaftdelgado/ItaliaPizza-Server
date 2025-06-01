@@ -4,7 +4,14 @@ using System.Linq;
 
 namespace Services
 {
-     class SessionDAO
+    public interface ISessionDAO
+    {
+        PersonalDTO SignIn(string username, string password);
+        int UpdateActivity(int personalID);
+        int SignOut(int personalID);
+    }
+
+    public class SessionDAO : ISessionDAO
     {
         public PersonalDTO SignIn(string username, string password)
         {
@@ -60,6 +67,5 @@ namespace Services
                 return 0;
             }
         }
-
     }
 }

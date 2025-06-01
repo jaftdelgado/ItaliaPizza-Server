@@ -5,52 +5,52 @@ namespace Services.FinanceServices
 {
     public class FinanceService : IFinanceManager
     {
+        private readonly IFinanceDAO _dao;
+        public FinanceService() : this(new FinanceDAO()) { }
+
+        public FinanceService(IFinanceDAO dao)
+        {
+            _dao = dao;
+        }
+
         public List<TransactionDTO> GetCurrentTransactions()
         {
-            var dao = new FinanceDAO();
-            return dao.GetCurrentTransactions();
+            return _dao.GetCurrentTransactions();
         }
 
         public bool RegisterOrderPayment(int orderId)
         {
-            var dao = new FinanceDAO();
-            return dao.RegisterOrderPayment(orderId);
+            return _dao.RegisterOrderPayment(orderId);
         }
 
         public CashRegisterDTO GetOpenCashRegisterInfo()
         {
-            var dao = new FinanceDAO();
-            return dao.GetOpenCashRegisterInfo();
+            return _dao.GetOpenCashRegisterInfo();
         }
 
         public bool OpenCashRegister(decimal initialAmount)
         {
-            var dao = new FinanceDAO();
-            return dao.OpenCashRegister(initialAmount);
+            return _dao.OpenCashRegister(initialAmount);
         }
 
         public bool CloseCashRegister(decimal cashierAmount)
         {
-            var dao = new FinanceDAO();
-            return dao.CloseCashRegister(cashierAmount);
+            return _dao.CloseCashRegister(cashierAmount);
         }
 
         public int RegisterCashOut(decimal amount, string description)
         {
-            var dao = new FinanceDAO();
-            return dao.RegisterCashOut(amount, description);
+            return _dao.RegisterCashOut(amount, description);
         }
 
         public int RegisterSupplierOrderExpense(int supplierOrderID)
         {
-            var dao = new FinanceDAO();
-            return dao.RegisterSupplierOrderExpense(supplierOrderID);
+            return _dao.RegisterSupplierOrderExpense(supplierOrderID);
         }
 
         public bool HasOpenCashRegister()
         {
-            var dao = new FinanceDAO();
-            return dao.HasOpenCashRegister();
+            return _dao.HasOpenCashRegister();
         }
     }
 }

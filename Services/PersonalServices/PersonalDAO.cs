@@ -6,7 +6,18 @@ using System.Collections.Generic;
 
 namespace Services
 {
-    public class PersonalDAO
+    public interface IPersonalDAO
+    {
+        List<Personal> GetAllPersonals();
+        int AddPersonal(Personal personal, Address address);
+        bool UpdatePersonal(Personal personal, Address address);
+        bool DeletePersonal(int personalID);
+        bool ReactivatePersonal(int personalID);
+        bool IsUsernameAvailable(string username);
+        bool IsRfcUnique(string rfc);
+        bool IsPersonalEmailAvailable(string email);
+    }
+    public class PersonalDAO : IPersonalDAO
     {
         public List<Personal> GetAllPersonals()
         {

@@ -8,10 +8,20 @@ namespace Services
 {
     public class PersonalService : IPersonalManager
     {
+        private readonly IPersonalDAO _dao;
+
+        // Constructor por defecto para producción
+        public PersonalService() : this(new PersonalDAO()) { }
+
+        // Constructor con inyección para pruebas unitarias
+        public PersonalService(IPersonalDAO dao)
+        {
+            _dao = dao;
+        }
+
         public List<PersonalDTO> GetAllPersonals()
         {
-            var dao = new PersonalDAO();
-            var personals = dao.GetAllPersonals();
+            var personals = _dao.GetAllPersonals();
 
             return personals.Select(p => new PersonalDTO
             {
@@ -63,9 +73,7 @@ namespace Services
                 City = personalDTO.Address.City
             };
 
-            PersonalDAO personalDAO = new PersonalDAO();
-            int result = personalDAO.AddPersonal(personal, address);
-            return result;
+            return _dao.AddPersonal(personal, address);
         }
 
         public bool UpdatePersonal(PersonalDTO personalDTO)
@@ -90,38 +98,32 @@ namespace Services
                 City = personalDTO.Address.City
             };
 
-            var dao = new PersonalDAO();
-            return dao.UpdatePersonal(updatedPersonal, updatedAddress);
+            return _dao.UpdatePersonal(updatedPersonal, updatedAddress);
         }
 
         public bool DeletePersonal(int personalID)
         {
-            PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.DeletePersonal(personalID);
+            return _dao.DeletePersonal(personalID);
         }
 
         public bool ReactivatePersonal(int personalID)
         {
-            PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.ReactivatePersonal(personalID);
+            return _dao.ReactivatePersonal(personalID);
         }
 
         public bool IsUsernameAvailable(string username)
         {
-            PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.IsUsernameAvailable(username);
+            return _dao.IsUsernameAvailable(username);
         }
 
         public bool IsRfcUnique(string rfc)
         {
-            PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.IsRfcUnique(rfc);
+            return _dao.IsRfcUnique(rfc);
         }
 
         public bool IsPersonalEmailAvailable(string email)
         {
-            PersonalDAO personalDAO = new PersonalDAO();
-            return personalDAO.IsPersonalEmailAvailable(email);
+            return _dao.IsPersonalEmailAvailable(email);
         }
     }
 }
