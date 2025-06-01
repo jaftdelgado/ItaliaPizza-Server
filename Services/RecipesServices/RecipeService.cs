@@ -13,7 +13,6 @@ namespace Services
         {
             var recipe = new Recipe
             {
-                Description = recipeDTO.Description,
                 PreparationTime = recipeDTO.PreparationTime,
                 ProductID = recipeDTO.ProductID,
             };
@@ -41,7 +40,6 @@ namespace Services
             return recipes.Select(r => new RecipeDTO
             {
                 RecipeID = r.RecipeID,
-                Description = r.Description,
                 PreparationTime = r.PreparationTime,
                 ProductID = r.ProductID,
                 ProductName = r.Product.Name,
@@ -53,7 +51,6 @@ namespace Services
             var recipe = new Recipe
             {
                 RecipeID = recipeDTO.RecipeID,
-                Description = recipeDTO.Description,
                 PreparationTime = recipeDTO.PreparationTime,
                 ProductID = recipeDTO.ProductID,
             };

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Services.Dtos
 {
@@ -7,33 +6,36 @@ namespace Services.Dtos
     public class ProductDTO
     {
         [DataMember]
-        public int Id { get; set; }
+        public int ProductID { get; set; }
 
         [DataMember]
         public string Name { get; set; }
 
         [DataMember]
-        public string Category { get; set; }
+        public int? Category { get; set; }
 
         [DataMember]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         [DataMember]
-        public bool IsPrepared { get; set; }
+        public bool? IsPrepared { get; set; }
 
         [DataMember]
-        public int SupplierID { get; set; }
-
-        [DataMember]
-        public string Status { get; set; }
-
-        [DataMember]
-        public byte[] Photo { get; set; }
+        public byte[] ProductPic { get; set; }
 
         [DataMember]
         public string Description { get; set; }
 
         [DataMember]
-        public string Code { get; set; }
+        public string ProductCode { get; set; }
+
+        [DataMember]
+        public bool IsActive { get; set; }
+
+        [DataMember]
+        public int? SupplyID { get; set; }
+
+        [DataMember]
+        public bool IsDeletable { get; set; }
     }
 }

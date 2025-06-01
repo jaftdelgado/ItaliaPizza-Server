@@ -96,6 +96,9 @@
     <Compile Include="Recipe.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="RecipeStep.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="RecipeSupply.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
