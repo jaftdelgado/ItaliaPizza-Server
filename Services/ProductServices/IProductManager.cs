@@ -1,10 +1,6 @@
 ﻿using Services.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
@@ -12,7 +8,21 @@ namespace Services
     public interface IProductManager
     {
         [OperationContract]
-        ProductDTO AddProduct(ProductDTO productDTO);
+        int AddProduct(ProductDTO productDTO);
 
+        [OperationContract]
+        List<ProductDTO> GetAllProducts(bool activeOnly = false);
+
+        [OperationContract]
+        bool UpdateProduct(ProductDTO productDTO);
+
+        [OperationContract]
+        bool DeleteProduct(int productId);
+
+        [OperationContract]
+        bool ReactivateProduct(int productId);
+
+        [OperationContract]
+        bool IsProductDeletable(int productId);
     }
 }

@@ -12,14 +12,13 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class RecipeSupply
+    public partial class RecipeStep
     {
-        public int RecipeSupplyID { get; set; }
+        public int RecipeStepID { get; set; }
         public int RecipeID { get; set; }
-        public int SupplyID { get; set; }
-        public decimal UseQuantity { get; set; }
+        public int StepNumber { get; set; }
+        public string Instruction { get; set; }
     
-        public virtual Supply Supply { get; set; }
         public virtual Recipe Recipe { get; set; }
     }
 }

@@ -23,19 +23,19 @@ namespace Model
     
         public int ProductID { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
+        public Nullable<int> Category { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<bool> IsPrepared { get; set; }
-        public Nullable<int> SupplierID { get; set; }
-        public string Status { get; set; }
-        public byte[] Photo { get; set; }
+        public byte[] ProductPic { get; set; }
         public string Description { get; set; }
-        public string Code { get; set; }
+        public string ProductCode { get; set; }
+        public bool IsActive { get; set; }
+        public Nullable<int> SupplyID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Order> Product_Order { get; set; }
+        public virtual Supply Supply { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipe> Recipes { get; set; }
-        public virtual Supplier Supplier { get; set; }
     }
 }

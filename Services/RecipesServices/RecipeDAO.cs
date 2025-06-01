@@ -57,7 +57,6 @@ namespace Services
                 return recipes.Select(r => new RecipeDTO
                 {
                     RecipeID = r.RecipeID,
-                    Description = r.Description,
                     PreparationTime = r.PreparationTime,
                     ProductID = r.ProductID,
                     ProductName = r.Product.Name,
@@ -89,7 +88,6 @@ namespace Services
                             return 0;
 
 
-                        existingRecipe.Description = updatedRecipe.Description;
                         existingRecipe.PreparationTime = updatedRecipe.PreparationTime;
 
                         var updatedIds = updatedRecipeSupplies.Select(rs => rs.RecipeSupplyID).ToList();

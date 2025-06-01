@@ -31,9 +31,7 @@ namespace Model
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderState> OrderStates { get; set; }
         public virtual DbSet<Personal> Personals { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Product_Order> Product_Order { get; set; }
-        public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<RecipeSupply> RecipeSupplies { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StockReport> StockReports { get; set; }
@@ -45,5 +43,8 @@ namespace Model
         public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<CashRegister> CashRegisters { get; set; }
+        public virtual DbSet<Recipe> Recipes { get; set; }
+        public virtual DbSet<RecipeStep> RecipeSteps { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }

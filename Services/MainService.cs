@@ -53,7 +53,15 @@ namespace Services
         public bool ReactivateCustomer(int customerID) => _customerService.ReactivateCustomer(customerID);
         #endregion
 
-        public ProductDTO AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+        #region Product
+        public int AddProduct(ProductDTO productDTO) => _productService.AddProduct(productDTO);
+        public bool UpdateProduct(ProductDTO productDTO) => _productService.UpdateProduct(productDTO);
+        public List<ProductDTO> GetAllProducts(bool activeOnly = false) => _productService.GetAllProducts(activeOnly);
+        public bool DeleteProduct(int productId) => _productService.DeleteProduct(productId);
+        public bool ReactivateProduct(int productId) => _productService.ReactivateProduct(productId);
+        public bool IsProductDeletable(int productId) => _productService.IsProductDeletable(productId);
+        #endregion
+
 
         #region Personal
         public List<PersonalDTO> GetAllPersonals() => _personalService.GetAllPersonals();
