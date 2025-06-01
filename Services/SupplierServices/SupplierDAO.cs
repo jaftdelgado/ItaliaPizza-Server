@@ -6,7 +6,17 @@ using System.Linq;
 
 namespace Services
 {
-    public class SupplierDAO
+    public interface ISupplierDAO
+    {
+        List<Supplier> GetAllSuppliers();
+        List<Supplier> GetSuppliersByCategory(int categoryId);
+        int AddSupplier(Supplier supplier);
+        bool UpdateSupplier(Supplier supplier);
+        bool DeleteSupplier(int supplierId);
+        bool ReactivateSupplier(int supplierId);
+        bool CanDeleteSupplier(int supplierId);
+    }
+    public class SupplierDAO : ISupplierDAO
     {
         public List<Supplier> GetAllSuppliers()
         {
