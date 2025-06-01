@@ -7,10 +7,18 @@ namespace Services
 {
     public class SupplierService : ISupplierManager
     {
+        private readonly ISupplierDAO _supplierDAO;
+
+        public SupplierService() : this(new SupplierDAO()) { }
+
+        public SupplierService(ISupplierDAO supplierDAO)
+        {
+            _supplierDAO = supplierDAO;
+        }
+
         public List<SupplierDTO> GetAllSuppliers()
         {
-            var dao = new SupplierDAO();
-            var suppliers = dao.GetAllSuppliers();
+            var suppliers = _supplierDAO.GetAllSuppliers();
 
             return suppliers.Select(s => new SupplierDTO
             {
@@ -27,9 +35,7 @@ namespace Services
 
         public List<SupplierDTO> GetSuppliersByCategory(int categoryId)
         {
-            SupplierDAO dao = new SupplierDAO();
-
-            return dao.GetSuppliersByCategory(categoryId)
+            return _supplierDAO.GetSuppliersByCategory(categoryId)
                 .Select(s => new SupplierDTO
                 {
                     Id = s.SupplierID,
@@ -54,9 +60,7 @@ namespace Services
                 CategorySupply = supplierDTO.CategorySupply
             };
 
-            SupplierDAO supplierDAO = new SupplierDAO();
-            int supplierId = supplierDAO.AddSupplier(supplier);
-            return supplierId;
+            return _supplierDAO.AddSupplier(supplier);
         }
 
         public bool UpdateSupplier(SupplierDTO supplierDTO)
@@ -72,26 +76,22 @@ namespace Services
                 CategorySupply = supplierDTO.CategorySupply
             };
 
-            var dao = new SupplierDAO();
-            return dao.UpdateSupplier(updatedSupplier);
+            return _supplierDAO.UpdateSupplier(updatedSupplier);
         }
 
         public bool DeleteSupplier(int supplierID)
         {
-            SupplierDAO supplierDAO = new SupplierDAO();
-            return supplierDAO.DeleteSupplier(supplierID);
+            return _supplierDAO.DeleteSupplier(supplierID);
         }
 
         public bool ReactivateSupplier(int supplierID)
         {
-            SupplierDAO supplierDAO = new SupplierDAO();
-            return supplierDAO.ReactivateSupplier(supplierID);
-        }
-        public bool CanDeleteSupplier(int supplierId)
-        {
-            var dao = new SupplierDAO();
-            return dao.CanDeleteSupplier(supplierId);
+            return _supplierDAO.ReactivateSupplier(supplierID);
         }
 
+        public bool CanDeleteSupplier(int supplierId)
+        {
+            return _supplierDAO.CanDeleteSupplier(supplierId);
+        }
     }
 }
