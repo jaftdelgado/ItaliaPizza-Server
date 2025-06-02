@@ -84,12 +84,11 @@ namespace Services.SupplyServices
                     RecipeSupplyID = recipeSupply.RecipeSupplyID,
                     SupplyID = recipeSupply.SupplyID,
                     UseQuantity = recipeSupply.UseQuantity,
-                    RecipeSupplyName = recipeSupply.Supply.SupplyName,
-                    MeasureUnit = recipeSupply.Supply.MeasureUnit,
                 });
             }
             return recipeSupplyList;
         }
+
         public int AddSupply(SupplyDTO supplyDTO)
         {
             var supply = new Supply

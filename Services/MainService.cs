@@ -127,11 +127,11 @@ namespace Services
         #endregion
 
         #region Recipe
-        public int RegisterRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.RegisterRecipe(recipe, supplies);
+        public List<ProductDTO> GetProductsWithRecipe() => _recipeService.GetProductsWithRecipe();
+        public int AddRecipe(RecipeDTO recipeDTO) => _recipeService.AddRecipe(recipeDTO);
+        public bool UpdateRecipe(RecipeDTO recipeDTO) => _recipeService.UpdateRecipe(recipeDTO);
+        public bool DeleteRecipe(int recipeId) => _recipeService.DeleteRecipe(recipeId);
 
-        public List<RecipeDTO> GetAllRecipes() => _recipeService.GetAllRecipes();
-        public List<RecipeDTO> GetRecipes() => _recipeService.GetRecipes();
-        public int UpdateRecipe(RecipeDTO recipe, List<RecipeSupplyDTO> supplies) => _recipeService.UpdateRecipe(recipe, supplies);
         #endregion
 
         #region Session

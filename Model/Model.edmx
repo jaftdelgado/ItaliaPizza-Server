@@ -102,6 +102,7 @@
           <Property Name="ProductCode" Type="varchar" MaxLength="8" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="SupplyID" Type="int" />
+          <Property Name="RecipeID" Type="int" />
         </EntityType>
         <EntityType Name="Product_Order">
           <Key>
@@ -118,7 +119,6 @@
           </Key>
           <Property Name="RecipeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PreparationTime" Type="int" Nullable="false" />
-          <Property Name="ProductID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RecipeStep">
           <Key>
@@ -369,6 +369,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Recipe">
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Supply">
           <End Role="Supply" Type="Self.Supply" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -378,18 +390,6 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="SupplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Recipe_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Recipe">
-              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -625,13 +625,13 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Product_Order" EntitySet="Product_Order" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_Recipe" Association="Self.FK_Product_Recipe">
+            <End Role="Recipe" EntitySet="Recipe" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_Product_Supply" Association="Self.FK_Product_Supply">
             <End Role="Supply" EntitySet="Supply" />
             <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Recipe_Product" Association="Self.FK_Recipe_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
           <AssociationSet Name="FK_RecipeStep_Recipe" Association="Self.FK_RecipeStep_Recipe">
             <End Role="Recipe" EntitySet="Recipe" />
@@ -1075,8 +1075,21 @@
             <End Role="CashRegister" EntitySet="CashRegisters" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
-          <EntitySet Name="Recipes" EntityType="italiapizzaModel.Recipe" />
           <EntitySet Name="RecipeSteps" EntityType="italiapizzaModel.RecipeStep" />
+          <EntitySet Name="Products" EntityType="italiapizzaModel.Product" />
+          <EntitySet Name="Recipes" EntityType="italiapizzaModel.Recipe" />
+          <AssociationSet Name="FK_Product_Order_Product" Association="italiapizzaModel.FK_Product_Order_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Order" EntitySet="Product_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Recipe" Association="italiapizzaModel.FK_Product_Recipe">
+            <End Role="Recipe" EntitySet="Recipes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Supply" Association="italiapizzaModel.FK_Product_Supply">
+            <End Role="Supply" EntitySet="Supplies" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_RecipeStep_Recipe" Association="italiapizzaModel.FK_RecipeStep_Recipe">
             <End Role="Recipe" EntitySet="Recipes" />
             <End Role="RecipeStep" EntitySet="RecipeSteps" />
@@ -1084,19 +1097,6 @@
           <AssociationSet Name="FK_RecipeSupply_Recipe" Association="italiapizzaModel.FK_RecipeSupply_Recipe">
             <End Role="Recipe" EntitySet="Recipes" />
             <End Role="RecipeSupply" EntitySet="RecipeSupplies" />
-          </AssociationSet>
-          <EntitySet Name="Products" EntityType="italiapizzaModel.Product" />
-          <AssociationSet Name="FK_Product_Order_Product" Association="italiapizzaModel.FK_Product_Order_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Product_Order" EntitySet="Product_Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_Supply" Association="italiapizzaModel.FK_Product_Supply">
-            <End Role="Supply" EntitySet="Supplies" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Recipe_Product" Association="italiapizzaModel.FK_Recipe_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Recipe" EntitySet="Recipes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Supplier">
@@ -1322,17 +1322,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Recipe">
-          <Key>
-            <PropertyRef Name="RecipeID" />
-          </Key>
-          <Property Name="RecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PreparationTime" Type="Int32" Nullable="false" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RecipeSteps" Relationship="italiapizzaModel.FK_RecipeStep_Recipe" FromRole="Recipe" ToRole="RecipeStep" />
-          <NavigationProperty Name="RecipeSupplies" Relationship="italiapizzaModel.FK_RecipeSupply_Recipe" FromRole="Recipe" ToRole="RecipeSupply" />
-          <NavigationProperty Name="Product" Relationship="italiapizzaModel.FK_Recipe_Product" FromRole="Recipe" ToRole="Product" />
-        </EntityType>
         <EntityType Name="RecipeStep">
           <Key>
             <PropertyRef Name="RecipeStepID" />
@@ -1343,6 +1332,71 @@
           <Property Name="Instruction" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Recipe" Relationship="italiapizzaModel.FK_RecipeStep_Recipe" FromRole="RecipeStep" ToRole="Recipe" />
         </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="IsPrepared" Type="Boolean" />
+          <Property Name="ProductPic" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="SupplyID" Type="Int32" />
+          <Property Name="RecipeID" Type="Int32" />
+          <NavigationProperty Name="Product_Order" Relationship="italiapizzaModel.FK_Product_Order_Product" FromRole="Product" ToRole="Product_Order" />
+          <NavigationProperty Name="Recipe" Relationship="italiapizzaModel.FK_Product_Recipe" FromRole="Product" ToRole="Recipe" />
+          <NavigationProperty Name="Supply" Relationship="italiapizzaModel.FK_Product_Supply" FromRole="Product" ToRole="Supply" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="RecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PreparationTime" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="italiapizzaModel.FK_Product_Recipe" FromRole="Recipe" ToRole="Product" />
+          <NavigationProperty Name="RecipeSteps" Relationship="italiapizzaModel.FK_RecipeStep_Recipe" FromRole="Recipe" ToRole="RecipeStep" />
+          <NavigationProperty Name="RecipeSupplies" Relationship="italiapizzaModel.FK_RecipeSupply_Recipe" FromRole="Recipe" ToRole="RecipeSupply" />
+        </EntityType>
+        <Association Name="FK_Product_Order_Product">
+          <End Type="italiapizzaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="italiapizzaModel.Product_Order" Role="Product_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Product_Order">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Recipe">
+          <End Type="italiapizzaModel.Recipe" Role="Recipe" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="RecipeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Supply">
+          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supply">
+              <PropertyRef Name="SupplyID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupplyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RecipeStep_Recipe">
           <End Type="italiapizzaModel.Recipe" Role="Recipe" Multiplicity="1" />
           <End Type="italiapizzaModel.RecipeStep" Role="RecipeStep" Multiplicity="*" />
@@ -1366,60 +1420,6 @@
             </Principal>
             <Dependent Role="RecipeSupply">
               <PropertyRef Name="RecipeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="IsPrepared" Type="Boolean" />
-          <Property Name="ProductPic" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="ProductCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="SupplyID" Type="Int32" />
-          <NavigationProperty Name="Product_Order" Relationship="italiapizzaModel.FK_Product_Order_Product" FromRole="Product" ToRole="Product_Order" />
-          <NavigationProperty Name="Supply" Relationship="italiapizzaModel.FK_Product_Supply" FromRole="Product" ToRole="Supply" />
-          <NavigationProperty Name="Recipes" Relationship="italiapizzaModel.FK_Recipe_Product" FromRole="Product" ToRole="Recipe" />
-        </EntityType>
-        <Association Name="FK_Product_Order_Product">
-          <End Type="italiapizzaModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="italiapizzaModel.Product_Order" Role="Product_Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Product_Order">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_Supply">
-          <End Type="italiapizzaModel.Supply" Role="Supply" Multiplicity="0..1" />
-          <End Type="italiapizzaModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supply">
-              <PropertyRef Name="SupplyID" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="SupplyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Recipe_Product">
-          <End Type="italiapizzaModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="italiapizzaModel.Recipe" Role="Recipe" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Recipe">
-              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1645,15 +1645,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Recipes">
-            <EntityTypeMapping TypeName="italiapizzaModel.Recipe">
-              <MappingFragment StoreEntitySet="Recipe">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
-                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RecipeSteps">
             <EntityTypeMapping TypeName="italiapizzaModel.RecipeStep">
               <MappingFragment StoreEntitySet="RecipeStep">
@@ -1667,6 +1658,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="italiapizzaModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
@@ -1677,6 +1669,14 @@
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="italiapizzaModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="PreparationTime" ColumnName="PreparationTime" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

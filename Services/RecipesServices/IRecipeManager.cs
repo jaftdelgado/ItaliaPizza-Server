@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Dtos;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace Services
@@ -7,15 +8,16 @@ namespace Services
     public interface IRecipeManager
     {
         [OperationContract]
-        int RegisterRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies);
+        List<ProductDTO> GetProductsWithRecipe();
 
         [OperationContract]
-        List<RecipeDTO> GetAllRecipes();
+        int AddRecipe(RecipeDTO recipeDTO);
 
         [OperationContract]
-        List<RecipeDTO> GetRecipes();
-        
+        bool UpdateRecipe(RecipeDTO recipeDTO);
+
         [OperationContract]
-        int UpdateRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies);
+        bool DeleteRecipe(int recipeId);
+
     }
 }

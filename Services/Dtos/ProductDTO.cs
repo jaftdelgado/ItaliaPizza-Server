@@ -34,8 +34,15 @@ namespace Services.Dtos
 
         [DataMember]
         public int? SupplyID { get; set; }
+        
+        [DataMember]
+        public int? RecipeID { get; set; }
+
+        [DataMember]
+        public RecipeDTO Recipe { get; set; }
 
         [DataMember]
         public bool IsDeletable { get; set; }
+
     }
 }

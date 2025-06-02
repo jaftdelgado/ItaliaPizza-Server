@@ -1,69 +1,65 @@
 ﻿using Model;
-using System;
+using Services.Daos;
+using Services.Dtos;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
-    class RecipeService : IRecipeManager
+    public class RecipeService : IRecipeManager
     {
-        public int RegisterRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies)
+        private readonly RecipeDAO recipeDAO = new RecipeDAO();
+
+        public List<ProductDTO> GetProductsWithRecipe()
+        {
+            return recipeDAO.GetProductsWithRecipe();
+        }
+
+        public int AddRecipe(RecipeDTO recipeDTO)
         {
             var recipe = new Recipe
             {
-                PreparationTime = recipeDTO.PreparationTime,
-                ProductID = recipeDTO.ProductID,
+                PreparationTime = recipeDTO.PreparationTime
             };
-            var recipeSupplies = supplies.Select(s => new RecipeSupply
+
+            var result = recipeDAO.AddRecipe(recipe);
+
+            if (result != null)
             {
-                SupplyID = s.SupplyID,
-                UseQuantity = s.UseQuantity,
-                
-            }).ToList();
-            var recipeDAO = new RecipeDAO();
-            return recipeDAO.RegisterRecipe(recipe, recipeSupplies);
+                recipeDTO.RecipeID = result.RecipeID;
+
+                if (recipeDTO.Steps != null)
+                {
+                    foreach (var step in recipeDTO.Steps)
+                    {
+                        step.RecipeID = recipeDTO.RecipeID;
+                        recipeDAO.AddStep(step);
+                    }
+                }
+
+                if (recipeDTO.Supplies != null)
+                {
+                    foreach (var supply in recipeDTO.Supplies)
+                    {
+                        supply.RecipeID = recipeDTO.RecipeID;
+                        recipeDAO.AddSupply(supply);
+                    }
+                }
+
+                return recipeDTO.RecipeID;
+            }
+
+            return -1;
         }
 
-        public List<RecipeDTO> GetAllRecipes()
+        public bool UpdateRecipe(RecipeDTO recipeDTO)
         {
-            var recipeDAO = new RecipeDAO();
-            var recipes = recipeDAO.GetAllRecipes();
-            return recipes;
-        }
-        public List<RecipeDTO> GetRecipes()
-        {
-            var dao = new RecipeDAO();
-            var recipes = dao.GetRecipes();
-
-            return recipes.Select(r => new RecipeDTO
-            {
-                RecipeID = r.RecipeID,
-                PreparationTime = r.PreparationTime,
-                ProductID = r.ProductID,
-                ProductName = r.Product.Name,
-            }).ToList();
+            return recipeDAO.UpdateRecipe(recipeDTO);
         }
 
-        public int UpdateRecipe(RecipeDTO recipeDTO, List<RecipeSupplyDTO> supplies)
+        public bool DeleteRecipe(int recipeId)
         {
-            var recipe = new Recipe
-            {
-                RecipeID = recipeDTO.RecipeID,
-                PreparationTime = recipeDTO.PreparationTime,
-                ProductID = recipeDTO.ProductID,
-            };
-            var recipeSupplies = supplies.Select(s => new RecipeSupply
-            {
-                RecipeID = recipeDTO.RecipeID,
-                RecipeSupplyID = s.RecipeSupplyID,
-                SupplyID = s.SupplyID,
-                UseQuantity = s.UseQuantity,
-
-            }).ToList();
-            var recipeDAO = new RecipeDAO();
-            return recipeDAO.UpdateRecipe(recipe, recipeSupplies);
+            return recipeDAO.DeleteRecipe(recipeId);
         }
     }
 }

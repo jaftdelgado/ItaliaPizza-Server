@@ -61,6 +61,7 @@
     <Compile Include="Dtos\PersonalDTO.cs" />
     <Compile Include="Dtos\ProductDTO.cs" />
     <Compile Include="Dtos\RecipeDTO.cs" />
+    <Compile Include="Dtos\RecipeStepDTO.cs" />
     <Compile Include="Dtos\RecipeSupplyDTO.cs" />
     <Compile Include="Dtos\SupplierDTO.cs" />
     <Compile Include="Dtos\SupplierOrderDTO.cs" />
