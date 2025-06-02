@@ -19,7 +19,7 @@ namespace Model
         public int SupplyID { get; set; }
         public decimal UseQuantity { get; set; }
     
-        public virtual Supply Supply { get; set; }
         public virtual Recipe Recipe { get; set; }
+        public virtual Supply Supply { get; set; }
     }
 }

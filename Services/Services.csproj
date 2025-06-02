@@ -105,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{fb6f14a3-e487-4c64-b334-cc07f3ccf416}</Project>
+      <Project>{75bbd82a-7bbe-48f6-a0db-d764408bf79d}</Project>
       <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServerUtilities\ServerUtilities.csproj">
