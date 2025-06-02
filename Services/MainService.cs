@@ -33,7 +33,6 @@ namespace Services
             _financeService = new FinanceService();
             _supplierOrderService = new SupplierOrderService();
             _orderService = new OrderService();
-            _recipeService = new RecipeService();
             _sessionService = new SessionService();
             _wasteService = new WasteService();
         }
