@@ -23,7 +23,6 @@ namespace Model
         public int CashRegisterID { get; set; }
         public Nullable<System.DateTime> ClosingDate { get; set; }
         public decimal InitialBalance { get; set; }
-        public Nullable<decimal> FinalBalance { get; set; }
         public System.DateTime OpeningDate { get; set; }
         public Nullable<decimal> CashierAmount { get; set; }
         public decimal CurrentBalance { get; set; }
