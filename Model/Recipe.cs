@@ -17,18 +17,19 @@ namespace Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Recipe()
         {
+            this.Products = new HashSet<Product>();
             this.RecipeSteps = new HashSet<RecipeStep>();
             this.RecipeSupplies = new HashSet<RecipeSupply>();
         }
     
         public int RecipeID { get; set; }
         public int PreparationTime { get; set; }
-        public int ProductID { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeStep> RecipeSteps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeSupply> RecipeSupplies { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

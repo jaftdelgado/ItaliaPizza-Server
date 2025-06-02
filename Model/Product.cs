@@ -18,7 +18,6 @@ namespace Model
         public Product()
         {
             this.Product_Order = new HashSet<Product_Order>();
-            this.Recipes = new HashSet<Recipe>();
         }
     
         public int ProductID { get; set; }
@@ -31,11 +30,11 @@ namespace Model
         public string ProductCode { get; set; }
         public bool IsActive { get; set; }
         public Nullable<int> SupplyID { get; set; }
+        public Nullable<int> RecipeID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Order> Product_Order { get; set; }
         public virtual Supply Supply { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Recipe> Recipes { get; set; }
+        public virtual Recipe Recipe { get; set; }
     }
 }
