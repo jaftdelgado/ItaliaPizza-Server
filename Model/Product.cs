@@ -34,7 +34,7 @@ namespace Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Order> Product_Order { get; set; }
-        public virtual Supply Supply { get; set; }
         public virtual Recipe Recipe { get; set; }
+        public virtual Supply Supply { get; set; }
     }
 }

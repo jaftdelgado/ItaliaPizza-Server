@@ -28,7 +28,8 @@ namespace Services
                 Description = productDTO.Description,
                 ProductCode = productDTO.ProductCode,
                 IsActive = true,
-                SupplyID = productDTO.SupplyID
+                SupplyID = productDTO.SupplyID,
+                RecipeID = productDTO.RecipeID
             };
 
             var result = productDAO.AddProduct(product);
@@ -44,21 +45,59 @@ namespace Services
 
         public List<ProductDTO> GetAllProducts(bool activeOnly = false)
         {
-            var products = productDAO.GetAllProducts(activeOnly);
-            return products.Select(p => new ProductDTO
+            var products = productDAO.GetAllProductsWithRecipe(activeOnly);
+            var productDTOs = new List<ProductDTO>();
+
+            foreach (var product in products)
             {
-                ProductID = p.ProductID,
-                Name = p.Name,
-                Category = p.Category,
-                Price = p.Price,
-                IsPrepared = p.IsPrepared,
-                ProductPic = p.ProductPic,
-                Description = p.Description,
-                ProductCode = p.ProductCode,
-                IsActive = p.IsActive,
-                SupplyID = p.SupplyID,
-                IsDeletable = !productDAO.IsProductUsedInOrders(p.ProductID)
-            }).ToList();
+                var dto = new ProductDTO
+                {
+                    ProductID = product.ProductID,
+                    Name = product.Name,
+                    Category = product.Category,
+                    Price = product.Price,
+                    IsPrepared = product.IsPrepared,
+                    ProductPic = product.ProductPic,
+                    Description = product.Description,
+                    ProductCode = product.ProductCode,
+                    IsActive = product.IsActive,
+                    SupplyID = product.SupplyID,
+                    RecipeID = product.RecipeID,
+                    IsDeletable = !productDAO.IsProductUsedInOrders(product.ProductID),
+                    Recipe = null
+                };
+
+                if (product.RecipeID.HasValue && product.Recipe != null)
+                {
+                    dto.Recipe = new RecipeDTO
+                    {
+                        RecipeID = product.Recipe.RecipeID,
+                        PreparationTime = product.Recipe.PreparationTime,
+                        Steps = product.Recipe.RecipeSteps?
+                            .OrderBy(rs => rs.StepNumber)
+                            .Select(rs => new RecipeStepDTO
+                            {
+                                RecipeStepID = rs.RecipeStepID,
+                                RecipeID = rs.RecipeID,
+                                StepNumber = rs.StepNumber,
+                                Instruction = rs.Instruction // corregido campo
+                            }).ToList(),
+
+                        Supplies = product.Recipe.RecipeSupplies?
+                            .Select(rsp => new RecipeSupplyDTO
+                            {
+                                RecipeSupplyID = rsp.RecipeSupplyID,
+                                RecipeID = rsp.RecipeID,
+                                SupplyID = rsp.SupplyID,
+                                UseQuantity = rsp.UseQuantity // corregido campo
+                            }).ToList()
+                    };
+                }
+
+                productDTOs.Add(dto);
+            }
+
+            return productDTOs;
         }
 
         public bool UpdateProduct(ProductDTO productDTO)
@@ -72,7 +111,8 @@ namespace Services
                 IsPrepared = productDTO.IsPrepared,
                 ProductPic = productDTO.ProductPic,
                 Description = productDTO.Description,
-                SupplyID = productDTO.SupplyID
+                SupplyID = productDTO.SupplyID,
+                RecipeID = productDTO.RecipeID 
             };
 
             return productDAO.UpdateProduct(updatedProduct);

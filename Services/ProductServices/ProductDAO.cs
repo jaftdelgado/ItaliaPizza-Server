@@ -16,16 +16,24 @@ namespace Model
             }
         }
 
-        public List<Product> GetAllProducts(bool activeOnly = false)
+        public List<Product> GetAllProductsWithRecipe(bool activeOnly = false)
         {
             using (var context = new italiapizzaEntities())
             {
-                var query = context.Products.AsQueryable();
+                var query = context.Products
+                    .Include(p => p.Recipe.RecipeSteps)
+                    .Include(p => p.Recipe.RecipeSupplies)
+                    .AsQueryable();
+
                 if (activeOnly)
+                {
                     query = query.Where(p => p.IsActive);
+                }
+
                 return query.ToList();
             }
         }
+
 
         public bool UpdateProduct(Product updatedProduct)
         {
@@ -42,6 +50,7 @@ namespace Model
                 existingProduct.ProductPic = updatedProduct.ProductPic;
                 existingProduct.Description = updatedProduct.Description;
                 existingProduct.SupplyID = updatedProduct.SupplyID;
+                existingProduct.RecipeID = updatedProduct.RecipeID;
 
                 context.SaveChanges();
                 return true;

@@ -42,6 +42,7 @@ namespace Model
         public virtual DbSet<Supply> Supplies { get; set; }
         public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<CashRegister> CashRegisters { get; set; }
         public virtual DbSet<RecipeStep> RecipeSteps { get; set; }
         public virtual DbSet<CashRegister> CashRegisters { get; set; }
         public virtual DbSet<Product> Products { get; set; }

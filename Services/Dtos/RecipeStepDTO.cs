@@ -3,18 +3,18 @@
 namespace Services.Dtos
 {
     [DataContract]
-    public class RecipeSupplyDTO
+    public class RecipeStepDTO
     {
         [DataMember]
-        public int RecipeSupplyID { get; set; }
+        public int RecipeStepID { get; set; }
 
         [DataMember]
         public int RecipeID { get; set; }
 
         [DataMember]
-        public int SupplyID { get; set; }
+        public int StepNumber { get; set; }
 
         [DataMember]
-        public decimal UseQuantity { get; set; }
+        public string Instruction { get; set; }
     }
 }
