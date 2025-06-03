@@ -33,6 +33,7 @@ namespace Services
             _financeService = new FinanceService();
             _supplierOrderService = new SupplierOrderService();
             _orderService = new OrderService();
+            _recipeService = new RecipeService();
             _sessionService = new SessionService();
             _wasteService = new WasteService();
         }
@@ -61,9 +62,10 @@ namespace Services
         public bool IsProductDeletable(int productId) => _productService.IsProductDeletable(productId);
         #endregion
 
-
         #region Personal
         public List<PersonalDTO> GetAllPersonals() => _personalService.GetAllPersonals();
+
+        public List<DeliveryDriverDTO> GetDeliveryDrivers() => _personalService.GetDeliveryDrivers();
         public int AddPersonal(PersonalDTO personalDTO) => _personalService.AddPersonal(personalDTO);
         public bool UpdatePersonal(PersonalDTO personalDTO) => _personalService.UpdatePersonal(personalDTO);
         public bool DeletePersonal(int personalID) => _personalService.DeletePersonal(personalID);
@@ -123,6 +125,8 @@ namespace Services
         public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID) => _orderService.GetOrderItemsByOrderID(orderID);
 
         public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
+
+        public int AddLocalOrder(OrderDTO orderDTO) => _orderService.AddLocalOrder(orderDTO);
         #endregion
 
         #region Recipe

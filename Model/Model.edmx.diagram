@@ -4,13 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2d37cfc588654babacba88d9ae060299" Name="Diagram1">
+      <Diagram DiagramId="2d37cfc588654babacba88d9ae060299" Name="Diagram1" ZoomLevel="66">
         <EntityTypeShape EntityType="italiapizzaModel.Address" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.CashRegister" Width="1.5" PointX="8.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Customer" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Delivery" Width="1.5" PointX="5.25" PointY="21.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.Order" Width="1.5" PointX="7.5" PointY="22.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="italiapizzaModel.OrderState" Width="1.5" PointX="5.25" PointY="24.125" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Personal" Width="1.5" PointX="5.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Product" Width="1.5" PointX="7.5" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="italiapizzaModel.Product_Order" Width="1.5" PointX="9.75" PointY="3.875" IsExpanded="true" />
@@ -30,12 +28,6 @@
         <AssociationConnector Association="italiapizzaModel.FK_Delivery_Address" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Personal_Address" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_CashRegister" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Order_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Order_Delivery" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Order_State" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="italiapizzaModel.FK_Transaction_Order" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK__Personal__RoleID__160F4887" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Product" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Recipe" ManuallyRouted="false" />
@@ -52,6 +44,12 @@
         <AssociationConnector Association="italiapizzaModel.FK_SupplierOrderSupply_Supply" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Supply_SupplyCategory" ManuallyRouted="false" />
         <AssociationConnector Association="italiapizzaModel.FK_Waste_Supply" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="italiapizzaModel.Order" Width="1.5" PointX="7.5" PointY="22.25" />
+        <AssociationConnector Association="italiapizzaModel.FK_Order_Customer" />
+        <AssociationConnector Association="italiapizzaModel.FK_Order_Delivery" />
+        <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" />
+        <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Order" />
+        <AssociationConnector Association="italiapizzaModel.FK_Transaction_Order" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

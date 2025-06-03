@@ -10,10 +10,8 @@ namespace Services
     {
         private readonly IPersonalDAO _dao;
 
-        // Constructor por defecto para producción
         public PersonalService() : this(new PersonalDAO()) { }
 
-        // Constructor con inyección para pruebas unitarias
         public PersonalService(IPersonalDAO dao)
         {
             _dao = dao;
@@ -46,6 +44,19 @@ namespace Services
                     ZipCode = p.Address.ZipCode,
                     City = p.Address.City
                 }
+            }).ToList();
+        }
+
+        public List<DeliveryDriverDTO> GetDeliveryDrivers()
+        {
+            var drivers = _dao.GetDeliveryDrivers();
+
+            return drivers.Select(d => new DeliveryDriverDTO
+            {
+                PersonalID = d.PersonalID,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                PhoneNumber = d.PhoneNumber
             }).ToList();
         }
 

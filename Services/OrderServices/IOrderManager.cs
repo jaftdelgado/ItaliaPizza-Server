@@ -9,8 +9,12 @@ namespace Services.OrderServices
     {
         [OperationContract]
         List<OrderSummaryDTO> GetDeliveredOrders();
+
         [OperationContract]
         List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID);
+
+        [OperationContract]
+        int AddLocalOrder(OrderDTO orderDTO);
     }
 
 }

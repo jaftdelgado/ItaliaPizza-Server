@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="italiapizzaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -55,18 +55,11 @@
           <Property Name="CustomerID" Type="int" />
           <Property Name="OrderDate" Type="datetime" />
           <Property Name="Total" Type="decimal" Precision="6" Scale="2" />
-          <Property Name="Status" Type="varchar" MaxLength="255" />
           <Property Name="IsDelivery" Type="bit" />
           <Property Name="PersonalID" Type="int" />
-          <Property Name="IDDelivery" Type="int" />
-          <Property Name="IDState" Type="int" />
-        </EntityType>
-        <EntityType Name="OrderState">
-          <Key>
-            <PropertyRef Name="StateID" />
-          </Key>
-          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="DeliveryID" Type="int" />
+          <Property Name="TableNumber" Type="varchar" MaxLength="3" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Personal">
           <Key>
@@ -292,7 +285,7 @@
               <PropertyRef Name="DeliveryID" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="IDDelivery" />
+              <PropertyRef Name="DeliveryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -305,18 +298,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="PersonalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_State">
-          <End Role="OrderState" Type="Self.OrderState" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderState">
-              <PropertyRef Name="StateID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="IDState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -564,7 +545,6 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderState" EntityType="Self.OrderState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product_Order" EntityType="Self.Product_Order" Schema="dbo" store:Type="Tables" />
@@ -602,10 +582,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Order_Personal" Association="Self.FK_Order_Personal">
             <End Role="Personal" EntitySet="Personal" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
-            <End Role="OrderState" EntitySet="OrderState" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_Personal_Address" Association="Self.FK_Personal_Address">
@@ -685,8 +661,7 @@
             <End Role="WasteSupply" EntitySet="WasteSupply" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="italiapizzaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -727,7 +702,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="AddressID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Customer_Address" FromRole="Customer" ToRole="Address" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -738,36 +713,8 @@
           <Property Name="DeliveryStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AddressID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Delivery_Address" FromRole="Delivery" ToRole="Address" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Delivery" FromRole="Delivery" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderID" />
-          </Key>
-          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int32" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="Total" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="IsDelivery" Type="Boolean" />
-          <Property Name="PersonalID" Type="Int32" />
-          <Property Name="IDDelivery" Type="Int32" />
-          <Property Name="IDState" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
-          <NavigationProperty Name="Delivery" Relationship="Self.FK_Order_Delivery" FromRole="Order" ToRole="Delivery" />
-          <NavigationProperty Name="Personal" Relationship="Self.FK_Order_Personal" FromRole="Order" ToRole="Personal" />
-          <NavigationProperty Name="OrderState" Relationship="Self.FK_Order_State" FromRole="Order" ToRole="OrderState" />
-          <NavigationProperty Name="Product_Order" Relationship="Self.FK_Product_Order_Order" FromRole="Order" ToRole="Product_Order" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Order" FromRole="Order" ToRole="Transaction" />
-        </EntityType>
-        <EntityType Name="OrderState">
-          <Key>
-            <PropertyRef Name="StateID" />
-          </Key>
-          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_State" FromRole="OrderState" ToRole="Order" />
-        </EntityType>
+          <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Delivery" FromRole="Delivery" ToRole="Order" />
+          </EntityType>
         <EntityType Name="Personal">
           <Key>
             <PropertyRef Name="PersonalID" />
@@ -787,8 +734,8 @@
           <Property Name="AddressID" Type="Int32" Nullable="false" />
           <Property Name="IsOnline" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Personal_Address" FromRole="Personal" ToRole="Address" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Personal" FromRole="Personal" ToRole="Order" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Personal__RoleID__160F4887" FromRole="Personal" ToRole="Roles" />
+          <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Personal" FromRole="Personal" ToRole="Order" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -817,8 +764,8 @@
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Product_Order_Order" FromRole="Product_Order" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Product_Order_Product" FromRole="Product_Order" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="italiapizzaModel.FK_Product_Order_Order" FromRole="Product_Order" ToRole="Order" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -961,8 +908,8 @@
           <Property Name="SupplierOrderID" Type="Int32" />
           <Property Name="Concept" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CashRegister" Relationship="Self.FK_Transaction_CashRegister" FromRole="Transaction" ToRole="CashRegister" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Transaction_Order" FromRole="Transaction" ToRole="Order" />
           <NavigationProperty Name="SupplierOrder" Relationship="Self.FK_Transaction_SupplierOrder" FromRole="Transaction" ToRole="SupplierOrder" />
+          <NavigationProperty Name="Order" Relationship="italiapizzaModel.FK_Transaction_Order" FromRole="Transaction" ToRole="Order" />
         </EntityType>
         <EntityType Name="WasteSupply">
           <Key>
@@ -1018,78 +965,6 @@
             </Principal>
             <Dependent Role="Transaction">
               <PropertyRef Name="CashRegisterID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Delivery">
-          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Delivery">
-              <PropertyRef Name="DeliveryID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="IDDelivery" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Personal">
-          <End Role="Personal" Type="Self.Personal" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Personal">
-              <PropertyRef Name="PersonalID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="PersonalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_State">
-          <End Role="OrderState" Type="Self.OrderState" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderState">
-              <PropertyRef Name="StateID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="IDState" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_Order_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="1" />
-          <End Role="Product_Order" Type="Self.Product_Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="Product_Order">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Transaction_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="Transaction">
-              <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1300,8 +1175,6 @@
           <EntitySet Name="CashRegisters" EntityType="Self.CashRegister" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="OrderStates" EntityType="Self.OrderState" />
           <EntitySet Name="Personals" EntityType="Self.Personal" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Product_Order" EntityType="Self.Product_Order" />
@@ -1331,30 +1204,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Transaction_CashRegister" Association="Self.FK_Transaction_CashRegister">
             <End Role="CashRegister" EntitySet="CashRegisters" />
-            <End Role="Transaction" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Delivery" Association="Self.FK_Order_Delivery">
-            <End Role="Delivery" EntitySet="Deliveries" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Personal" Association="Self.FK_Order_Personal">
-            <End Role="Personal" EntitySet="Personals" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
-            <End Role="OrderState" EntitySet="OrderStates" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_Order_Order" Association="Self.FK_Product_Order_Order">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Product_Order" EntitySet="Product_Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transaction_Order" Association="Self.FK_Transaction_Order">
-            <End Role="Order" EntitySet="Orders" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
           <AssociationSet Name="FK__Personal__RoleID__160F4887" Association="Self.FK__Personal__RoleID__160F4887">
@@ -1421,7 +1270,107 @@
             <End Role="Supply" EntitySet="Supplies" />
             <End Role="WasteSupply" EntitySet="WasteSupplies" />
           </AssociationSet>
+          <EntitySet Name="Orders" EntityType="italiapizzaModel.Order" />
+          <AssociationSet Name="FK_Order_Customer" Association="italiapizzaModel.FK_Order_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Delivery" Association="italiapizzaModel.FK_Order_Delivery">
+            <End Role="Delivery" EntitySet="Deliveries" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Personal" Association="italiapizzaModel.FK_Order_Personal">
+            <End Role="Personal" EntitySet="Personals" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Order_Order" Association="italiapizzaModel.FK_Product_Order_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Product_Order" EntitySet="Product_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Order" Association="italiapizzaModel.FK_Transaction_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="IsDelivery" Type="Boolean" />
+          <Property Name="PersonalID" Type="Int32" />
+          <Property Name="DeliveryID" Type="Int32" />
+          <Property Name="TableNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="italiapizzaModel.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Delivery" Relationship="italiapizzaModel.FK_Order_Delivery" FromRole="Order" ToRole="Delivery" />
+          <NavigationProperty Name="Personal" Relationship="italiapizzaModel.FK_Order_Personal" FromRole="Order" ToRole="Personal" />
+          <NavigationProperty Name="Product_Order" Relationship="italiapizzaModel.FK_Product_Order_Order" FromRole="Order" ToRole="Product_Order" />
+          <NavigationProperty Name="Transactions" Relationship="italiapizzaModel.FK_Transaction_Order" FromRole="Order" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="FK_Order_Customer">
+          <End Type="italiapizzaModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Delivery">
+          <End Type="italiapizzaModel.Delivery" Role="Delivery" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DeliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Personal">
+          <End Type="italiapizzaModel.Personal" Role="Personal" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="PersonalID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PersonalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Order_Order">
+          <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="italiapizzaModel.Product_Order" Role="Product_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Product_Order">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Order">
+          <End Type="italiapizzaModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="italiapizzaModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1471,29 +1420,6 @@
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="italiapizzaModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="IsDelivery" ColumnName="IsDelivery" />
-                <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
-                <ScalarProperty Name="IDDelivery" ColumnName="IDDelivery" />
-                <ScalarProperty Name="IDState" ColumnName="IDState" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderStates">
-            <EntityTypeMapping TypeName="italiapizzaModel.OrderState">
-              <MappingFragment StoreEntitySet="OrderState">
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1675,6 +1601,21 @@
                 <ScalarProperty Name="WasteID" ColumnName="WasteID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="italiapizzaModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TableNumber" ColumnName="TableNumber" />
+                <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
+                <ScalarProperty Name="PersonalID" ColumnName="PersonalID" />
+                <ScalarProperty Name="IsDelivery" ColumnName="IsDelivery" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

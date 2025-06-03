@@ -80,14 +80,14 @@ namespace Services.FinanceServices
             using (var context = new italiapizzaEntities())
             {
                 var order = context.Orders.FirstOrDefault(o => o.OrderID == orderId);
-                if (order == null || order.IDState != 4) return false;
+                if (order == null || order.Status != 4) return false;
 
                 var openCashRegister = GetOpenCashRegister();
                 if (openCashRegister == null) return false;
 
                 var total = order.Total ?? 0m;
 
-                order.IDState = 5;
+                order.Status = 5;
 
                 var transaction = new Transaction
                 {

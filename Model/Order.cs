@@ -25,16 +25,16 @@ namespace Model
         public Nullable<int> CustomerID { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public Nullable<decimal> Total { get; set; }
-        public string Status { get; set; }
+        public string OrderStatus { get; set; }
         public Nullable<bool> IsDelivery { get; set; }
         public Nullable<int> PersonalID { get; set; }
-        public Nullable<int> IDDelivery { get; set; }
-        public Nullable<int> IDState { get; set; }
+        public Nullable<int> DeliveryID { get; set; }
+        public string TableNumber { get; set; }
+        public int Status { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Delivery Delivery { get; set; }
         public virtual Personal Personal { get; set; }
-        public virtual OrderState OrderState { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Order> Product_Order { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
