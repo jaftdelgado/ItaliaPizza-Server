@@ -25,7 +25,6 @@ namespace Model
         public Nullable<int> CustomerID { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public Nullable<decimal> Total { get; set; }
-        public string OrderStatus { get; set; }
         public Nullable<bool> IsDelivery { get; set; }
         public Nullable<int> PersonalID { get; set; }
         public Nullable<int> DeliveryID { get; set; }

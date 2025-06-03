@@ -15,6 +15,10 @@ namespace Services.OrderServices
 
         [OperationContract]
         int AddLocalOrder(OrderDTO orderDTO);
+
+        [OperationContract]
+        int AddDeliveryOrder(OrderDTO orderDTO, DeliveryDTO deliveryDTO);
+
     }
 
 }

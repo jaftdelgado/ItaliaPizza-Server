@@ -21,12 +21,12 @@ namespace Model
         }
     
         public int DeliveryID { get; set; }
-        public System.DateTime DeliveryDate { get; set; }
-        public string DeliveryStatus { get; set; }
         public int AddressID { get; set; }
+        public int DeliveryDriverID { get; set; }
     
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual Personal Personal { get; set; }
     }
 }

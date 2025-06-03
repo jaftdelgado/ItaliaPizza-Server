@@ -60,19 +60,19 @@ namespace Services
             return customerDAO.IsCustomerEmailAvailable(email);
         }
 
-        bool ICustomerManager.DeleteCustomer(int customerID)
+        public bool DeleteCustomer(int customerID)
         {
             CustomerDAO customerDAO = new CustomerDAO();
             return customerDAO.DeleteCustomer(customerID);
         }
 
-        bool ICustomerManager.ReactivateCustomer(int customerID)
+        public bool ReactivateCustomer(int customerID)
         {
             CustomerDAO customerDAO = new CustomerDAO();
             return customerDAO.ReactivateCustomer(customerID);
         }
 
-        bool ICustomerManager.UpdateCustomer(CustomerDTO customerDTO)
+        public bool UpdateCustomer(CustomerDTO customerDTO)
         {
             var updatedCustomer = new Customer
             {
@@ -93,6 +93,12 @@ namespace Services
 
             var dao = new CustomerDAO();
             return dao.UpdateCustomer(updatedCustomer, updatedAddress);
+        }
+
+        public List<CustomerDTO> GetActiveCustomers()
+        {
+            var dao = new CustomerDAO();
+            return dao.GetActiveCustomers();
         }
     }
 }

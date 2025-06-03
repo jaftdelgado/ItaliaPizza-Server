@@ -51,6 +51,7 @@ namespace Services
         public bool UpdateCustomer(CustomerDTO customerDTO) => _customerService.UpdateCustomer(customerDTO);
         public bool DeleteCustomer(int customerID) => _customerService.DeleteCustomer(customerID);
         public bool ReactivateCustomer(int customerID) => _customerService.ReactivateCustomer(customerID);
+        public List<CustomerDTO> GetActiveCustomers() => _customerService.GetActiveCustomers();
         #endregion
 
         #region Product
@@ -127,15 +128,20 @@ namespace Services
         public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
 
         public int AddLocalOrder(OrderDTO orderDTO) => _orderService.AddLocalOrder(orderDTO);
+
+        public int AddDeliveryOrder(OrderDTO orderDTO, DeliveryDTO deliveryDTO) => _orderService.AddDeliveryOrder(orderDTO, deliveryDTO);
         #endregion
 
         #region Recipe
-        public List<ProductDTO> GetProductsWithRecipe() => _recipeService.GetProductsWithRecipe();
-        public int AddRecipe(RecipeDTO recipeDTO) => _recipeService.AddRecipe(recipeDTO);
-        public bool UpdateRecipe(RecipeDTO recipeDTO) => _recipeService.UpdateRecipe(recipeDTO);
-        public bool DeleteRecipe(int recipeId) => _recipeService.DeleteRecipe(recipeId);
+        public List<ProductDTO> GetProductsWithRecipe(bool includeSteps = false) => _recipeService.GetProductsWithRecipe(includeSteps);
 
+        public int AddRecipe(RecipeDTO recipeDTO) => _recipeService.AddRecipe(recipeDTO);
+
+        public bool UpdateRecipe(RecipeDTO recipeDTO) => _recipeService.UpdateRecipe(recipeDTO);
+
+        public bool DeleteRecipe(int recipeId) => _recipeService.DeleteRecipe(recipeId);
         #endregion
+
 
         #region Session
         public PersonalDTO SignIn(string username, string password) => _sessionService.SignIn(username, password);

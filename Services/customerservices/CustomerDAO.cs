@@ -1,4 +1,5 @@
 ﻿using Model;
+using Services.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -136,5 +137,34 @@ namespace Services
                 return false;
             }
         }
+
+        public List<CustomerDTO> GetActiveCustomers()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var query = context.Customers
+                    .Where(c => c.IsActive)
+                    .Select(c => new CustomerDTO
+                    {
+                        CustomerID = c.CustomerID,
+                        FirstName = c.FirstName,
+                        LastName = c.LastName,
+                        EmailAddress = c.EmailAddress,
+                        PhoneNumber = c.PhoneNumber,
+                        IsActive = c.IsActive,
+                        AddressID = c.AddressID,
+                        Address = c.Address == null ? null : new AddressDTO
+                        {
+                            Id = c.Address.AddressID,
+                            AddressName = c.Address.AddressName,
+                            ZipCode = c.Address.ZipCode,
+                            City = c.Address.City
+                        }
+                    });
+
+                return query.ToList();
+            }
+        }
+
     }
 }

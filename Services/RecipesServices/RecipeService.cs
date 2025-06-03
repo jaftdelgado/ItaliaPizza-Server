@@ -10,9 +10,10 @@ namespace Services
     {
         private readonly RecipeDAO recipeDAO = new RecipeDAO();
 
-        public List<ProductDTO> GetProductsWithRecipe()
+        public List<ProductDTO> GetProductsWithRecipe(bool includeSteps = false)
         {
-            return recipeDAO.GetProductsWithRecipe();
+            var productsWithRecipe = recipeDAO.GetProductsWithRecipe(includeSteps);
+            return productsWithRecipe;
         }
 
         public int AddRecipe(RecipeDTO recipeDTO)

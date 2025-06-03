@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace Services.Dtos
 {
-    internal class DeliveryDTO
-    {
-    }
-
     [DataContract]
     public class DeliveryDriverDTO
     {

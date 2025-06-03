@@ -24,5 +24,8 @@ namespace Services
 
         [OperationContract]
         bool ReactivateCustomer(int customerID);
+
+        [OperationContract]
+        List<CustomerDTO> GetActiveCustomers();
     }
 }

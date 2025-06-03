@@ -43,9 +43,8 @@
             <PropertyRef Name="DeliveryID" />
           </Key>
           <Property Name="DeliveryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DeliveryDate" Type="datetime" Nullable="false" />
-          <Property Name="DeliveryStatus" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="DeliveryDriverID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -262,6 +261,18 @@
             </Principal>
             <Dependent Role="Delivery">
               <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_DeliveryDriver">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="PersonalID" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="DeliveryDriverID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -572,6 +583,10 @@
             <End Role="Address" EntitySet="Address" />
             <End Role="Delivery" EntitySet="Delivery" />
           </AssociationSet>
+          <AssociationSet Name="FK_Delivery_DeliveryDriver" Association="Self.FK_Delivery_DeliveryDriver">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Order" EntitySet="Order" />
@@ -709,11 +724,11 @@
             <PropertyRef Name="DeliveryID" />
           </Key>
           <Property Name="DeliveryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeliveryStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AddressID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Delivery_Address" FromRole="Delivery" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Delivery" FromRole="Delivery" ToRole="Order" />
+          <Property Name="DeliveryDriverID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal" Relationship="italiapizzaModel.FK_Delivery_DeliveryDriver" FromRole="Delivery" ToRole="Personal" />
           </EntityType>
         <EntityType Name="Personal">
           <Key>
@@ -736,6 +751,7 @@
           <NavigationProperty Name="Address" Relationship="Self.FK_Personal_Address" FromRole="Personal" ToRole="Address" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Personal__RoleID__160F4887" FromRole="Personal" ToRole="Roles" />
           <NavigationProperty Name="Orders" Relationship="italiapizzaModel.FK_Order_Personal" FromRole="Personal" ToRole="Order" />
+          <NavigationProperty Name="Deliveries" Relationship="italiapizzaModel.FK_Delivery_DeliveryDriver" FromRole="Personal" ToRole="Delivery" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1291,6 +1307,10 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="Transaction" EntitySet="Transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_Delivery_DeliveryDriver" Association="italiapizzaModel.FK_Delivery_DeliveryDriver">
+            <End Role="Personal" EntitySet="Personals" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Order">
           <Key>
@@ -1371,6 +1391,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Delivery_DeliveryDriver">
+          <End Type="italiapizzaModel.Personal" Role="Personal" Multiplicity="1" />
+          <End Type="italiapizzaModel.Delivery" Role="Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="PersonalID" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="DeliveryDriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1416,9 +1448,8 @@
           <EntitySetMapping Name="Deliveries">
             <EntityTypeMapping TypeName="italiapizzaModel.Delivery">
               <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="DeliveryDriverID" ColumnName="DeliveryDriverID" />
                 <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
-                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>

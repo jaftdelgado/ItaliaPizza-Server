@@ -50,6 +50,7 @@
         <AssociationConnector Association="italiapizzaModel.FK_Order_Personal" />
         <AssociationConnector Association="italiapizzaModel.FK_Product_Order_Order" />
         <AssociationConnector Association="italiapizzaModel.FK_Transaction_Order" />
+        <AssociationConnector Association="italiapizzaModel.FK_Delivery_DeliveryDriver" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
