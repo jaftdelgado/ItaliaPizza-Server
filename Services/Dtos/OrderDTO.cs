@@ -47,4 +47,17 @@ namespace Services.Dtos
         [DataMember]
         public int Quantity { get; set; }
     }
+
+    [DataContract]
+    public class DeliveryDTO
+    {
+        [DataMember]
+        public int DeliveryID { get; set; }
+
+        [DataMember]
+        public int AddressID { get; set; }
+
+        [DataMember]
+        public int DeliveryDriverID { get; set; }
+    }
 }

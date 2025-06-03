@@ -76,5 +76,45 @@ namespace Services.OrderServices
             return result;
         }
 
+        public int AddDeliveryOrder(Order order, Delivery delivery, List<Product_Order> productOrders)
+        {
+            int result = 0;
+            using (var context = new italiapizzaEntities())
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Guardar entrega
+                        context.Deliveries.Add(delivery);
+                        context.SaveChanges();
+
+                        // Asignar DeliveryID a la orden
+                        order.DeliveryID = delivery.DeliveryID;
+
+                        // Guardar orden
+                        context.Orders.Add(order);
+                        context.SaveChanges();
+
+                        // Guardar productos de la orden
+                        foreach (var item in productOrders)
+                        {
+                            item.OrderID = order.OrderID;
+                            context.Product_Order.Add(item);
+                        }
+
+                        context.SaveChanges();
+                        transaction.Commit();
+                        result = 1;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        result = 0;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

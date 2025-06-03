@@ -8,7 +8,7 @@ namespace Services
     public interface IRecipeManager
     {
         [OperationContract]
-        List<ProductDTO> GetProductsWithRecipe();
+        List<ProductDTO> GetProductsWithRecipe(bool includeSteps = false);
 
         [OperationContract]
         int AddRecipe(RecipeDTO recipeDTO);
@@ -18,6 +18,5 @@ namespace Services
 
         [OperationContract]
         bool DeleteRecipe(int recipeId);
-
     }
 }

@@ -45,5 +45,32 @@ namespace Services.OrderServices
             return _orderDAO.AddLocalOrder(order, productOrders);
         }
 
+        public int AddDeliveryOrder(OrderDTO orderDTO, DeliveryDTO deliveryDTO)
+        {
+            var delivery = new Delivery
+            {
+                AddressID = deliveryDTO.AddressID,
+                DeliveryDriverID = deliveryDTO.DeliveryDriverID
+            };
+
+            var order = new Order
+            {
+                CustomerID = orderDTO.CustomerID,
+                OrderDate = DateTime.Now,
+                Total = orderDTO.Total,
+                IsDelivery = true,
+                PersonalID = orderDTO.PersonalID,
+                Status = 0,
+                TableNumber = null
+            };
+
+            var productOrders = orderDTO.Items.Select(p => new Product_Order
+            {
+                ProductID = p.ProductID,
+                Quantity = p.Quantity
+            }).ToList();
+
+            return _orderDAO.AddDeliveryOrder(order, delivery, productOrders);
+        }
     }
 }
