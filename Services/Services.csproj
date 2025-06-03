@@ -56,6 +56,7 @@
     <Compile Include="Dtos\AddressDTO.cs" />
     <Compile Include="Dtos\CashRegisterDTO.cs" />
     <Compile Include="Dtos\CustomerDTO.cs" />
+    <Compile Include="Dtos\DeliveryDTO.cs" />
     <Compile Include="Dtos\OrderDTO.cs" />
     <Compile Include="Dtos\OrderSummaryDTO.cs" />
     <Compile Include="Dtos\PersonalDTO.cs" />

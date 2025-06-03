@@ -11,6 +11,9 @@ namespace Services
         List<PersonalDTO> GetAllPersonals();
 
         [OperationContract]
+        List<DeliveryDriverDTO> GetDeliveryDrivers();
+
+        [OperationContract]
         int AddPersonal(PersonalDTO personalDTO);
 
         [OperationContract]

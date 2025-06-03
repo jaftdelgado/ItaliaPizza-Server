@@ -2,6 +2,7 @@
 using Services.Dtos;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace Services.OrderServices
@@ -13,7 +14,7 @@ namespace Services.OrderServices
             using (var context = new italiapizzaEntities())
             {
                 return context.Orders
-                    .Where(o => o.IDState == 4)
+                    .Where(o => o.Status == 4)
                     .Select(o => new OrderSummaryDTO
                     {
                         OrderID = o.OrderID,
@@ -42,5 +43,38 @@ namespace Services.OrderServices
                     .ToList();
             }
         }
+
+        public int AddLocalOrder(Order order, List<Product_Order> productOrders)
+        {
+            int result = 0;
+            using (var context = new italiapizzaEntities())
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        context.Orders.Add(order);
+                        context.SaveChanges();
+
+                        foreach (var item in productOrders)
+                        {
+                            item.OrderID = order.OrderID;
+                            context.Product_Order.Add(item);
+                        }
+
+                        context.SaveChanges();
+                        transaction.Commit();
+                        result = 1;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        result = 0;
+                    }
+                }
+            }
+            return result;
+        }
+
     }
 }

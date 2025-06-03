@@ -80,9 +80,6 @@
     <Compile Include="Order.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrderState.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Personal.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

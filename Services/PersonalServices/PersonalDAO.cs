@@ -9,6 +9,7 @@ namespace Services
     public interface IPersonalDAO
     {
         List<Personal> GetAllPersonals();
+        List<Personal> GetDeliveryDrivers();
         int AddPersonal(Personal personal, Address address);
         bool UpdatePersonal(Personal personal, Address address);
         bool DeletePersonal(int personalID);
@@ -24,6 +25,16 @@ namespace Services
             using (var context = new italiapizzaEntities())
             {
                 return context.Personals.Include("Address").ToList();
+            }
+        }
+
+        public List<Personal> GetDeliveryDrivers()
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                return context.Personals
+                    .Where(p => p.RoleID == 6 && p.IsActive)
+                    .ToList();
             }
         }
 

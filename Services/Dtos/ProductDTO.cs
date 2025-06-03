@@ -34,7 +34,7 @@ namespace Services.Dtos
 
         [DataMember]
         public int? SupplyID { get; set; }
-        
+
         [DataMember]
         public int? RecipeID { get; set; }
 

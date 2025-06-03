@@ -13,53 +13,47 @@ namespace Services.Daos
         {
             using (var context = new italiapizzaEntities())
             {
-                var products = context.Products
-                    .Include(p => p.Recipe)
-                    .Include(p => p.Recipe.RecipeSteps)
-                    .Include(p => p.Recipe.RecipeSupplies.Select(rs => rs.Supply))
-                    .Where(p => p.IsActive && p.RecipeID != null)
-                    .ToList();
-
-                var productDTOs = products.Select(p => new ProductDTO
-                {
-                    ProductID = p.ProductID,
-                    Name = p.Name,
-                    Category = p.Category,
-                    Price = p.Price,
-                    IsPrepared = p.IsPrepared,
-                    ProductPic = p.ProductPic,
-                    Description = p.Description,
-                    ProductCode = p.ProductCode,
-                    IsActive = p.IsActive,
-                    SupplyID = p.SupplyID,
-                    RecipeID = p.RecipeID,
-                    Recipe = new RecipeDTO
+                return context.Products
+                    .Where(p => p.IsActive && p.RecipeID != null && p.Recipe != null)
+                    .Select(p => new ProductDTO
                     {
-                        RecipeID = p.Recipe.RecipeID,
                         ProductID = p.ProductID,
-                        PreparationTime = p.Recipe.PreparationTime,
-                        Steps = p.Recipe.RecipeSteps
-                            .OrderBy(s => s.StepNumber)
-                            .Select(s => new RecipeStepDTO
-                            {
-                                RecipeStepID = s.RecipeStepID,
-                                RecipeID = s.RecipeID,
-                                StepNumber = s.StepNumber,
-                                Instruction = s.Instruction
-                            }).ToList(),
-                        Supplies = p.Recipe.RecipeSupplies.Select(rs => new RecipeSupplyDTO
+                        Name = p.Name,
+                        Category = p.Category,
+                        Price = p.Price,
+                        IsPrepared = p.IsPrepared,
+                        ProductPic = p.ProductPic,
+                        Description = p.Description,
+                        ProductCode = p.ProductCode,
+                        IsActive = p.IsActive,
+                        SupplyID = p.SupplyID,
+                        RecipeID = p.RecipeID,
+                        Recipe = new RecipeDTO
                         {
-                            RecipeID = rs.RecipeID,
-                            SupplyID = rs.SupplyID,
-                            UseQuantity = rs.UseQuantity
-                        }).ToList()
-                    }
-                }).ToList();
-
-                return productDTOs;
+                            RecipeID = p.Recipe.RecipeID,
+                            ProductID = p.ProductID,
+                            PreparationTime = p.Recipe.PreparationTime,
+                            Steps = p.Recipe.RecipeSteps
+                                .OrderBy(s => s.StepNumber)
+                                .Select(s => new RecipeStepDTO
+                                {
+                                    RecipeStepID = s.RecipeStepID,
+                                    RecipeID = s.RecipeID,
+                                    StepNumber = s.StepNumber,
+                                    Instruction = s.Instruction
+                                }).ToList(),
+                            Supplies = p.Recipe.RecipeSupplies
+                                .Select(rs => new RecipeSupplyDTO
+                                {
+                                    RecipeID = rs.RecipeID,
+                                    SupplyID = rs.SupplyID,
+                                    UseQuantity = rs.UseQuantity
+                                }).ToList()
+                        }
+                    })
+                    .ToList();
             }
         }
-
 
         public Recipe AddRecipe(Recipe recipe)
         {
@@ -195,5 +189,7 @@ namespace Services.Daos
                 }
             }
         }
+
+
     }
 }

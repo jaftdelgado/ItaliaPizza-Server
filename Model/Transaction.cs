@@ -25,7 +25,7 @@ namespace Model
         public int Concept { get; set; }
     
         public virtual CashRegister CashRegister { get; set; }
-        public virtual Order Order { get; set; }
         public virtual SupplierOrder SupplierOrder { get; set; }
+        public virtual Order Order { get; set; }
     }
 }
