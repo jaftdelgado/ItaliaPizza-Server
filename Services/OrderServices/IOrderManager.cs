@@ -10,6 +10,8 @@ namespace Services.OrderServices
         [OperationContract]
         List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery);
 
+        [OperationContract]
+        bool ChangeOrderStatus(int orderId, int newStatus, int roleId);
 
         [OperationContract]
         int AddLocalOrder(OrderDTO orderDTO);

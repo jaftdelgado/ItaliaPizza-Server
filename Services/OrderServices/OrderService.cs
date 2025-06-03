@@ -15,6 +15,11 @@ namespace Services.OrderServices
             return _orderDAO.GetOrders(statusList, includeLocal, includeDelivery);
         }
 
+        public bool ChangeOrderStatus(int orderId, int newStatus, int roleId)
+        {
+            return _orderDAO.ChangeOrderStatus(orderId, newStatus, roleId);
+        }
+
         public int AddLocalOrder(OrderDTO orderDTO)
         {
             var order = new Order

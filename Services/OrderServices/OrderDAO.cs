@@ -104,18 +104,14 @@ namespace Services.OrderServices
                 {
                     try
                     {
-                        // Guardar entrega
                         context.Deliveries.Add(delivery);
                         context.SaveChanges();
 
-                        // Asignar DeliveryID a la orden
                         order.DeliveryID = delivery.DeliveryID;
 
-                        // Guardar orden
                         context.Orders.Add(order);
                         context.SaveChanges();
 
-                        // Guardar productos de la orden
                         foreach (var item in productOrders)
                         {
                             item.OrderID = order.OrderID;
@@ -134,6 +130,65 @@ namespace Services.OrderServices
                 }
             }
             return result;
+        }
+
+        private bool IsValidTransition(int currentStatus, int newStatus, int roleId, bool isDelivery)
+        {
+            var transitions = new Dictionary<int, Dictionary<int, List<int>>>();
+
+            // Cook (roleId = 5)
+            var cookTransitions = new Dictionary<int, List<int>>();
+            cookTransitions.Add(1, new List<int> { 2, 0 }); // Preparar, Cancelar
+            cookTransitions.Add(2, new List<int> { 3, 0 }); // Listo, Cancelar
+            transitions.Add(5, cookTransitions);
+
+            // Cashier (roleId = 3)
+            var cashierTransitions = new Dictionary<int, List<int>>();
+            cashierTransitions.Add(1, new List<int> { 0 }); // Cancelar
+
+            if (isDelivery)
+                cashierTransitions.Add(3, new List<int> { 4, 6 }); // Enviada, Pagar
+            else
+                cashierTransitions.Add(3, new List<int> { 6 }); // Pagar solo
+
+            cashierTransitions.Add(4, new List<int> { 5, 7 }); // Entregada, No entregada
+            cashierTransitions.Add(5, new List<int> { 6 }); // Pagar orden
+            transitions.Add(3, cashierTransitions);
+
+            // Waiter (roleId = 4)
+            var waiterTransitions = new Dictionary<int, List<int>>();
+            waiterTransitions.Add(1, new List<int> { 0 }); // Cancelar
+            waiterTransitions.Add(3, new List<int> { 5 }); // Marcar entregado
+            transitions.Add(4, waiterTransitions);
+
+            List<int> allowedTargets;
+            Dictionary<int, List<int>> stateMap;
+            if (!transitions.TryGetValue(roleId, out stateMap))
+                return false;
+
+            if (!stateMap.TryGetValue(currentStatus, out allowedTargets))
+                return false;
+
+            return allowedTargets.Contains(newStatus);
+        }
+
+        public bool ChangeOrderStatus(int orderId, int newStatus, int roleId)
+        {
+            using (var context = new italiapizzaEntities())
+            {
+                var order = context.Orders.FirstOrDefault(o => o.OrderID == orderId);
+                if (order == null) throw new Exception("Orden no encontrada.");
+
+                var isDelivery = order.IsDelivery ?? false;
+
+                if (!IsValidTransition(order.Status, newStatus, roleId, isDelivery))
+                    throw new InvalidOperationException("Transición de estado inválida para el rol actual.");
+
+                order.Status = newStatus;
+                context.SaveChanges();
+
+                return true;
+            }
         }
     }
 }
