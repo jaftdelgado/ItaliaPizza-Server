@@ -1,4 +1,5 @@
 ﻿using Services.Dtos;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -27,5 +28,9 @@ namespace Services.FinanceServices
 
         [OperationContract]
         bool HasOpenCashRegister();
+        [OperationContract]
+        List<TransactionDTO> GetTransactionsByDate(DateTime startDate, DateTime endDate);
+        [OperationContract]
+        List<CashRegisterDTO> GetCashRegisterByDate(DateTime startDate, DateTime endDate);
     }
 }

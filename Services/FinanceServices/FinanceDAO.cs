@@ -3,6 +3,7 @@ using Services.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
 
 namespace Services.FinanceServices
 {
@@ -187,6 +188,59 @@ namespace Services.FinanceServices
                     transaction.Rollback();
                     return 0;
                 }
+            }
+        }
+
+        public List<TransactionDTO> GetTransactionsByDate(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                using (var context = new italiapizzaEntities())
+                {
+                    return context.Transactions
+                        .Where(t => t.Date >= startDate && t.Date <= endDate)
+                        .OrderBy(t => t.Date)
+                        .Select(t => new TransactionDTO
+                        {
+                            TransactionID = t.TransactionID,
+                            CashRegisterID = t.CashRegisterID,
+                            Amount = t.Amount,
+                            Date = t.Date,
+                            Concept = t.Concept,
+                            OrderID = t.OrderID
+                        })
+                        .ToList();
+                }
+            } catch (Exception)
+            {
+                return new List<TransactionDTO>();
+            }
+        }
+
+        public List<CashRegisterDTO> GetCashRegisterByDate(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                using (var context = new italiapizzaEntities())
+                {
+                    return context.CashRegisters
+                        .Where(c => c.ClosingDate != null &&
+                                    c.ClosingDate >= startDate &&
+                                    c.ClosingDate <= endDate)
+                        .OrderBy(c => c.ClosingDate)
+                        .Select(c => new CashRegisterDTO
+                        {
+                            CashRegisterID = c.CashRegisterID,
+                            InitialBalance = c.InitialBalance,
+                            OpeningDate = c.OpeningDate,
+                            ClosingDate = c.ClosingDate,
+                            CashierAmount = c.CashierAmount
+                        })
+                        .ToList();
+                }
+            } catch (Exception)
+            {
+                return new List<CashRegisterDTO>();
             }
         }
     }

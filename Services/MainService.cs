@@ -5,6 +5,7 @@ using Services.SupplyServices;
 using Services.FinanceServices;
 using Services.OrderServices;
 using Services.WasteServices;
+using System;
 
 namespace Services
 {
@@ -102,6 +103,8 @@ namespace Services
         public int RegisterSupplierOrderExpense(int supplierOrderID) => _financeService.RegisterSupplierOrderExpense(supplierOrderID);
 
         public bool HasOpenCashRegister() => _financeService.HasOpenCashRegister();
+        public List<TransactionDTO> GetTransactionsByDate(DateTime startDate, DateTime endDate) => _financeService.GetTransactionsByDate(startDate, endDate);
+        public List<CashRegisterDTO> GetCashRegisterByDate(DateTime startDate, DateTime endDate) => _financeService.GetCashRegisterByDate(startDate, endDate);
         #endregion
         
         #region OrderSupplier

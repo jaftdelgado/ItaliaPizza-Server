@@ -1,4 +1,5 @@
 ﻿using Services.Dtos;
+using System;
 using System.Collections.Generic;
 
 namespace Services.FinanceServices
@@ -45,6 +46,18 @@ namespace Services.FinanceServices
         {
             var dao = new FinanceDAO();
             return dao.HasOpenCashRegister();
+        }
+
+        public List<TransactionDTO> GetTransactionsByDate(DateTime startDate, DateTime endDate)
+        {
+            var dao = new FinanceDAO();
+            return dao.GetTransactionsByDate(startDate, endDate);
+        }
+
+        public List<CashRegisterDTO> GetCashRegisterByDate(DateTime startDate, DateTime endDate)
+        {
+            var dao = new FinanceDAO();
+            return dao.GetCashRegisterByDate(startDate, endDate);
         }
     }
 }
