@@ -18,7 +18,8 @@ namespace Services.OrderServices
 
         [OperationContract]
         int AddDeliveryOrder(OrderDTO orderDTO, DeliveryDTO deliveryDTO);
-
+        [OperationContract]
+        bool UpdateOrder(OrderDTO orderDTO);
     }
 
 }

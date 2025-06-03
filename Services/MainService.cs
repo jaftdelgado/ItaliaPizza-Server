@@ -104,7 +104,7 @@ namespace Services
 
         #region Finance
         public List<TransactionDTO> GetCurrentTransactions() => _financeService.GetCurrentTransactions();
-        public bool RegisterOrderPayment(int orderId) => _financeService.RegisterOrderPayment(orderId);
+        public int RegisterOrderPayment(int orderId, decimal efectivo) => _financeService.RegisterOrderPayment(orderId, efectivo);
         public CashRegisterDTO GetOpenCashRegisterInfo() => _financeService.GetOpenCashRegisterInfo();
         public bool OpenCashRegister(decimal initialAmout) => _financeService.OpenCashRegister(initialAmout);
         public bool CloseCashRegister(decimal cashierAmount) => _financeService.CloseCashRegister(cashierAmount);
@@ -130,6 +130,8 @@ namespace Services
         public int AddLocalOrder(OrderDTO orderDTO) => _orderService.AddLocalOrder(orderDTO);
 
         public int AddDeliveryOrder(OrderDTO orderDTO, DeliveryDTO deliveryDTO) => _orderService.AddDeliveryOrder(orderDTO, deliveryDTO);
+
+        public bool UpdateOrder(OrderDTO orderDTO) => _orderService.UpdateOrder(orderDTO);
         #endregion
 
         #region Recipe

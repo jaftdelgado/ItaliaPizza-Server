@@ -9,7 +9,7 @@ namespace Services.FinanceServices
     public interface IFinanceDAO
     {
         List<TransactionDTO> GetCurrentTransactions();
-        bool RegisterOrderPayment(int orderId);
+        int RegisterOrderPayment(int orderId, decimal efectivo);
         CashRegisterDTO GetOpenCashRegisterInfo();
         bool OpenCashRegister(decimal initialAmount);
         bool CloseCashRegister(decimal cashierAmount);
@@ -74,39 +74,57 @@ namespace Services.FinanceServices
                     .ToList();
             }
         }
-
-        public bool RegisterOrderPayment(int orderId)
+        public int RegisterOrderPayment(int orderId, decimal efectivo)
         {
             using (var context = new italiapizzaEntities())
+            using (var transaction = context.Database.BeginTransaction())
             {
-                var order = context.Orders.FirstOrDefault(o => o.OrderID == orderId);
-                if (order == null || order.Status != 4) return false;
-
-                var openCashRegister = GetOpenCashRegister();
-                if (openCashRegister == null) return false;
-
-                var total = order.Total ?? 0m;
-
-                order.Status = 5;
-
-                var transaction = new Transaction
+                try
                 {
-                    FinancialFlow = "I",
-                    Amount = total,
-                    Date = DateTime.Now,
-                    Description = "Pago de comanda",
-                    OrderID = orderId,
-                    CashRegisterID = openCashRegister.CashRegisterID
-                };
-                context.Transactions.Add(transaction);
+                    var order = context.Orders.FirstOrDefault(o => o.OrderID == orderId);
+                    if (order == null || order.Status != 5)
+                        return -1;
 
-                openCashRegister.CurrentBalance += total;
+                    var cashRegister = context.CashRegisters.FirstOrDefault(c => c.ClosingDate == null);
+                    if (cashRegister == null)
+                        return -2;
 
-                context.SaveChanges();
-                return true;
+                    decimal total = order.Total ?? 0;
+                    decimal cambio = efectivo - total;
+
+                    if (cambio < 0)
+                        return -3;
+
+                    if (cashRegister.CurrentBalance < cambio)
+                        return -4;
+
+                    var transactionRecord = new Transaction
+                    {
+                        FinancialFlow = "I",
+                        Amount = total,
+                        Date = DateTime.Now,
+                        Description = $"Pago de comanda #{order.OrderID}",
+                        CashRegisterID = cashRegister.CashRegisterID,
+                        OrderID = order.OrderID,
+                        Concept = 1 
+                    };
+                    context.Transactions.Add(transactionRecord);
+
+                    cashRegister.CurrentBalance += total;
+
+                    order.Status = 6;
+
+                    context.SaveChanges();
+                    transaction.Commit();
+                    return 1; 
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return 0;
+                }
             }
         }
-
         public bool OpenCashRegister(decimal initialAmount)
         {
             if (GetOpenCashRegister() != null)
