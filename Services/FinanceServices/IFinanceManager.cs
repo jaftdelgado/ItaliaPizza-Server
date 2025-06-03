@@ -11,7 +11,7 @@ namespace Services.FinanceServices
         List<TransactionDTO> GetCurrentTransactions();
 
         [OperationContract]
-        bool RegisterOrderPayment(int orderId);
+        int RegisterOrderPayment(int orderId, decimal efectivo);
 
         [OperationContract]
         CashRegisterDTO GetOpenCashRegisterInfo();

@@ -190,5 +190,42 @@ namespace Services.OrderServices
                 return true;
             }
         }
+        public bool UpdateOrder(Order updatedOrder, List<Product_Order> updatedProducts)
+        {
+            using (var context = new italiapizzaEntities())
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var existingOrder = context.Orders.FirstOrDefault(o => o.OrderID == updatedOrder.OrderID);
+                    if (existingOrder == null)
+                        return false;
+
+                    // Actualizar el total
+                    existingOrder.Total = updatedOrder.Total;
+
+                    // Eliminar productos actuales de la orden
+                    var existingProducts = context.Product_Order.Where(po => po.OrderID == updatedOrder.OrderID).ToList();
+                    context.Product_Order.RemoveRange(existingProducts);
+                    context.SaveChanges();
+
+                    // Agregar nuevos productos
+                    foreach (var item in updatedProducts)
+                    {
+                        item.OrderID = updatedOrder.OrderID;
+                        context.Product_Order.Add(item);
+                    }
+
+                    context.SaveChanges();
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
     }
 }

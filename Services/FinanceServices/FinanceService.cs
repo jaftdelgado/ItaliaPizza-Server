@@ -18,9 +18,9 @@ namespace Services.FinanceServices
             return _dao.GetCurrentTransactions();
         }
 
-        public bool RegisterOrderPayment(int orderId)
+        public int RegisterOrderPayment(int orderId, decimal efectivo)
         {
-            return _dao.RegisterOrderPayment(orderId);
+            return _dao.RegisterOrderPayment(orderId, efectivo);
         }
 
         public CashRegisterDTO GetOpenCashRegisterInfo()

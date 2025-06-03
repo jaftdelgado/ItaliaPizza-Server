@@ -70,5 +70,21 @@ namespace Services.OrderServices
 
             return _orderDAO.AddDeliveryOrder(order, delivery, productOrders);
         }
+        public bool UpdateOrder(OrderDTO orderDTO)
+        {
+            var order = new Order
+            {
+                OrderID = orderDTO.OrderID,
+                Total = orderDTO.Total
+            };
+
+            var productOrders = orderDTO.Items.Select(p => new Product_Order
+            {
+                ProductID = p.ProductID,
+                Quantity = p.Quantity ?? 0
+            }).ToList();
+
+            return _orderDAO.UpdateOrder(order, productOrders);
+        }
     }
 }
