@@ -125,6 +125,8 @@ namespace Services
         #region Orders
         public List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery) => _orderService.GetOrders(statusList, includeLocal, includeDelivery);
 
+        public bool ChangeOrderStatus(int orderId, int newStatus, int roleId) => _orderService.ChangeOrderStatus(orderId, newStatus, roleId);
+
         public int AddLocalOrder(OrderDTO orderDTO) => _orderService.AddLocalOrder(orderDTO);
 
         public int AddDeliveryOrder(OrderDTO orderDTO, DeliveryDTO deliveryDTO) => _orderService.AddDeliveryOrder(orderDTO, deliveryDTO);
@@ -139,7 +141,6 @@ namespace Services
 
         public bool DeleteRecipe(int recipeId) => _recipeService.DeleteRecipe(recipeId);
         #endregion
-
 
         #region Session
         public PersonalDTO SignIn(string username, string password) => _sessionService.SignIn(username, password);
