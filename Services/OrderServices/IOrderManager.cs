@@ -8,10 +8,8 @@ namespace Services.OrderServices
     public interface IOrderManager
     {
         [OperationContract]
-        List<OrderSummaryDTO> GetDeliveredOrders();
+        List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery);
 
-        [OperationContract]
-        List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID);
 
         [OperationContract]
         int AddLocalOrder(OrderDTO orderDTO);

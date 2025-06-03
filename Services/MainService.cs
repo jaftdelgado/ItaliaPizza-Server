@@ -123,9 +123,7 @@ namespace Services
         #endregion
 
         #region Orders
-        public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID) => _orderService.GetOrderItemsByOrderID(orderID);
-
-        public List<OrderSummaryDTO> GetDeliveredOrders() => _orderService.GetDeliveredOrders();
+        public List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery) => _orderService.GetOrders(statusList, includeLocal, includeDelivery);
 
         public int AddLocalOrder(OrderDTO orderDTO) => _orderService.AddLocalOrder(orderDTO);
 
