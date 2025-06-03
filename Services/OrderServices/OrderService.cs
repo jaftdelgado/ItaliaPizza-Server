@@ -10,16 +10,9 @@ namespace Services.OrderServices
     {
         private readonly OrderDAO _orderDAO = new OrderDAO();
 
-        public List<OrderSummaryDTO> GetDeliveredOrders()
+        public List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery)
         {
-            var dao = new OrderDAO();
-            return dao.GetDeliveredOrders();
-        }
-
-        public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID)
-        {
-            var dao = new OrderDAO();
-            return dao.GetOrderItemsByOrderID(orderID);
+            return _orderDAO.GetOrders(statusList, includeLocal, includeDelivery);
         }
 
         public int AddLocalOrder(OrderDTO orderDTO)
@@ -32,7 +25,7 @@ namespace Services.OrderServices
                 IsDelivery = false,
                 PersonalID = orderDTO.PersonalID,
                 DeliveryID = null,
-                Status = 0,
+                Status = 1,
                 TableNumber = orderDTO.TableNumber
             };
 
@@ -60,7 +53,7 @@ namespace Services.OrderServices
                 Total = orderDTO.Total,
                 IsDelivery = true,
                 PersonalID = orderDTO.PersonalID,
-                Status = 0,
+                Status = 1,
                 TableNumber = null
             };
 

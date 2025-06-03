@@ -9,38 +9,57 @@ namespace Services.OrderServices
 {
     public class OrderDAO
     {
-        public List<OrderSummaryDTO> GetDeliveredOrders()
+        public List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery)
         {
             using (var context = new italiapizzaEntities())
             {
-                return context.Orders
-                    .Where(o => o.Status == 4)
-                    .Select(o => new OrderSummaryDTO
+                var query = context.Orders.AsQueryable();
+
+                if (statusList != null && statusList.Any())
+                    query = query.Where(o => statusList.Contains(o.Status));
+
+                if (includeLocal && !includeDelivery)
+                    query = query.Where(o => o.IsDelivery == false);
+
+                else if (!includeLocal && includeDelivery)
+                    query = query.Where(o => o.IsDelivery == true);
+
+                var orderDTOs = query.Select(order => new OrderDTO
+                {
+                    OrderID = order.OrderID,
+                    CustomerID = order.CustomerID,
+                    OrderDate = order.OrderDate,
+                    Total = order.Total,
+                    IsDelivery = order.IsDelivery,
+                    PersonalID = order.PersonalID,
+                    AttendedByName = order.Personal != null
+                        ? order.Personal.FirstName + " " + order.Personal.LastName
+                        : null,
+                    DeliveryID = order.DeliveryID,
+                    Status = order.Status,
+                    TableNumber = order.TableNumber,
+                    Items = order.Product_Order.Select(po => new ProductOrderDTO
                     {
-                        OrderID = o.OrderID,
-                        OrderDate = o.OrderDate ?? DateTime.MinValue,
-                        Total = o.Total ?? 0m,
-                        Products = o.Product_Order.Select(po => new OrderItemSummaryDTO
+                        ProductID = po.ProductID,
+                        Quantity = po.Quantity,
+                        Name = po.Product.Name,
+                        Price = po.Product.Price,
+                        ProductPic = po.Product.ProductPic
+                    }).ToList(),
+                    DeliveryInfo = order.IsDelivery == true && order.Customer != null && order.Customer.Address != null && order.Personal != null
+                        ? new DeliveryDTO
                         {
-                            Product = po.Product.Name,
-                            Quantity = po.Quantity ?? 0
-                        }).ToList()
-                    })
-                    .ToList();
-            }
-        }
-        public List<OrderItemSummaryDTO> GetOrderItemsByOrderID(int orderID)
-        {
-            using (var context = new italiapizzaEntities())
-            {
-                return context.Product_Order
-                    .Where(po => po.OrderID == orderID)
-                    .Select(po => new OrderItemSummaryDTO
-                    {
-                        Product = po.Product.Name,
-                        Quantity = po.Quantity ?? 0
-                    })
-                    .ToList();
+                            DeliveryID = order.DeliveryID ?? 0,
+                            AddressID = order.Customer.Address.AddressID,
+                            DeliveryDriverID = order.Personal.PersonalID,
+                            CustomerFullName = order.Customer.LastName + ", " + order.Customer.FirstName,
+                            CustomerAddress = order.Customer.Address.AddressName + ", " + order.Customer.Address.City + ", " + order.Customer.Address.ZipCode,
+                            DeliveryDriverName = order.Personal.FirstName + " " + order.Personal.LastName
+                        }
+                        : null
+                }).ToList();
+
+                return orderDTOs;
             }
         }
 

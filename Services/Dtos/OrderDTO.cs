@@ -26,6 +26,9 @@ namespace Services.Dtos
         public int? PersonalID { get; set; }
 
         [DataMember]
+        public string AttendedByName { get; set; }
+
+        [DataMember]
         public int? DeliveryID { get; set; }
 
         [DataMember]
@@ -35,7 +38,10 @@ namespace Services.Dtos
         public string TableNumber { get; set; }
 
         [DataMember]
-        public List<ProductOrderDTO> Items { get; set; } 
+        public List<ProductOrderDTO> Items { get; set; }
+
+        [DataMember]
+        public DeliveryDTO DeliveryInfo { get; set; }
     }
 
     [DataContract]
@@ -45,8 +51,18 @@ namespace Services.Dtos
         public int ProductID { get; set; }
 
         [DataMember]
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public decimal? Price { get; set; }
+
+        [DataMember]
+        public byte[] ProductPic { get; set; }
     }
+
 
     [DataContract]
     public class DeliveryDTO
@@ -59,5 +75,15 @@ namespace Services.Dtos
 
         [DataMember]
         public int DeliveryDriverID { get; set; }
+
+        [DataMember]
+        public string CustomerFullName { get; set; }
+
+        [DataMember]
+        public string CustomerAddress { get; set; }
+
+        [DataMember]
+        public string DeliveryDriverName { get; set; }
     }
+
 }
