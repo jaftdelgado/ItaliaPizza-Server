@@ -7,7 +7,15 @@ using System.Linq;
 
 namespace Services.OrderServices
 {
-    public class OrderDAO
+    public interface IOrderDAO
+    {
+        List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery);
+        int AddLocalOrder(Order order, List<Product_Order> productOrders);
+        int AddDeliveryOrder(Order order, Delivery delivery, List<Product_Order> productOrders);
+        bool ChangeOrderStatus(int orderId, int newStatus, int roleId);
+        bool UpdateOrder(Order updatedOrder, List<Product_Order> updatedProducts);
+    }
+    public class OrderDAO : IOrderDAO
     {
         public List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery)
         {

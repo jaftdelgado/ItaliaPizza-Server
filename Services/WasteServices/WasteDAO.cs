@@ -5,7 +5,11 @@ using System.Linq;
 
 namespace Services.WasteServices
 {
-    public class WasteDAO
+    public interface IWasteDAO
+    {
+        bool RegisterSupplyLoss(Supply supply);
+    }
+    public class WasteDAO : IWasteDAO
     {
         public bool RegisterSupplyLoss(Supply supply)
         {

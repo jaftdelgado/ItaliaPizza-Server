@@ -4,7 +4,17 @@ using System.Data.Entity;
 
 namespace Model
 {
-    public class ProductDAO
+    public interface IProductDAO
+    {
+        Product AddProduct(Product product);
+        List<Product> GetAllProductsWithRecipe(bool activeOnly = false);
+        bool UpdateProduct(Product updatedProduct);
+        bool DeleteProduct(int productId);
+        bool ReactivateProduct(int productId);
+        bool IsProductUsedInOrders(int productId);
+        bool ExistsProductCode(string code);
+    }
+    public class ProductDAO : IProductDAO
     {
         public Product AddProduct(Product product)
         {

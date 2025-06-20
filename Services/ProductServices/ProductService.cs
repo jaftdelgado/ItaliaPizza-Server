@@ -8,8 +8,13 @@ namespace Services
 {
     public class ProductService : IProductManager
     {
-        private readonly ProductDAO productDAO = new ProductDAO();
+        private readonly IProductDAO productDAO;
+        public ProductService() : this(new ProductDAO()) { }
 
+        public ProductService(IProductDAO dao)
+        {
+            productDAO = dao;
+        }
         public int AddProduct(ProductDTO productDTO)
         {
             if (productDTO.IsPrepared == true) productDTO.SupplyID = null;
