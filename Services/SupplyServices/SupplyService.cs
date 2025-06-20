@@ -8,7 +8,14 @@ namespace Services.SupplyServices
 {
     public class SupplyService : ISupplyManager
     {
-        private readonly SupplyDAO dao = new SupplyDAO();
+        private readonly ISupplyDAO dao;
+
+        public SupplyService() : this(new SupplyDAO()) { }
+
+        public SupplyService(ISupplyDAO dao)
+        {
+            this.dao = dao;
+        }
 
         public List<SupplyDTO> GetSuppliesBySupplier(int supplierId)
         {

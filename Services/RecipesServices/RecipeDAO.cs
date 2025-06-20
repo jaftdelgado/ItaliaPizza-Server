@@ -7,7 +7,16 @@ using System.Linq;
 
 namespace Services.Daos
 {
-    public class RecipeDAO
+    public interface IRecipeDAO
+    {
+        List<ProductDTO> GetProductsWithRecipe(bool includeSteps = false);
+        Recipe AddRecipe(Recipe recipe);
+        void AddStep(RecipeStepDTO stepDTO);
+        void AddSupply(RecipeSupplyDTO supplyDTO);
+        bool UpdateRecipe(RecipeDTO recipeDTO);
+        bool DeleteRecipe(int recipeId);
+    }
+    public class RecipeDAO : IRecipeDAO
     {
         public List<ProductDTO> GetProductsWithRecipe(bool includeSteps = false)
         {

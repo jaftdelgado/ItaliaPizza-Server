@@ -8,8 +8,13 @@ namespace Services
 {
     public class RecipeService : IRecipeManager
     {
-        private readonly RecipeDAO recipeDAO = new RecipeDAO();
+        private readonly IRecipeDAO recipeDAO;
+        public RecipeService() : this(new RecipeDAO()) { }
 
+        public RecipeService(IRecipeDAO recipeDAO)
+        {
+            this.recipeDAO = recipeDAO;
+        }
         public List<ProductDTO> GetProductsWithRecipe(bool includeSteps = false)
         {
             var productsWithRecipe = recipeDAO.GetProductsWithRecipe(includeSteps);

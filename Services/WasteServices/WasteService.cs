@@ -6,6 +6,14 @@ namespace Services.WasteServices
 {
     public class WasteService : IWasteManager
     {
+        private readonly IWasteDAO _dao;
+
+        public WasteService() : this(new WasteDAO()) { }
+
+        public WasteService(IWasteDAO dao)
+        {
+            _dao = dao;
+        }
         public bool RegisterSupplyLoss(SupplyDTO supplyDTO)
         {
             var updateSupplyStock = new Supply
@@ -14,8 +22,8 @@ namespace Services.WasteServices
                 Stock = supplyDTO.Stock
             };
 
-            var dao = new WasteDAO();
-            return dao.RegisterSupplyLoss(updateSupplyStock);
+            var _dao = new WasteDAO();
+            return _dao.RegisterSupplyLoss(updateSupplyStock);
         }
     }
 }

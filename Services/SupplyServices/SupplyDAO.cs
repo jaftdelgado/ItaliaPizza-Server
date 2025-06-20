@@ -8,7 +8,21 @@ using System.Linq;
 
 namespace Services.SupplyServices
 {
-    public class SupplyDAO
+    public interface ISupplyDAO
+    {
+        List<Supply> GetSuppliesBySupplier(int supplierId);
+        List<Supply> GetSuppliesAvailableByCategory(int categoryId, int? supplierId);
+        List<SupplyDTO> GetAllSupplies(bool activeOnly = false);
+        int AddSupply(Supply supply);
+        bool UpdateSupply(Supply updatedSupply);
+        bool DeleteSupply(int supplyID);
+        bool ReactivateSupply(int supplyID);
+        bool AssignSupplierToSupply(List<int> supplyIds, int supplierId);
+        bool UnassignSupplierFromSupply(List<int> supplyIds, int supplierId);
+        List<RecipeSupply> GetSuppliesByRecipe(int recipeId);
+        bool IsSupplyDeletable(int supplyId);
+    }
+    public class SupplyDAO : ISupplyDAO
     {
         public List<Supply> GetSuppliesBySupplier(int supplierId)
         {

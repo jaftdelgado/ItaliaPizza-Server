@@ -8,8 +8,13 @@ namespace Services.OrderServices
 {
     public class OrderService : IOrderManager
     {
-        private readonly OrderDAO _orderDAO = new OrderDAO();
+        private readonly IOrderDAO _orderDAO;
+        public OrderService() : this(new OrderDAO()) { }
 
+        public OrderService(IOrderDAO orderDAO)
+        {
+            _orderDAO = orderDAO;
+        }
         public List<OrderDTO> GetOrders(List<int> statusList, bool includeLocal, bool includeDelivery)
         {
             return _orderDAO.GetOrders(statusList, includeLocal, includeDelivery);
