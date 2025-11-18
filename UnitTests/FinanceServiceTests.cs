@@ -50,25 +50,29 @@ namespace UnitTests
         [Test]
         public void RegisterOrderPayment_Success_ReturnsTrue()
         {
-            _daoMock.Setup(d => d.RegisterOrderPayment(1)).Returns(true);
+            _daoMock.Setup(d => d.RegisterOrderPayment(1, 100)).Returns(1);
 
-            Assert.IsTrue(_service.RegisterOrderPayment(1));
+            var result = _service.RegisterOrderPayment(1, 100);
+
+            Assert.That(result, Is.EqualTo(1));
         }
 
         [Test]
         public void RegisterOrderPayment_Invalid_ReturnsFalse()
         {
-            _daoMock.Setup(d => d.RegisterOrderPayment(99)).Returns(false);
+            _daoMock.Setup(d => d.RegisterOrderPayment(99, 50)).Returns(-1);
 
-            Assert.IsFalse(_service.RegisterOrderPayment(99));
+            var result = _service.RegisterOrderPayment(99, 50);
+
+            Assert.That(result, Is.EqualTo(-1));
         }
 
         [Test]
         public void RegisterOrderPayment_Exception_Throws()
         {
-            _daoMock.Setup(d => d.RegisterOrderPayment(It.IsAny<int>())).Throws(new Exception());
+            _daoMock.Setup(d => d.RegisterOrderPayment(It.IsAny<int>(), It.IsAny<decimal>())).Throws(new Exception());
 
-            Assert.Throws<Exception>(() => _service.RegisterOrderPayment(1));
+            Assert.Throws<Exception>(() => _service.RegisterOrderPayment(1, 100));
         }
 
         [Test]
